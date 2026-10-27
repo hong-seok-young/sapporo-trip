@@ -1,0 +1,445 @@
+<title>삿포로 겨울 드라이브</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one reading column; a boarding-pass style strip for bookings, a road-map timeline for days, tickable lists for prep */
+:root{
+  --bg:#f3f6f9; --surface:#ffffff; --ink:#14212e; --muted:#5b6b7a; --line:#d7e0e8;
+  --ice:#1f6f9c; --ice-soft:#e3eff6; --signal:#c2571c; --signal-soft:#fbeee6; --ok:#2e7d4f;
+  --display:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e161e; --surface:#16212c; --ink:#e6edf3; --muted:#9aabba; --line:#27394a;
+  --ice:#6fb6df; --ice-soft:#1a3242; --signal:#f0915a; --signal-soft:#3a2418; --ok:#6cc792; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e161e; --surface:#16212c; --ink:#e6edf3; --muted:#9aabba; --line:#27394a;
+  --ice:#6fb6df; --ice-soft:#1a3242; --signal:#f0915a; --signal-soft:#3a2418; --ok:#6cc792; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(28px,6vw,40px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:21px;font-weight:700}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+header{display:flex;flex-direction:column;gap:12px}
+.route{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font-family:var(--mono);font-size:15px;color:var(--muted)}
+.route b{color:var(--ink);font-weight:600}
+.lede{color:var(--muted);max-width:60ch}
+nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+nav a{flex:0 0 auto;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;font-size:13px;background:var(--surface)}
+nav a:hover,nav a:focus-visible{border-color:var(--ice);color:var(--ice);outline:none}
+section{display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px}
+.sec-head .note{font-size:13px;color:var(--muted)}
+
+/* booking passes */
+.passes{display:grid;gap:12px}
+.pass{display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pass .main{padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pass .stub{padding:14px 16px;border-left:2px dashed var(--line);display:flex;flex-direction:column;justify-content:center;gap:2px;text-align:right;min-width:120px;background:var(--ice-soft)}
+.pass .stub .k{font-size:11px;color:var(--muted);letter-spacing:.06em}
+.pass .stub .v{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ice);word-break:break-all}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--ice-soft);color:var(--ice);font-weight:500}
+.tag.warn{background:var(--signal-soft);color:var(--signal)}
+.tag.ok{background:transparent;border:1px solid var(--ok);color:var(--ok)}
+@media (max-width:520px){.pass{grid-template-columns:1fr}.pass .stub{border-left:0;border-top:2px dashed var(--line);text-align:left;flex-direction:row;flex-wrap:wrap;gap:4px 16px;align-items:baseline}}
+
+/* timeline */
+.days{display:flex;flex-direction:column;gap:0}
+.day{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding-bottom:22px;position:relative}
+.day::before{content:"";position:absolute;left:31px;top:30px;bottom:0;width:2px;background:var(--line)}
+.day:last-child::before{display:none}
+.day .d{width:64px;height:30px;border-radius:6px;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:600;position:relative;z-index:1}
+.day .body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.day .meta{font-size:13px;color:var(--muted)}
+.stops{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.stops li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;font-size:14px}
+.stops .t{font-family:var(--mono);color:var(--ice);font-size:13px;padding-top:1px}
+.drive{font-size:13px;color:var(--muted);border-left:3px solid var(--ice);padding-left:10px}
+
+/* checklists */
+.progress{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.checks{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.checks li{border-top:1px solid var(--line)} .checks li:first-child{border-top:0}
+.checks label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:11px 14px;cursor:pointer;align-items:start}
+.checks input{width:18px;height:18px;margin:3px 0 0;accent-color:var(--ok)}
+.checks .txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.checks .sub{font-size:13px;color:var(--muted)}
+.checks input:checked + .txt > b{text-decoration:line-through;color:var(--muted);font-weight:500}
+.checks b{font-weight:500}
+.group-title{font-size:13px;font-weight:700;color:var(--muted);margin-top:4px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;align-items:start}
+.grid2 > div{display:flex;flex-direction:column;gap:8px;min-width:0}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
+.tip{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tip ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.fuel{display:flex;gap:6px;flex-wrap:wrap;font-size:13px}
+.fuel span{padding:2px 8px;border-radius:4px;font-weight:600;color:#fff}
+
+/* phrases */
+.phrases{display:flex;flex-direction:column;gap:10px}
+.phrase{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
+.phrase .jp{font-size:17px;font-weight:500}
+.phrase .ko{font-size:13px;color:var(--muted);grid-column:1}
+.phrase button{grid-row:1/span 2;grid-column:2}
+button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:6px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--ice);color:var(--ice);outline:none}
+
+/* cost table */
+.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 14px;border-top:1px solid var(--line);text-align:left}
+tr:first-child th,tr:first-child td{border-top:0}
+td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tfoot td{font-weight:700;border-top:2px solid var(--ink)}
+footer{font-size:12px;color:var(--muted)}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Hokkaido · Winter drive · 2 people</span>
+  <h1>삿포로 겨울 드라이브</h1>
+  <div class="route"><b>ICN</b> → <b>CTS</b> 12.03 목 · 삿포로 · 비에이 · 오타루 · 아사리가와 → <b>CTS</b> 12.06 일</div>
+  <p class="lede">렌터카로 도는 3박 4일. 예약 현황, 날짜별 동선, 남은 할 일과 준비물, 현지 운전 메모를 한곳에 모았어요. 체크 표시는 이 기기에 저장돼요.</p>
+  <nav aria-label="바로가기">
+    <a href="#bookings">예약</a><a href="#days">일정</a><a href="#todo">할 일</a><a href="#pack">준비물</a><a href="#drive">운전 메모</a><a href="#phrases">일본어</a><a href="#cost">비용</a>
+  </nav>
+</header>
+
+<section id="bookings">
+  <div class="sec-head"><h2>예약 현황</h2><span class="note">취소 기한은 날짜가 빠른 순으로 렌터카 → 료칸</span></div>
+  <div class="passes">
+    <article class="pass">
+      <div class="main">
+        <h3>항공 · 파라타항공 <span class="tag ok">발권 완료</span></h3>
+        <dl class="kv">
+          <dt>가는 편</dt><dd><span class="mono">WE0531</span> · 12/3 10:05 인천 T1 → 12:45 신치토세 국제선</dd>
+          <dt>오는 편</dt><dd><span class="mono">WE0532</span> · 12/6 14:05 신치토세 → 17:30 인천</dd>
+          <dt>수하물</dt><dd>위탁 1인 15kg</dd>
+        </dl>
+      </div>
+      <div class="stub"><span class="k">항공사 예약</span><span class="v">J2AMM7</span><span class="k">마이리얼트립</span><span class="v">AIR1131114</span></div>
+    </article>
+
+    <article class="pass">
+      <div class="main">
+        <h3>렌터카 · 타임즈 신치토세 공항점 <span class="tag ok">예약 완료</span></h3>
+        <dl class="kv">
+          <dt>차량</dt><dd>CX-30 또는 야리스 크로스급, 금연, 스터드리스</dd>
+          <dt>픽업</dt><dd>12/3 14:00 · 공항 송영(WE0531)</dd>
+          <dt>반납</dt><dd>12/6 12:00 예약 · <b>실제 목표 11:00</b> · 공항 송영(WE0532)</dd>
+          <dt>요금</dt><dd>30,430엔 현장 신용카드 · 면책·NOC·ETC 카드 포함</dd>
+          <dt>영업소</dt><dd>千歳市柏台南2-1-4 · <span class="mono">0123-45-8756</span> · 09:00–19:00</dd>
+          <dt>취소</dt><dd>11/26까지 무료 · 변경은 취소 후 재예약</dd>
+        </dl>
+      </div>
+      <div class="stub"><span class="k">타비라이 예약</span><span class="v">101865004</span></div>
+    </article>
+
+    <article class="pass">
+      <div class="main">
+        <h3>숙소 1 · 스스키노역 근처 호텔 2박 <span class="tag ok">예약 완료</span></h3>
+        <dl class="kv">
+          <dt>날짜</dt><dd>12/3 체크인 → 12/5 체크아웃</dd>
+          <dt>주차</dt><dd>기계식, 2박 1,800엔 · 입고 때 주차권을 프런트에 제출</dd>
+          <dt>차 높이</dt><dd>통로 1.98m · 178cm 이하 구간이면 OK</dd>
+        </dl>
+      </div>
+      <div class="stub"><span class="k">주차</span><span class="v">1,800엔</span></div>
+    </article>
+
+    <article class="pass">
+      <div class="main">
+        <h3>숙소 2 · 오타루 리트리트 구라무레 <span class="tag ok">결제 완료</span></h3>
+        <dl class="kv">
+          <dt>날짜</dt><dd>12/5 15:00 체크인 → 12/6 11:00 체크아웃</dd>
+          <dt>객실</dt><dd>개인 온천 딸린 화양실 메조네트, 성인 2명, 금연·트윈 요청</dd>
+          <dt>식사</dt><dd>석식·조식 포함 · 저녁 18:00/19:00, 아침 8:00/8:30/9:00 중 선택</dd>
+          <dt>주차</dt><dd>무료, 호텔 앞 좌우</dd>
+          <dt>현장 결제</dt><dd>입욕세 소액</dd>
+          <dt>취소</dt><dd>11/28 전까지 무료</dd>
+          <dt>연락</dt><dd><span class="mono">+81 134-51-5151</span></dd>
+        </dl>
+      </div>
+      <div class="stub"><span class="k">아고다 예약</span><span class="v">1790296362</span></div>
+    </article>
+
+    <article class="pass">
+      <div class="main">
+        <h3>통신·보험</h3>
+        <dl class="kv">
+          <dt>이심</dt><dd>도코모 로컬망, 하루 5GB 후 저속 무제한 · 구매 후 90일 내 개통</dd>
+          <dt>여행자보험</dt><dd>가입 완료</dd>
+        </dl>
+      </div>
+      <div class="stub"><span class="k">상태</span><span class="v">완료</span></div>
+    </article>
+  </div>
+</section>
+
+<section id="days">
+  <div class="sec-head"><h2>날짜별 동선</h2><span class="note">12월 초 일몰은 16시 전후</span></div>
+  <div class="days">
+    <div class="day">
+      <div class="d">12.03</div>
+      <div class="body">
+        <h3>도착 · 삿포로 시내</h3>
+        <ul class="stops">
+          <li><span class="t">12:45</span><span>신치토세 국제선 도착 → 입국심사</span></li>
+          <li><span class="t">13:30</span><span>렌터카 카운터 접수 → 셔틀로 영업소(약 15분) → 수속, 고속도로 패스 4일권 신청</span></li>
+          <li><span class="t">14:30</span><span>출발, 고속도로로 스스키노 호텔(약 1시간) → 주차</span></li>
+          <li><span class="t">저녁</span><span>걸어서 오도리 공원 화이트 일루미네이션, TV타워 → 스스키노 징기스칸·라멘</span></li>
+        </ul>
+        <p class="drive">운전 약 50km · 저녁엔 차를 두고 걸어 다니기</p>
+      </div>
+    </div>
+    <div class="day">
+      <div class="d">12.04</div>
+      <div class="body">
+        <h3>비에이 왕복</h3>
+        <ul class="stops">
+          <li><span class="t">08:00</span><span>호텔 출발 전 주유 · 아사히카와 방면 고속도로</span></li>
+          <li><span class="t">오전</span><span>패치워크 길, 켄과 메리 나무, 세븐스타 나무</span></li>
+          <li><span class="t">점심</span><span>비에이 시내 · 낮에 한 번 더 주유</span></li>
+          <li><span class="t">오후</span><span>크리스마스트리 나무 → 흰수염폭포</span></li>
+          <li><span class="t">16:30</span><span>청의 호수 조명 (주차 1,000엔)</span></li>
+          <li><span class="t">밤</span><span>약 3시간 걸려 삿포로 복귀</span></li>
+        </ul>
+        <p class="drive">운전 가장 긴 날 · 왕복 약 340km, 귀가는 밤 눈길</p>
+      </div>
+    </div>
+    <div class="day">
+      <div class="d">12.05</div>
+      <div class="body">
+        <h3>오타루 → 아사리가와 료칸</h3>
+        <ul class="stops">
+          <li><span class="t">09:00</span><span>체크아웃 후 오타루로(약 1시간) · 최대 요금 있는 주차장에 주차</span></li>
+          <li><span class="t">오전</span><span>오타루 운하 → 사카이마치 거리 → 오르골당 → 르타오</span></li>
+          <li><span class="t">점심</span><span>스시 또는 카이센동</span></li>
+          <li><span class="t">16:00</span><span>가스등 켜진 운하 야경</span></li>
+          <li><span class="t">17:00</span><span>텐구야마 로프웨이 야경 (겨울 왕복 2,000엔, 마지막 상행 19:48)</span></li>
+          <li><span class="t">18:30</span><span>료칸 체크인 · 19:00 가이세키 · 개인 온천</span></li>
+        </ul>
+        <p class="drive">운전 약 60km · 상점은 18시 전후에 닫음</p>
+      </div>
+    </div>
+    <div class="day">
+      <div class="d">12.06</div>
+      <div class="body">
+        <h3>귀국</h3>
+        <ul class="stops">
+          <li><span class="t">08:00</span><span>조식 · 아침 온천</span></li>
+          <li><span class="t">09:00</span><span>출발 (공항까지 약 90분)</span></li>
+          <li><span class="t">10:40</span><span>공항 근처 주유소에서 가득 주유, 영수증 챙기기</span></li>
+          <li><span class="t">11:00</span><span>타임즈 영업소 반납 → 셔틀로 국제선(약 10분)</span></li>
+          <li><span class="t">14:05</span><span>WE0532 출발</span></li>
+        </ul>
+        <p class="drive">반납 기준은 출발 90분 전(12:35)까지</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="todo">
+  <div class="sec-head"><h2>남은 할 일</h2><div class="progress" style="min-width:200px"><div class="bar"><span id="todo-bar"></span></div><span id="todo-count" class="mono">0/0</span></div></div>
+  <div class="grid2">
+    <div>
+      <span class="group-title">지금 바로</span>
+      <ul class="checks" data-list="todo">
+        <li><label><input type="checkbox" id="t-idp"><span class="txt"><b>국제운전면허증 발급</b><span class="sub">없으면 차를 못 빌림. 여자친구도 운전하면 같이</span></span></label></li>
+        <li><label><input type="checkbox" id="t-meal"><span class="txt"><b>료칸에 식사 시간 답장</b><span class="sub">저녁 19:00 · 아침 8:00</span></span></label></li>
+        <li><label><input type="checkbox" id="t-times"><span class="txt"><b>타임즈 문의 답장 확인</b><span class="sub">4WD 여부, 고속도로 패스, 셔틀, 반납 시간</span></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <span class="group-title">출발 1~2주 전</span>
+      <ul class="checks" data-list="todo">
+        <li><label><input type="checkbox" id="t-vjw"><span class="txt"><b>Visit Japan Web 등록</b><span class="sub">입국심사·세관 QR 미리 만들기</span></span></label></li>
+        <li><label><input type="checkbox" id="t-yen"><span class="txt"><b>엔화 현금 3만~5만 엔</b><span class="sub">1,000엔 지폐 넉넉히 · 부족하면 세븐일레븐 ATM</span></span></label></li>
+        <li><label><input type="checkbox" id="t-eat"><span class="txt"><b>꼭 갈 식당 예약</b><span class="sub">스스키노 징기스칸, 오타루 스시</span></span></label></li>
+        <li><label><input type="checkbox" id="t-event"><span class="txt"><b>행사 날짜 확인</b><span class="sub">청의 호수 조명, 오타루 푸른 운하</span></span></label></li>
+        <li><label><input type="checkbox" id="t-card"><span class="txt"><b>카드 해외결제 허용·비밀번호 확인</b><span class="sub">비자·마스터 2장 준비</span></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <span class="group-title">출발 직전</span>
+      <ul class="checks" data-list="todo">
+        <li><label><input type="checkbox" id="t-map"><span class="txt"><b>구글 지도 홋카이도 오프라인 저장</b><span class="sub">비에이 산길 대비</span></span></label></li>
+        <li><label><input type="checkbox" id="t-checkin"><span class="txt"><b>파라타항공 온라인 체크인</b></span></label></li>
+        <li><label><input type="checkbox" id="t-esim"><span class="txt"><b>이심 설치·듀얼심 설정</b><span class="sub">한국 번호는 데이터 로밍만 끄기</span></span></label></li>
+        <li><label><input type="checkbox" id="t-weather"><span class="txt"><b>도로·날씨 확인</b><span class="sub">비에이 가는 날 폭설 예보면 일정 조정</span></span></label></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="pack">
+  <div class="sec-head"><h2>준비물</h2><div class="progress" style="min-width:200px"><div class="bar"><span id="pack-bar"></span></div><span id="pack-count" class="mono">0/0</span></div></div>
+  <div class="grid2">
+    <div>
+      <span class="group-title">서류·결제</span>
+      <ul class="checks" data-list="pack">
+        <li><label><input type="checkbox" id="p-passport"><span class="txt"><b>여권</b><span class="sub">고속도로 패스 신청에도 필요</span></span></label></li>
+        <li><label><input type="checkbox" id="p-license"><span class="txt"><b>한국 운전면허증</b></span></label></li>
+        <li><label><input type="checkbox" id="p-idp"><span class="txt"><b>국제운전면허증</b></span></label></li>
+        <li><label><input type="checkbox" id="p-cards"><span class="txt"><b>신용카드 2장</b><span class="sub">렌터카는 본인 명의 카드로</span></span></label></li>
+        <li><label><input type="checkbox" id="p-cash"><span class="txt"><b>엔화 현금, 동전 지갑</b></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <span class="group-title">차량</span>
+      <ul class="checks" data-list="pack">
+        <li><label><input type="checkbox" id="p-mount"><span class="txt"><b>휴대폰 거치대</b><span class="sub">송풍구 클립형</span></span></label></li>
+        <li><label><input type="checkbox" id="p-charger"><span class="txt"><b>시가잭 USB 충전기·케이블</b></span></label></li>
+        <li><label><input type="checkbox" id="p-sunglass"><span class="txt"><b>선글라스</b><span class="sub">눈 반사광</span></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <span class="group-title">방한</span>
+      <ul class="checks" data-list="pack">
+        <li><label><input type="checkbox" id="p-shoes"><span class="txt"><b>미끄럼 방지 신발 또는 아이젠</b></span></label></li>
+        <li><label><input type="checkbox" id="p-coat"><span class="txt"><b>패딩, 장갑, 모자, 목도리</b></span></label></li>
+        <li><label><input type="checkbox" id="p-heat"><span class="txt"><b>핫팩</b></span></label></li>
+        <li><label><input type="checkbox" id="p-lip"><span class="txt"><b>립밤, 보습제</b></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <span class="group-title">기타</span>
+      <ul class="checks" data-list="pack">
+        <li><label><input type="checkbox" id="p-adapter"><span class="txt"><b>일본용 돼지코(A타입)</b></span></label></li>
+        <li><label><input type="checkbox" id="p-battery"><span class="txt"><b>보조배터리</b><span class="sub">추위에 배터리가 빨리 닳음 · 기내 반입</span></span></label></li>
+        <li><label><input type="checkbox" id="p-scale"><span class="txt"><b>휴대용 저울</b><span class="sub">위탁 1인 15kg</span></span></label></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="drive">
+  <div class="sec-head"><h2>현지 운전 메모</h2><span class="note">좌측통행 · 운전석 오른쪽</span></div>
+  <div class="tips">
+    <div class="tip">
+      <h3>톨게이트 (ETC)</h3>
+      <ul>
+        <li>보라색 <b>ETC</b> 차로로, 시속 20km 이하로 통과</li>
+        <li>출발 전 단말기에 ETC 카드가 꽂혔는지 확인</li>
+        <li>실수로 <b>一般</b> 차로에 들어가면 통행권을 뽑고, 출구에서 통행권과 ETC 카드를 직원에게</li>
+        <li>신용카드·현금으로 내면 패스가 적용 안 됨</li>
+        <li>차단기가 안 열리면 후진하지 말고 비상등 켜고 대기</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <h3>주유</h3>
+      <div class="fuel"><span style="background:#c62828">빨강 = 레귤러 ✓</span><span style="background:#b88a00">노랑 = 하이오크</span><span style="background:#2e7d32">초록 = 경유</span></div>
+      <ul>
+        <li><b>軽油(케유)</b>는 디젤. 휘발유 아님</li>
+        <li>풀서비스에서 "레규라 만탄"</li>
+        <li>시골 주유소는 일찍 닫음. 비에이 가는 날 두 번 주유</li>
+        <li>반납 전 가득 채우고 영수증 보관</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <h3>눈길·주차</h3>
+      <ul>
+        <li>4WD여도 브레이크·커브는 똑같이 미끄러움. 속도로 조절</li>
+        <li>밤에 주차하면 와이퍼 세워두기</li>
+        <li>호텔 기계식 주차: 一旦停止에서 멈춘 뒤 턴테이블, 직원 안내</li>
+        <li>코인 주차장은 '最大料金' 있는 곳, 나갈 때 칸 번호로 정산</li>
+        <li>술 한 잔이라도 마시면 운전 금지. 동승자도 처벌 대상</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <h3>렌터카 픽업·반납</h3>
+      <ul>
+        <li>차 받을 때 흠집을 직원과 같이 확인하고 사진 촬영</li>
+        <li>내비 한국어 설정, 목적지는 전화번호로</li>
+        <li>추가 운전자는 현장에서 등록</li>
+        <li>사고 나면 그 자리에서 경찰과 타임즈에 연락</li>
+        <li>영업소 근처 주유소 위치를 물어 지도에 저장</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="phrases">
+  <div class="sec-head"><h2>바로 쓰는 일본어</h2><span class="note">복사해서 보여줘도 돼요</span></div>
+  <div class="phrases">
+    <div class="phrase"><span class="jp">レギュラー満タンでお願いします</span><span class="ko">레귤러 가득 넣어주세요</span><button type="button" data-copy="レギュラー満タンでお願いします">복사</button></div>
+    <div class="phrase"><span class="jp">ETCカードでお願いします</span><span class="ko">ETC 카드로 할게요 (톨게이트 일반 차로)</span><button type="button" data-copy="ETCカードでお願いします">복사</button></div>
+    <div class="phrase"><span class="jp">北海道エクスプレスウェイパスを申し込みたいです</span><span class="ko">홋카이도 고속도로 패스를 신청하고 싶어요</span><button type="button" data-copy="北海道エクスプレスウェイパスを申し込みたいです">복사</button></div>
+    <div class="phrase"><span class="jp">駐車場は滞在中、出し入れ自由ですか?</span><span class="ko">숙박 중 주차 입출고가 자유인가요?</span><button type="button" data-copy="駐車場は滞在中、出し入れ自由ですか?">복사</button></div>
+    <div class="phrase"><span class="jp">この近くのガソリンスタンドはどこですか?</span><span class="ko">근처 주유소가 어디인가요?</span><button type="button" data-copy="この近くのガソリンスタンドはどこですか?">복사</button></div>
+  </div>
+</section>
+
+<section id="cost">
+  <div class="sec-head"><h2>렌터카 관련 비용</h2><span class="note">2인 · 숙박·항공 제외</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <tbody>
+        <tr><td>렌터카 (면책·NOC·ETC 카드 포함)</td><td class="n">30,430엔</td></tr>
+        <tr><td>홋카이도 고속도로 패스 4일권</td><td class="n">7,700엔</td></tr>
+        <tr><td>스스키노 호텔 주차 2박</td><td class="n">1,800엔</td></tr>
+        <tr><td>오타루 주차 · 청의 호수 주차</td><td class="n">약 2,000엔</td></tr>
+        <tr><td>기름값 (약 550km)</td><td class="n">5,000–8,000엔</td></tr>
+      </tbody>
+      <tfoot><tr><td>합계</td><td class="n">약 46,900–49,900엔</td></tr></tfoot>
+    </table>
+  </div>
+</section>
+
+<footer>마지막 정리 2026년 10월 27일 · 체크 표시는 이 기기의 브라우저에만 저장돼요.</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='sapporo-trip-checks';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
+  var boxes=document.querySelectorAll('.checks input[type=checkbox]');
+  function update(){
+    ['todo','pack'].forEach(function(name){
+      var list=document.querySelectorAll('[data-list="'+name+'"] input');
+      var done=0; list.forEach(function(b){if(b.checked)done++;});
+      document.getElementById(name+'-count').textContent=done+'/'+list.length;
+      document.getElementById(name+'-bar').style.width=(list.length?done/list.length*100:0)+'%';
+    });
+  }
+  boxes.forEach(function(b){
+    if(saved[b.id])b.checked=true;
+    b.addEventListener('change',function(){
+      saved[b.id]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      update();
+    });
+  });
+  update();
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var text=btn.getAttribute('data-copy');
+      var done=function(){btn.textContent='복사됨';setTimeout(function(){btn.textContent='복사';},1500);};
+      try{
+        navigator.clipboard.writeText(text).then(done,function(){selectFallback(btn);});
+      }catch(e){selectFallback(btn);}
+    });
+  });
+  function selectFallback(btn){
+    var jp=btn.parentNode.querySelector('.jp');
+    var r=document.createRange(); r.selectNodeContents(jp);
+    var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    btn.textContent='선택됨';
+  }
+})();
+</script>

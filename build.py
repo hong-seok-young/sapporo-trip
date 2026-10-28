@@ -578,11 +578,12 @@ G={
  '삼각시장 타키나미 식당':(4.2,3137,'ChIJj79C3KzhCl8RyrFy0-Xccxc'),'아지도코로 타케다':(4.1,2406,'ChIJ4VTM3azhCl8RM5ZhLXZvxsY'),'쿠키젠':(4.4,466,'ChIJq6oeh1HgCl8RmhDGKbEEVbY'),'이세즈시':(4.2,985,'ChIJWSYLgq3hCl8R_zAkzC8XrkA'),'마사즈시 젠안':(3.8,944,'ChIJE3yZmk3gCl8RFxH9jT4OSIQ'),'우오마사':(4.1,1693,'ChIJXckNlVLgCl8Ry123qNbPDes'),'나루토 본점':(4.1,6878,'ChIJq6padq3hCl8RdAJymA13dXs'),'케이엔':(4.0,1306,'ChIJbwg7D1PgCl8R_4iijlybylc'),'르타오 본점 카페':(4.3,3936,'ChIJA__BjVrgCl8R_mYZYGfWn3I'),'키타카로 오타루 본관':(4.3,1867,'ChIJb54BmlrgCl8RSSKykITg9MM'),
  '롯카테이 오타루운하점':(4.3,1768,'ChIJb54BmlrgCl8RBAlguOE736A'),'아마토 본점':(4.2,1002,'ChIJ_8qpoVPgCl8RdmmzFl-l6d8'),'쿠와타야 팡쥬':(4.0,187,'ChIJW4I-jE3gCl8RXARxhponx7Y'),'오타루 창고 No.1':(4.1,3891,'ChIJk-FOGk3gCl8RQ9Yv9HZnul4'),'홋카이도 라멘도조':(3.9,1730,'ChIJPbQYaGogdV8RaUxIu6A35jM'),'함타로':(3.9,1246,'ChIJXbSlZmogdV8R8PFXT1J8BYM'),'라비':(3.5,1269,'ChIJ3QbbWWogdV8RW0owURDPDSk'),'마츠오 징기스칸':(3.8,795,'ChIJcWIyYkAgdV8REge9mV-lxNg'),'르타오':(4.3,445,'ChIJAbARimogdV8RPJYzaBYCMLs'),'키노토야 · 로이즈':(4.3,1072,'ChIJcWIyYkAgdV8RUTJxFOOaGGI'),
  '데즈카수산 · 사케노마루가메':(4.0,63,'ChIJU_o4V2ogdV8RudWtDekMr90'),'밀크스탠드':(4.5,195,'ChIJVxQ9z3ghdV8RYUh34vRP3Ns'),'기타노하나 하야시':(4.5,348,'ChIJ_fDxY6UgdV8RdAXBYAofDZg'),'스시 미야카와':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'참고 · 홋카이도 3★':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'스스키노 프렌치 1★':(4.6,114,'ChIJiULtcIQpC18Rb7FjRDdL7Xk'),'비블레 · 아스페르주':(4.3,716,'ChIJbZYV9mnEDF8R9ZvyQbDNr6w'),'호텔 조식 · 편의점':(3.9,5425,'ChIJrdWqsIUpC18Ret8lNRJkB3U'),
+ '시베츠 징기스칸':(4.8,1254,'ChIJW9uHLwApC18Rk6WYmfNykjU'),'아르코':(4.6,577,'ChIJHUPnR4UpC18RXtmAbt1p2WQ'),'시로쿠마 본점':(4.1,705,'ChIJxaD-i4YpC18RkcPDS3Ir6Jk'),'히게노우시 본점':(4.1,930,'ChIJZ6HX7oQpC18RtN4bBmEt2Lg'),'마츠오 삿포로역앞점':(4.1,1317,'ChIJx49AJZ4pC18Rb3GBj1k8cpk'),'요시츠네':(4.1,411,'ChIJixUM9wopC18Rlj0US97frrc'),
 }
 
 # 날짜 → 끼니 → (이름, 일본어, 종류, 미슐랭, 지도검색어, 전화, 시간·휴무, [(메뉴, 사진키[:번호])...], 팁, 휴무표시)
 FOOD=[
- ('삿포로','12/3 목 · 15시 호텔 도착 → 늦은 점심 → 디저트 → 늦은 저녁 → 시메파르페 · 전부 호텔(南4西5) 도보권',[
+ ('삿포로','12/3 목 · 15시 호텔 도착 → 늦은 점심 → 디저트 → 양고기 or 초밥 저녁 → 시메파르페 · 전부 호텔(南4西5) 도보권',[
   ('🍜 늦은 점심 · 15시 전후',[
    ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','+81 11-233-2911','11:30–21:00 · 무휴',[('파리파리 치킨 수프카레 1,500엔','soup_curry'),('라벤더 포크 꼬치 카레','soup_curry:1')],'호텔 옆 블록 · 15시에도 열려 있음 · 체크인 전 바로 · 번호표 대기 있을 수 있음',''),
    ('라멘 요코초','元祖さっぽろラーメン横丁','미소라멘 17곳 골목','','元祖さっぽろラーメン横丁','','가게마다 다름 · 대부분 11:00–03:00',[('골목 분위기','ramen_street'),('白樺山荘 미소라멘 1천엔','miso_ramen'),('華龍 콘버터 미소','miso_ramen:1')],'南5西3 · 호텔 도보 5분 · 줄 짧은 집으로 · 현금만 받는 집 있음',''),
@@ -595,8 +596,15 @@ FOOD=[
    ('키노토야 오도리공원점','きのとや 大通公園店','치즈타르트 · 소프트','','きのとや 大通公園店','+81 11-233-6161','10:00–20:00',[('갓 구운 치즈타르트 297엔','cheese_tart'),('홋카이도 우유 소프트','soft_serve'),('베리 파르페','parfait')],'오도리 지하(北洋大通センター 1F) · 일루미네이션 보기 전 · 자리 금방 참',''),
    ('유키지루시 파를러 본점','雪印パーラー 本店','파르페 · 아이스크림','','雪印パーラー 本店 札幌','+81 11-251-7530','10:00–19:00',[('스노우 로열 아이스크림','ice_cream'),('대왕 파르페','parfait:2'),('멜론 아이스','soft_serve')],'北2西3 · 1961년부터 · 레트로 · 포장 아이스만 사도 됨',''),
   ]),
+  ('🐑 양고기 · 징기스칸 (구글 평점순)',[
+   ('시베츠 징기스칸','士別バーベキュー','징기스칸 · 홋카이도 서포크 양','','士別バーベキュー 札幌 すすきの','+81 11-522-8429','17:00–23:30 · 무휴',[('시베츠 서포크 램 세트(국산+호주산 비교)','jingisukan'),('램 다리살·숄더','jingisukan:1'),('카레라이스·마늘소금','jingisukan:2')],'南5西5 모모야빌 9F · 호텔 바로 옆 · 구글 4.8(1,254) 삿포로 양고기 1위 · 냄새 안 밸 정도로 환기 좋음 · 직원 영어 OK · 예약 권장 · 가격대 높음',''),
+   ('아르코','ジンギスカン アルコ','징기스칸 (골목 노포)','','ジンギスカン アルコ 札幌 南3条西7','+81 11-221-7923','17:00–21:00 · 월 휴무 → 목 OK',[('징기스칸 1접시 1천엔 전후','jingisukan:1'),('램 라비올리','hamburg'),('채소·디핑소스','jingisukan')],'南3西7 골목 · 6석 · 부부 운영 · 구글 4.6(577) · 예약 거의 필수 · 도보 12분 · 연기 심함',''),
+   ('다루마 본점','成吉思汗だるま 本店','징기스칸','','成吉思汗だるま 本店 札幌 南5条西4','+81 11-552-6013','17:00–05:00 · 연중무휴 · 원조',[('성길사한(양고기) 1,280엔','jingisukan'),('상육·히레 1,680엔','jingisukan:1'),('공기밥 220 · 김치 385','jingisukan:2')],'예약 불가 · 2인 5~6천엔 · 17시 줄 시작, 1시간 대기 흔함 → 1분 거리 5.5점·4.4점·6.4점 · 상육·히레 2시간 내 품절 · 냄새 밸 각오',''),
+   ('삿포로 비어엔','サッポロビール園','징기스칸 · 생맥주','','サッポロビール園 ジンギスカン','+81 570-098-346','11:30–21:00 · 무휴',[('징기스칸 무한리필 + 맥주 무한 (2시간)','jingisukan:2'),('빨간 벽돌 홀 분위기','beer_garden'),('버터 감자','gratin')],'차 10분 · 당일 접수도 가능(15분 내 도착) · 구글 4.2(8,641) · 운전자는 맥주 ✗',''),
+   ('시로쿠마 본점','札幌成吉思汗 しろくま 本店','징기스칸 (전부 양고기)','','札幌成吉思汗 しろくま 本店','+81 50-5485-5001','18:00–01:30 (목·금) · 무휴',[('생 양고기 각 부위','jingisukan'),('양 소시지','jingisukan:2')],'南6西3 · 카운터 바 · 구글 4.1(705) · 예약 어려움 · 늦게까지',''),
+   ('히게노우시 본점','北海道ラムジンギスカン ひげのうし 本店','징기스칸 (부위별)','','ひげのうし 本店 札幌','+81 11-281-2980','17:00–23:30 · 무휴',[('램 슬라이스·스테이크·립','jingisukan:1'),('호르몬(양 내장)','jingisukan')],'南3西5 · 넓고 환기 좋음 · 구글 4.1(930) · 전화 예약 쉬움 · 도보 8분',''),
+  ]),
   ('🍖 늦은 저녁 · 20시~',[
-   ('다루마 본점','成吉思汗だるま 本店','징기스칸','','成吉思汗だるま 本店 札幌 南5条西4','+81 11-552-6013','17:00–05:00 · 연중무휴',[('성길사한(양고기) 1,280엔','jingisukan'),('상육·히레 1,680엔','jingisukan:1'),('공기밥 220 · 김치 385','jingisukan:2')],'예약 불가 · 2인 5~6천엔 · 17시 줄 시작, 1시간 대기 흔함 → 1분 거리 5.5점·4.4점·6.4점 · 상육·히레 2시간 내 품절 · 냄새 밸 각오',''),
    ('스시젠 스스키노점','すし善 すすきの店','초밥','★★','すし善 すすきの店 札幌','','~자정 · 일 휴무 → 목 OK',[('오마카세 니기리 1.3만엔~','nigiri:4'),('우니','uni:1'),('보탄새우·게','crab')],'도보권 미슐랭 2★ · 코스 13,000엔부터 · 예약 권장',''),
    ('타쿠즈시','田久鮓','초밥','★','田久鮓 札幌 すすきの','+81 11-211-1206','17:30–22:00 · 부정기',[('오마카세 1.5~2만엔','nigiri:5'),('연어 사시미','chirashi')],'南3西3 G DINING 6F · 타베로그 선결제 예약 · 셰프 1명 운영',''),
    ('스시킨','薄野 鮨金','초밥','★','薄野 鮨金 札幌','+81 11-251-9521','18:00–22:00 · 수 휴무 → 목 OK',[('오마카세 2~3만엔','nigiri:7'),('참치','nigiri:3'),('우니','uni')],'南4西4 · 전화 예약 · 니기리 중심 · 영어 가능',''),
@@ -1086,17 +1094,18 @@ JS = r'''
   /* 메인 탭 · 서브 탭 */
   var VIEWS=['day','book','drive','check','more'],seg=$('#seg'),cur=ls.get('sg-view')||'day',subs={};
   try{subs=JSON.parse(ls.get('sg-subs')||'{}')||{}}catch(e){}
+  var restoring=false;function navPush(){if(restoring)return;try{history.pushState({sg:'nav',v:cur,s:subs[cur]||null,d:curDay,a:ls.get('sg-food')||0},'')}catch(e){}}
   function showView(id){cur=id;ls.set('sg-view',id);
     $$('.bn button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.v===id?'true':'false')});
     VIEWS.forEach(function(v){$('#v-'+v).hidden=v!==id});
     var ss=$$('#v-'+id+' .sub');seg.innerHTML='';
     if(ss.length>1){var want=subs[id]||ss[0].dataset.sub;ss.forEach(function(s){var b=document.createElement('button');b.textContent=s.dataset.label;b.dataset.sub=s.dataset.sub;b.setAttribute('aria-selected',s.dataset.sub===want?'true':'false');b.addEventListener('click',function(){showSub(id,s.dataset.sub)});seg.appendChild(b)});showSub(id,want,true)}
-    window.scrollTo(0,0);if(typeof snowSet==='function')snowSet();if(id==='day'&&typeof reveal==='function')reveal()}
+    window.scrollTo(0,0);if(typeof snowSet==='function')snowSet();if(id==='day'&&typeof reveal==='function')reveal();navPush()}
   function showSub(id,sub,quiet){subs[id]=sub;ls.set('sg-subs',JSON.stringify(subs));
     $$('#v-'+id+' .sub').forEach(function(s){s.hidden=s.dataset.sub!==sub});
     $$('#v-'+id+' .sub:not([hidden]) .ring .fg').forEach(function(r){r.classList.remove('go');void r.getBoundingClientRect();r.classList.add('go')});
     $$('#seg button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.sub===sub?'true':'false')});
-    if(!quiet)window.scrollTo(0,0)}
+    if(!quiet){window.scrollTo(0,0);navPush()}}
   $$('.bn button').forEach(function(b){b.addEventListener('click',function(){showView(b.dataset.v)})});
 
   /* 일정 · 히어로 · 날짜 */
@@ -1108,7 +1117,7 @@ JS = r'''
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
     $('#hero').dataset.f=d.f;$('#hero').dataset.cap=d.title;
     var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
-    markNext();reveal()}
+    markNext();reveal();navPush()}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
   function reveal(){var lis=$$('.tl:not([hidden]) li:not(.now)');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
     if(!io||rm){lis.forEach(function(l){l.classList.add('in')});return}
@@ -1153,15 +1162,16 @@ JS = r'''
     var kv=el('div','kv2');[['🕐',d.ht],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
     var ta=el('div','ta');var a=el('a','map','구글 지도 열기');a.href=d.q;a.target='_blank';a.rel='noopener';ta.appendChild(a);if(d.tel){var tb=el('button','tel',d.tel);tb.addEventListener('click',function(){cp(d.tel,'전화번호')});ta.appendChild(tb)}shB.appendChild(ta);
     if(first){var cr=el('div','cr');cr.textContent='사진은 메뉴 참고용 · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);shB.appendChild(cr)}
-    sheet.hidden=false;document.body.style.overflow='hidden';buzz(6)}
-  function closeFood(){sheet.hidden=true;document.body.style.overflow=''}
+    sheet.hidden=false;document.body.style.overflow='hidden';buzz(6);modalPush()}
+  function _closeFood(){sheet.hidden=true;document.body.style.overflow=''}
+  function closeFood(){if(sheet.hidden)return;if(history.state&&history.state.sg==='modal'){history.back()}else{_closeFood()}}
   $('#sh-bg').addEventListener('click',closeFood);
   $$('.fc').forEach(function(b){b.addEventListener('click',function(){openFood(+b.dataset.i)})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFood()});
   /* 맛집 지역 */
-  function foodArea(i){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i)}
+  function foodArea(i,quiet){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i);if(!quiet)navPush()}
   $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
-  foodArea(tripDay?tripDay-1:(ls.get('sg-food')||0));
+  foodArea(tripDay?tripDay-1:(ls.get('sg-food')||0),true);
   /* 체크리스트 */
   var saved={};try{saved=JSON.parse(ls.get('sg-checks')||'{}')||{}}catch(e){}
   function prog(){['todo','pack'].forEach(function(n){var l=$$('[data-l="'+n+'"] input'),c=0;l.forEach(function(b){if(b.checked)c++});$('#'+n+'-n').textContent=c+'/'+l.length;$('#'+n+'-ring').style.strokeDashoffset=97.4*(1-(l.length?c/l.length:0));var lab=$('#'+n+'-n').nextElementSibling;if(lab)lab.textContent=(c===l.length&&l.length)?(n==='todo'?'할 일 끝! 🎉':'짐 다 쌌다! 🎒✨'):(n==='todo'?'할 일':'짐')})}
@@ -1181,8 +1191,10 @@ JS = r'''
     lbc.innerHTML='';var t=document.createElement('div');t.textContent=cap;lbc.appendChild(t);if(!src){var a=document.createElement('a');a.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(f.split('/').slice(2).join('/'));a.target='_blank';a.rel='noopener';a.textContent='사진 · Wikimedia Commons';lbc.appendChild(a)}
     lbi.onload=function(){lbs.textContent='';lbi.style.display=''};
     lbi.onerror=function(){i++;if(i<ws.length){lbi.src=wurl(f,ws[i])}else{lbi.style.display='none';lbs.textContent='사진을 불러올 수 없음 (인터넷 필요)'}};
-    lbi.src=src||wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden'}
-  function closePh(){lb.classList.remove('on');lbi.removeAttribute('src');document.body.style.overflow=''}
+    lbi.src=src||wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden';modalPush()}
+  function _closePh(){lb.classList.remove('on');lbi.removeAttribute('src');document.body.style.overflow=''}
+  function closePh(){if(!lb.classList.contains('on'))return;if(history.state&&history.state.sg==='modal'){history.back()}else{_closePh()}}
+  function modalPush(){try{history.pushState({sg:'modal'},'')}catch(e){}}
   $$('[data-f]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh(b.dataset.f,b.dataset.cap)})});
   $$('[data-src]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh('',b.dataset.cap,b.dataset.src)})});
   $('#hero').addEventListener('click',function(){openPh($('#hero').dataset.f,$('#hero').dataset.cap)});
@@ -1223,8 +1235,16 @@ JS = r'''
   var heroVis=true;if('IntersectionObserver' in window){new IntersectionObserver(function(es){heroVis=es[0].isIntersecting;snowSet()}).observe(cv)}
   document.addEventListener('visibilitychange',snowSet);window.addEventListener('resize',function(){if(cx){snowSize()}});
   var _showView=showView;
-  /* 시작 뷰 */
-  showView(VIEWS.indexOf(cur)>=0?cur:'day');snowSet();
+  /* 시작 뷰 + 뒤로가기 */
+  restoring=true;showView(VIEWS.indexOf(cur)>=0?cur:'day');restoring=false;snowSet();
+  try{history.replaceState({sg:'root'},'');history.pushState({sg:'nav',v:cur,s:subs[cur]||null,d:curDay,a:ls.get('sg-food')||0},'')}catch(e){}
+  var exitArmed=false,exitT;
+  window.addEventListener('popstate',function(e){var st=e.state||{};
+    if(lb.classList.contains('on')){_closePh();return}
+    if(!sheet.hidden){_closeFood();return}
+    if(st.sg==='nav'){restoring=true;try{if(st.v&&st.v!==cur)showView(st.v);if(st.s&&subs[st.v]!==st.s)showSub(st.v,st.s,true);if(st.v==='day'&&st.d&&st.d!==curDay)setDay(st.d);if(st.a!=null)foodArea(st.a,true)}catch(x){}restoring=false;return}
+    if(st.sg==='root'){if(exitArmed){history.back();return}exitArmed=true;flash('한 번 더 누르면 종료',1800);clearTimeout(exitT);exitT=setTimeout(function(){exitArmed=false},2000);try{history.pushState({sg:'nav',v:cur,s:subs[cur]||null,d:curDay,a:ls.get('sg-food')||0},'')}catch(x){}}
+  });
   if(!cnt())setTimeout(function(){if(!cnt())flash('더보기 › 설정에서 내 정보 입력 → 예약번호·비밀번호 표시',3200)},800);
 
 

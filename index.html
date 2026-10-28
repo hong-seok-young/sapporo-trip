@@ -35,8 +35,9 @@ b{font-weight:700}
 /* 상단 */
 .hd{position:sticky;top:0;z-index:20;background:var(--night);color:#fff;padding-top:env(safe-area-inset-top,0px)}
 .hd-in{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px}
-.brand{font-family:var(--d);font-size:22px;letter-spacing:.02em;line-height:1}
-.brand small{font-family:var(--f);font-size:12px;opacity:.7;margin-left:8px;letter-spacing:0}
+.brand{display:flex;flex-direction:column;min-width:0}
+.brand b{font-family:var(--d);font-weight:400;font-size:19px;letter-spacing:.02em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{font-family:var(--f);font-size:11px;opacity:.7;margin-top:2px;letter-spacing:.02em}
 .dday{font-family:var(--d);font-size:20px;color:var(--lamp);line-height:1}
 .off{font-size:11px;font-weight:700;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:3px 9px;margin-left:8px}
 .hd-in .dday+.off{margin-left:8px}
@@ -279,7 +280,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 </style>
 </head>
 <body>
-<header class="hd"><div class="hd-in"><div class="brand">삿포로 <small>12.03 – 12.06 · 2인</small></div><div class="dday" id="dday"></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06</small></div><div class="dday" id="dday"></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 <section class="view" id="v-day" hidden>
 <div class="hero"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>

@@ -1,445 +1,736 @@
-<title>삿포로 겨울 드라이브</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14212e">
+<title>삿포로 가이드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: one reading column; a boarding-pass style strip for bookings, a road-map timeline for days, tickable lists for prep */
 :root{
-  --bg:#f3f6f9; --surface:#ffffff; --ink:#14212e; --muted:#5b6b7a; --line:#d7e0e8;
-  --ice:#1f6f9c; --ice-soft:#e3eff6; --signal:#c2571c; --signal-soft:#fbeee6; --ok:#2e7d4f;
-  --display:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#f3f6f9; --card:#fff; --ink:#14212e; --mut:#5b6b7a; --line:#dde5ec;
+  --ice:#1f6f9c; --ice2:#e3eff6; --warn:#c2571c; --warn2:#fbeee6; --ok:#2e7d4f;
+  --bar:#14212e; --bar-ink:#e6edf3;
+  --f:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --m:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0e161e; --surface:#16212c; --ink:#e6edf3; --muted:#9aabba; --line:#27394a;
-  --ice:#6fb6df; --ice-soft:#1a3242; --signal:#f0915a; --signal-soft:#3a2418; --ok:#6cc792; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0e161e; --surface:#16212c; --ink:#e6edf3; --muted:#9aabba; --line:#27394a;
-  --ice:#6fb6df; --ice-soft:#1a3242; --signal:#f0915a; --signal-soft:#3a2418; --ok:#6cc792; color-scheme:dark}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65}
-.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:flex;flex-direction:column;gap:44px}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.3}
-h1{font-size:clamp(28px,6vw,40px);font-weight:700;letter-spacing:-.01em}
-h2{font-size:21px;font-weight:700}
-h3{font-size:16px;font-weight:700}
-p{margin:0}
-.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
-header{display:flex;flex-direction:column;gap:12px}
-.route{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font-family:var(--mono);font-size:15px;color:var(--muted)}
-.route b{color:var(--ink);font-weight:600}
-.lede{color:var(--muted);max-width:60ch}
-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
-nav a{flex:0 0 auto;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;font-size:13px;background:var(--surface)}
-nav a:hover,nav a:focus-visible{border-color:var(--ice);color:var(--ice);outline:none}
-section{display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
-.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px}
-.sec-head .note{font-size:13px;color:var(--muted)}
-
-/* booking passes */
-.passes{display:grid;gap:12px}
-.pass{display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.pass .main{padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.pass .stub{padding:14px 16px;border-left:2px dashed var(--line);display:flex;flex-direction:column;justify-content:center;gap:2px;text-align:right;min-width:120px;background:var(--ice-soft)}
-.pass .stub .k{font-size:11px;color:var(--muted);letter-spacing:.06em}
-.pass .stub .v{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ice);word-break:break-all}
-.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;font-size:14px}
-.kv dt{color:var(--muted)} .kv dd{margin:0}
-.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--ice-soft);color:var(--ice);font-weight:500}
-.tag.warn{background:var(--signal-soft);color:var(--signal)}
-.tag.ok{background:transparent;border:1px solid var(--ok);color:var(--ok)}
-@media (max-width:520px){.pass{grid-template-columns:1fr}.pass .stub{border-left:0;border-top:2px dashed var(--line);text-align:left;flex-direction:row;flex-wrap:wrap;gap:4px 16px;align-items:baseline}}
-
-/* timeline */
-.days{display:flex;flex-direction:column;gap:0}
-.day{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding-bottom:22px;position:relative}
-.day::before{content:"";position:absolute;left:31px;top:30px;bottom:0;width:2px;background:var(--line)}
-.day:last-child::before{display:none}
-.day .d{width:64px;height:30px;border-radius:6px;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:600;position:relative;z-index:1}
-.day .body{display:flex;flex-direction:column;gap:8px;min-width:0}
-.day .meta{font-size:13px;color:var(--muted)}
-.stops{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.stops li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;font-size:14px}
-.stops .t{font-family:var(--mono);color:var(--ice);font-size:13px;padding-top:1px}
-.drive{font-size:13px;color:var(--muted);border-left:3px solid var(--ice);padding-left:10px}
-
-/* checklists */
-.progress{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
-.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
-.bar span{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
-.checks{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-.checks li{border-top:1px solid var(--line)} .checks li:first-child{border-top:0}
-.checks label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:11px 14px;cursor:pointer;align-items:start}
-.checks input{width:18px;height:18px;margin:3px 0 0;accent-color:var(--ok)}
-.checks .txt{display:flex;flex-direction:column;gap:2px;min-width:0}
-.checks .sub{font-size:13px;color:var(--muted)}
-.checks input:checked + .txt > b{text-decoration:line-through;color:var(--muted);font-weight:500}
-.checks b{font-weight:500}
-.group-title{font-size:13px;font-weight:700;color:var(--muted);margin-top:4px}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;align-items:start}
-.grid2 > div{display:flex;flex-direction:column;gap:8px;min-width:0}
-
-/* tips */
-.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
-.tip{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.tip ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px}
-.fuel{display:flex;gap:6px;flex-wrap:wrap;font-size:13px}
-.fuel span{padding:2px 8px;border-radius:4px;font-weight:600;color:#fff}
-
-/* phrases */
-.phrases{display:flex;flex-direction:column;gap:10px}
-.phrase{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
-.phrase .jp{font-size:17px;font-weight:500}
-.phrase .ko{font-size:13px;color:var(--muted);grid-column:1}
-.phrase button{grid-row:1/span 2;grid-column:2}
-button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:6px;cursor:pointer}
-button:hover,button:focus-visible{border-color:var(--ice);color:var(--ice);outline:none}
-
-/* cost table */
-.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
-th,td{padding:10px 14px;border-top:1px solid var(--line);text-align:left}
-tr:first-child th,tr:first-child td{border-top:0}
-td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
-tfoot td{font-weight:700;border-top:2px solid var(--ink)}
-footer{font-size:12px;color:var(--muted)}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0e161e; --card:#16212c; --ink:#e6edf3; --mut:#9aabba; --line:#27394a;
+  --ice:#6fb6df; --ice2:#1a3242; --warn:#f0915a; --warn2:#3a2418; --ok:#6cc792;
+  --bar:#0a1117; --bar-ink:#e6edf3; color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.5}
+.top{position:sticky;top:0;z-index:5;background:var(--bar);color:var(--bar-ink);padding:calc(env(safe-area-inset-top,0px) + 10px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px))}
+.top .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.top h1{margin:0;font-size:17px;font-weight:700}
+.top .d{font-family:var(--m);font-size:12px;opacity:.75}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:8px 0 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;font:inherit;font-size:14px;font-weight:500;color:var(--bar-ink);opacity:.65;background:none;border:0;border-bottom:3px solid transparent;padding:6px 10px 9px;cursor:pointer}
+.tabs button[aria-selected="true"]{opacity:1;border-bottom-color:var(--ice)}
+main{max-width:640px;margin:0 auto;padding:14px max(12px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.panel{display:flex;flex-direction:column;gap:12px}
+.panel[hidden]{display:none}
+h2{margin:6px 2px 0;font-size:13px;color:var(--mut);font-weight:700;letter-spacing:.04em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.card > h3{margin:0;padding:12px 14px 4px;font-size:16px}
+.card .sub{padding:0 14px 8px;font-size:13px;color:var(--mut)}
+.row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:9px 14px;border-top:1px solid var(--line);font-size:14px}
+.row:first-of-type{border-top:0}
+.card h3 + .row,.card .sub + .row{border-top:1px solid var(--line)}
+.row .k{color:var(--mut);font-size:13px}
+.row .v{min-width:0;overflow-wrap:anywhere}
+.mono{font-family:var(--m);font-variant-numeric:tabular-nums}
+.big{font-family:var(--m);font-size:18px;font-weight:600;color:var(--ice)}
+.copyable{cursor:pointer;border-bottom:1px dashed var(--ice);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.daysel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.daysel button{font:inherit;padding:8px 0;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.daysel button b{font-family:var(--m);font-size:15px}
+.daysel button span{font-size:11px;color:var(--mut)}
+.daysel button[aria-pressed="true"]{background:var(--ice);border-color:var(--ice);color:#fff}
+.daysel button[aria-pressed="true"] span{color:#fff}
+.tl{list-style:none;margin:0;padding:4px 0}
+.tl li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;padding:8px 14px;border-top:1px solid var(--line);font-size:14px}
+.tl li:first-child{border-top:0}
+.tl .h{font-family:var(--m);font-size:13px;color:var(--ice);padding-top:1px}
+.tl .x{font-size:12px;color:var(--mut);display:block}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:var(--warn2);color:var(--warn);font-weight:700;vertical-align:1px}
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:9px 14px;border-top:1px solid var(--line);font-size:14px}
+.list li:first-child{border-top:0}
+.list .x{display:block;font-size:12px;color:var(--mut)}
+.checks{list-style:none;margin:0;padding:0}
+.checks li{border-top:1px solid var(--line)}
+.checks li:first-child{border-top:0}
+.checks label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;padding:11px 14px;cursor:pointer;min-height:44px}
+.checks input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--ok)}
+.checks .x{display:block;font-size:12px;color:var(--mut)}
+.checks input:checked + span{color:var(--mut);text-decoration:line-through}
+.prog{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);padding:0 2px}
+.prog .b{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog .b i{display:block;height:100%;width:0;background:var(--ok)}
+.fuel{display:flex;gap:6px;padding:10px 14px 4px;flex-wrap:wrap}
+.fuel span{font-size:13px;font-weight:700;padding:3px 9px;border-radius:6px;color:#fff}
+.jp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.jp:first-of-type{border-top:0}
+.jp b{font-size:17px;font-weight:500}
+.jp span{font-size:12px;color:var(--mut)}
+.jp button,.mailbtn{grid-row:1/span 2;grid-column:2;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer}
+.warnbox{background:var(--warn2);border-color:var(--warn)}
+.warnbox > h3{color:var(--warn)}
+pre{margin:0;padding:12px 14px;white-space:pre-wrap;font-family:var(--f);font-size:13px;border-top:1px solid var(--line)}
+.mailhead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px}
+.mailhead h3{margin:0;font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:14px}
+th:last-child,td:last-child{padding-right:14px}
+thead th{border-top:0;color:var(--mut);font-weight:500}
+tr.pick td{background:var(--ice2);font-weight:700}
+.scroll{overflow-x:auto}
+.mono.copyable{white-space:nowrap}
+.sv.empty{color:var(--mut);border-bottom:1px dashed var(--mut);cursor:pointer}
+.set input,.set textarea{font:inherit;font-size:14px;width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.set textarea{font-family:var(--m);font-size:12px;resize:vertical}
+.set .row{align-items:center}
+.set .pad{padding:10px 14px;display:grid;gap:8px;border-top:1px solid var(--line)}
+.set .btns{display:flex;gap:8px;flex-wrap:wrap}
+.set .btns button{font:inherit;font-size:14px;padding:8px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+.set .btns button.pri{background:var(--ice);color:#fff;border-color:var(--ice)}
+.set .st{font-size:13px;color:var(--mut)}
+.ph{font:inherit;font-size:13px;line-height:1;padding:2px 5px;margin-left:3px;border:1px solid var(--line);background:var(--card);border-radius:6px;cursor:pointer;vertical-align:1px}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.lb.on{display:flex}
+.lb figure{margin:0;max-width:100%;max-height:100%;display:flex;flex-direction:column;align-items:center;gap:8px}
+.lb img{max-width:100%;max-height:72vh;border-radius:10px;background:#111}
+.lb figcaption{color:#fff;font-size:14px;text-align:center}
+.lb figcaption a{color:#9cd;font-size:12px}
+.lb .x{position:absolute;top:14px;right:14px;font:inherit;font-size:22px;color:#fff;background:none;border:0;cursor:pointer;padding:6px 10px}
+.lb .st{color:#ccc;font-size:13px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;color:#fff;vertical-align:1px}
+.tag.staff{background:#2e7d4f}
+.tag.self{background:#1f6f9c}
+@media (prefers-color-scheme:dark){.tag.staff{background:#3f9a66}.tag.self{background:#2f86b8}}
+.lk{color:var(--ice);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.lk::after{content:" ↗";font-size:.8em}
+.mp{color:var(--ice);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.mp::after{content:" ↗";font-size:.8em}
+.ab{display:inline-flex;gap:3px;margin:0 3px 0 4px;vertical-align:1px}
+.ab button{font:600 11px/1.3 var(--m);padding:2px 6px;border:1px solid var(--line);background:var(--bg);color:var(--mut);border-radius:6px;cursor:pointer}
+.ab button:active{background:var(--ice2);color:var(--ice)}
+table.tt td{text-align:left;font-family:var(--m);font-size:13px;padding:7px 6px}
+table.tt td:first-child{color:var(--mut);font-weight:600;width:40px}
+table.tt tr:first-child td{border-top:0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
 :focus-visible{outline:2px solid var(--ice);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
-<div class="wrap">
-<header>
-  <span class="eyebrow">Hokkaido · Winter drive · 2 people</span>
-  <h1>삿포로 겨울 드라이브</h1>
-  <div class="route"><b>ICN</b> → <b>CTS</b> 12.03 목 · 삿포로 · 비에이 · 오타루 · 아사리가와 → <b>CTS</b> 12.06 일</div>
-  <p class="lede">렌터카로 도는 3박 4일. 예약 현황, 날짜별 동선, 남은 할 일과 준비물, 현지 운전 메모를 한곳에 모았어요. 체크 표시는 이 기기에 저장돼요.</p>
-  <nav aria-label="바로가기">
-    <a href="#bookings">예약</a><a href="#days">일정</a><a href="#todo">할 일</a><a href="#pack">준비물</a><a href="#drive">운전 메모</a><a href="#phrases">일본어</a><a href="#cost">비용</a>
-  </nav>
-</header>
-
-<section id="bookings">
-  <div class="sec-head"><h2>예약 현황</h2><span class="note">취소 기한은 날짜가 빠른 순으로 렌터카 → 료칸</span></div>
-  <div class="passes">
-    <article class="pass">
-      <div class="main">
-        <h3>항공 · 파라타항공 <span class="tag ok">발권 완료</span></h3>
-        <dl class="kv">
-          <dt>가는 편</dt><dd><span class="mono">WE0531</span> · 12/3 10:05 인천 T1 → 12:45 신치토세 국제선</dd>
-          <dt>오는 편</dt><dd><span class="mono">WE0532</span> · 12/6 14:05 신치토세 → 17:30 인천</dd>
-          <dt>수하물</dt><dd>위탁 1인 15kg</dd>
-        </dl>
-      </div>
-      <div class="stub"><span class="k">항공사 예약</span><span class="v">J2AMM7</span><span class="k">마이리얼트립</span><span class="v">AIR1131114</span></div>
-    </article>
-
-    <article class="pass">
-      <div class="main">
-        <h3>렌터카 · 타임즈 신치토세 공항점 <span class="tag ok">예약 완료</span></h3>
-        <dl class="kv">
-          <dt>차량</dt><dd>CX-30 또는 야리스 크로스급, 금연, 스터드리스</dd>
-          <dt>픽업</dt><dd>12/3 14:00 · 공항 송영(WE0531)</dd>
-          <dt>반납</dt><dd>12/6 12:00 예약 · <b>실제 목표 11:00</b> · 공항 송영(WE0532)</dd>
-          <dt>요금</dt><dd>30,430엔 현장 신용카드 · 면책·NOC·ETC 카드 포함</dd>
-          <dt>영업소</dt><dd>千歳市柏台南2-1-4 · <span class="mono">0123-45-8756</span> · 09:00–19:00</dd>
-          <dt>취소</dt><dd>11/26까지 무료 · 변경은 취소 후 재예약</dd>
-        </dl>
-      </div>
-      <div class="stub"><span class="k">타비라이 예약</span><span class="v">101865004</span></div>
-    </article>
-
-    <article class="pass">
-      <div class="main">
-        <h3>숙소 1 · 스스키노역 근처 호텔 2박 <span class="tag ok">예약 완료</span></h3>
-        <dl class="kv">
-          <dt>날짜</dt><dd>12/3 체크인 → 12/5 체크아웃</dd>
-          <dt>주차</dt><dd>기계식, 2박 1,800엔 · 입고 때 주차권을 프런트에 제출</dd>
-          <dt>차 높이</dt><dd>통로 1.98m · 178cm 이하 구간이면 OK</dd>
-        </dl>
-      </div>
-      <div class="stub"><span class="k">주차</span><span class="v">1,800엔</span></div>
-    </article>
-
-    <article class="pass">
-      <div class="main">
-        <h3>숙소 2 · 오타루 리트리트 구라무레 <span class="tag ok">결제 완료</span></h3>
-        <dl class="kv">
-          <dt>날짜</dt><dd>12/5 15:00 체크인 → 12/6 11:00 체크아웃</dd>
-          <dt>객실</dt><dd>개인 온천 딸린 화양실 메조네트, 성인 2명, 금연·트윈 요청</dd>
-          <dt>식사</dt><dd>석식·조식 포함 · 저녁 18:00/19:00, 아침 8:00/8:30/9:00 중 선택</dd>
-          <dt>주차</dt><dd>무료, 호텔 앞 좌우</dd>
-          <dt>현장 결제</dt><dd>입욕세 소액</dd>
-          <dt>취소</dt><dd>11/28 전까지 무료</dd>
-          <dt>연락</dt><dd><span class="mono">+81 134-51-5151</span></dd>
-        </dl>
-      </div>
-      <div class="stub"><span class="k">아고다 예약</span><span class="v">1790296362</span></div>
-    </article>
-
-    <article class="pass">
-      <div class="main">
-        <h3>통신·보험</h3>
-        <dl class="kv">
-          <dt>이심</dt><dd>도코모 로컬망, 하루 5GB 후 저속 무제한 · 구매 후 90일 내 개통</dd>
-          <dt>여행자보험</dt><dd>가입 완료</dd>
-        </dl>
-      </div>
-      <div class="stub"><span class="k">상태</span><span class="v">완료</span></div>
-    </article>
+<div class="top">
+  <div class="t"><h1>삿포로 가이드</h1><span class="d">12.03–12.06 · 2인</span></div>
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="day" aria-selected="true">일정</button>
+    <button role="tab" data-tab="flight">항공</button>
+    <button role="tab" data-tab="stay">숙소</button>
+    <button role="tab" data-tab="car">렌터카</button>
+    <button role="tab" data-tab="icn">인천</button>
+    <button role="tab" data-tab="drive">운전</button>
+    <button role="tab" data-tab="park">주차</button>
+    <button role="tab" data-tab="todo">할 일</button>
+    <button role="tab" data-tab="pack">짐</button>
+    <button role="tab" data-tab="jp">일본어</button>
+    <button role="tab" data-tab="cost">비용</button>
+    <button role="tab" data-tab="info">기타</button>
+    <button role="tab" data-tab="set">설정</button>
   </div>
-</section>
-
-<section id="days">
-  <div class="sec-head"><h2>날짜별 동선</h2><span class="note">12월 초 일몰은 16시 전후</span></div>
-  <div class="days">
-    <div class="day">
-      <div class="d">12.03</div>
-      <div class="body">
-        <h3>도착 · 삿포로 시내</h3>
-        <ul class="stops">
-          <li><span class="t">12:45</span><span>신치토세 국제선 도착 → 입국심사</span></li>
-          <li><span class="t">13:30</span><span>렌터카 카운터 접수 → 셔틀로 영업소(약 15분) → 수속, 고속도로 패스 4일권 신청</span></li>
-          <li><span class="t">14:30</span><span>출발, 고속도로로 스스키노 호텔(약 1시간) → 주차</span></li>
-          <li><span class="t">저녁</span><span>걸어서 오도리 공원 화이트 일루미네이션, TV타워 → 스스키노 징기스칸·라멘</span></li>
-        </ul>
-        <p class="drive">운전 약 50km · 저녁엔 차를 두고 걸어 다니기</p>
-      </div>
-    </div>
-    <div class="day">
-      <div class="d">12.04</div>
-      <div class="body">
-        <h3>비에이 왕복</h3>
-        <ul class="stops">
-          <li><span class="t">08:00</span><span>호텔 출발 전 주유 · 아사히카와 방면 고속도로</span></li>
-          <li><span class="t">오전</span><span>패치워크 길, 켄과 메리 나무, 세븐스타 나무</span></li>
-          <li><span class="t">점심</span><span>비에이 시내 · 낮에 한 번 더 주유</span></li>
-          <li><span class="t">오후</span><span>크리스마스트리 나무 → 흰수염폭포</span></li>
-          <li><span class="t">16:30</span><span>청의 호수 조명 (주차 1,000엔)</span></li>
-          <li><span class="t">밤</span><span>약 3시간 걸려 삿포로 복귀</span></li>
-        </ul>
-        <p class="drive">운전 가장 긴 날 · 왕복 약 340km, 귀가는 밤 눈길</p>
-      </div>
-    </div>
-    <div class="day">
-      <div class="d">12.05</div>
-      <div class="body">
-        <h3>오타루 → 아사리가와 료칸</h3>
-        <ul class="stops">
-          <li><span class="t">09:00</span><span>체크아웃 후 오타루로(약 1시간) · 최대 요금 있는 주차장에 주차</span></li>
-          <li><span class="t">오전</span><span>오타루 운하 → 사카이마치 거리 → 오르골당 → 르타오</span></li>
-          <li><span class="t">점심</span><span>스시 또는 카이센동</span></li>
-          <li><span class="t">16:00</span><span>가스등 켜진 운하 야경</span></li>
-          <li><span class="t">17:00</span><span>텐구야마 로프웨이 야경 (겨울 왕복 2,000엔, 마지막 상행 19:48)</span></li>
-          <li><span class="t">18:30</span><span>료칸 체크인 · 19:00 가이세키 · 개인 온천</span></li>
-        </ul>
-        <p class="drive">운전 약 60km · 상점은 18시 전후에 닫음</p>
-      </div>
-    </div>
-    <div class="day">
-      <div class="d">12.06</div>
-      <div class="body">
-        <h3>귀국</h3>
-        <ul class="stops">
-          <li><span class="t">08:00</span><span>조식 · 아침 온천</span></li>
-          <li><span class="t">09:00</span><span>출발 (공항까지 약 90분)</span></li>
-          <li><span class="t">10:40</span><span>공항 근처 주유소에서 가득 주유, 영수증 챙기기</span></li>
-          <li><span class="t">11:00</span><span>타임즈 영업소 반납 → 셔틀로 국제선(약 10분)</span></li>
-          <li><span class="t">14:05</span><span>WE0532 출발</span></li>
-        </ul>
-        <p class="drive">반납 기준은 출발 90분 전(12:35)까지</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="todo">
-  <div class="sec-head"><h2>남은 할 일</h2><div class="progress" style="min-width:200px"><div class="bar"><span id="todo-bar"></span></div><span id="todo-count" class="mono">0/0</span></div></div>
-  <div class="grid2">
-    <div>
-      <span class="group-title">지금 바로</span>
-      <ul class="checks" data-list="todo">
-        <li><label><input type="checkbox" id="t-idp"><span class="txt"><b>국제운전면허증 발급</b><span class="sub">없으면 차를 못 빌림. 여자친구도 운전하면 같이</span></span></label></li>
-        <li><label><input type="checkbox" id="t-meal"><span class="txt"><b>료칸에 식사 시간 답장</b><span class="sub">저녁 19:00 · 아침 8:00</span></span></label></li>
-        <li><label><input type="checkbox" id="t-times"><span class="txt"><b>타임즈 문의 답장 확인</b><span class="sub">4WD 여부, 고속도로 패스, 셔틀, 반납 시간</span></span></label></li>
-      </ul>
-    </div>
-    <div>
-      <span class="group-title">출발 1~2주 전</span>
-      <ul class="checks" data-list="todo">
-        <li><label><input type="checkbox" id="t-vjw"><span class="txt"><b>Visit Japan Web 등록</b><span class="sub">입국심사·세관 QR 미리 만들기</span></span></label></li>
-        <li><label><input type="checkbox" id="t-yen"><span class="txt"><b>엔화 현금 3만~5만 엔</b><span class="sub">1,000엔 지폐 넉넉히 · 부족하면 세븐일레븐 ATM</span></span></label></li>
-        <li><label><input type="checkbox" id="t-eat"><span class="txt"><b>꼭 갈 식당 예약</b><span class="sub">스스키노 징기스칸, 오타루 스시</span></span></label></li>
-        <li><label><input type="checkbox" id="t-event"><span class="txt"><b>행사 날짜 확인</b><span class="sub">청의 호수 조명, 오타루 푸른 운하</span></span></label></li>
-        <li><label><input type="checkbox" id="t-card"><span class="txt"><b>카드 해외결제 허용·비밀번호 확인</b><span class="sub">비자·마스터 2장 준비</span></span></label></li>
-      </ul>
-    </div>
-    <div>
-      <span class="group-title">출발 직전</span>
-      <ul class="checks" data-list="todo">
-        <li><label><input type="checkbox" id="t-map"><span class="txt"><b>구글 지도 홋카이도 오프라인 저장</b><span class="sub">비에이 산길 대비</span></span></label></li>
-        <li><label><input type="checkbox" id="t-checkin"><span class="txt"><b>파라타항공 온라인 체크인</b></span></label></li>
-        <li><label><input type="checkbox" id="t-esim"><span class="txt"><b>이심 설치·듀얼심 설정</b><span class="sub">한국 번호는 데이터 로밍만 끄기</span></span></label></li>
-        <li><label><input type="checkbox" id="t-weather"><span class="txt"><b>도로·날씨 확인</b><span class="sub">비에이 가는 날 폭설 예보면 일정 조정</span></span></label></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="pack">
-  <div class="sec-head"><h2>준비물</h2><div class="progress" style="min-width:200px"><div class="bar"><span id="pack-bar"></span></div><span id="pack-count" class="mono">0/0</span></div></div>
-  <div class="grid2">
-    <div>
-      <span class="group-title">서류·결제</span>
-      <ul class="checks" data-list="pack">
-        <li><label><input type="checkbox" id="p-passport"><span class="txt"><b>여권</b><span class="sub">고속도로 패스 신청에도 필요</span></span></label></li>
-        <li><label><input type="checkbox" id="p-license"><span class="txt"><b>한국 운전면허증</b></span></label></li>
-        <li><label><input type="checkbox" id="p-idp"><span class="txt"><b>국제운전면허증</b></span></label></li>
-        <li><label><input type="checkbox" id="p-cards"><span class="txt"><b>신용카드 2장</b><span class="sub">렌터카는 본인 명의 카드로</span></span></label></li>
-        <li><label><input type="checkbox" id="p-cash"><span class="txt"><b>엔화 현금, 동전 지갑</b></span></label></li>
-      </ul>
-    </div>
-    <div>
-      <span class="group-title">차량</span>
-      <ul class="checks" data-list="pack">
-        <li><label><input type="checkbox" id="p-mount"><span class="txt"><b>휴대폰 거치대</b><span class="sub">송풍구 클립형</span></span></label></li>
-        <li><label><input type="checkbox" id="p-charger"><span class="txt"><b>시가잭 USB 충전기·케이블</b></span></label></li>
-        <li><label><input type="checkbox" id="p-sunglass"><span class="txt"><b>선글라스</b><span class="sub">눈 반사광</span></span></label></li>
-      </ul>
-    </div>
-    <div>
-      <span class="group-title">방한</span>
-      <ul class="checks" data-list="pack">
-        <li><label><input type="checkbox" id="p-shoes"><span class="txt"><b>미끄럼 방지 신발 또는 아이젠</b></span></label></li>
-        <li><label><input type="checkbox" id="p-coat"><span class="txt"><b>패딩, 장갑, 모자, 목도리</b></span></label></li>
-        <li><label><input type="checkbox" id="p-heat"><span class="txt"><b>핫팩</b></span></label></li>
-        <li><label><input type="checkbox" id="p-lip"><span class="txt"><b>립밤, 보습제</b></span></label></li>
-      </ul>
-    </div>
-    <div>
-      <span class="group-title">기타</span>
-      <ul class="checks" data-list="pack">
-        <li><label><input type="checkbox" id="p-adapter"><span class="txt"><b>일본용 돼지코(A타입)</b></span></label></li>
-        <li><label><input type="checkbox" id="p-battery"><span class="txt"><b>보조배터리</b><span class="sub">추위에 배터리가 빨리 닳음 · 기내 반입</span></span></label></li>
-        <li><label><input type="checkbox" id="p-scale"><span class="txt"><b>휴대용 저울</b><span class="sub">위탁 1인 15kg</span></span></label></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="drive">
-  <div class="sec-head"><h2>현지 운전 메모</h2><span class="note">좌측통행 · 운전석 오른쪽</span></div>
-  <div class="tips">
-    <div class="tip">
-      <h3>톨게이트 (ETC)</h3>
-      <ul>
-        <li>보라색 <b>ETC</b> 차로로, 시속 20km 이하로 통과</li>
-        <li>출발 전 단말기에 ETC 카드가 꽂혔는지 확인</li>
-        <li>실수로 <b>一般</b> 차로에 들어가면 통행권을 뽑고, 출구에서 통행권과 ETC 카드를 직원에게</li>
-        <li>신용카드·현금으로 내면 패스가 적용 안 됨</li>
-        <li>차단기가 안 열리면 후진하지 말고 비상등 켜고 대기</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>주유</h3>
-      <div class="fuel"><span style="background:#c62828">빨강 = 레귤러 ✓</span><span style="background:#b88a00">노랑 = 하이오크</span><span style="background:#2e7d32">초록 = 경유</span></div>
-      <ul>
-        <li><b>軽油(케유)</b>는 디젤. 휘발유 아님</li>
-        <li>풀서비스에서 "레규라 만탄"</li>
-        <li>시골 주유소는 일찍 닫음. 비에이 가는 날 두 번 주유</li>
-        <li>반납 전 가득 채우고 영수증 보관</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>눈길·주차</h3>
-      <ul>
-        <li>4WD여도 브레이크·커브는 똑같이 미끄러움. 속도로 조절</li>
-        <li>밤에 주차하면 와이퍼 세워두기</li>
-        <li>호텔 기계식 주차: 一旦停止에서 멈춘 뒤 턴테이블, 직원 안내</li>
-        <li>코인 주차장은 '最大料金' 있는 곳, 나갈 때 칸 번호로 정산</li>
-        <li>술 한 잔이라도 마시면 운전 금지. 동승자도 처벌 대상</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>렌터카 픽업·반납</h3>
-      <ul>
-        <li>차 받을 때 흠집을 직원과 같이 확인하고 사진 촬영</li>
-        <li>내비 한국어 설정, 목적지는 전화번호로</li>
-        <li>추가 운전자는 현장에서 등록</li>
-        <li>사고 나면 그 자리에서 경찰과 타임즈에 연락</li>
-        <li>영업소 근처 주유소 위치를 물어 지도에 저장</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="phrases">
-  <div class="sec-head"><h2>바로 쓰는 일본어</h2><span class="note">복사해서 보여줘도 돼요</span></div>
-  <div class="phrases">
-    <div class="phrase"><span class="jp">レギュラー満タンでお願いします</span><span class="ko">레귤러 가득 넣어주세요</span><button type="button" data-copy="レギュラー満タンでお願いします">복사</button></div>
-    <div class="phrase"><span class="jp">ETCカードでお願いします</span><span class="ko">ETC 카드로 할게요 (톨게이트 일반 차로)</span><button type="button" data-copy="ETCカードでお願いします">복사</button></div>
-    <div class="phrase"><span class="jp">北海道エクスプレスウェイパスを申し込みたいです</span><span class="ko">홋카이도 고속도로 패스를 신청하고 싶어요</span><button type="button" data-copy="北海道エクスプレスウェイパスを申し込みたいです">복사</button></div>
-    <div class="phrase"><span class="jp">駐車場は滞在中、出し入れ自由ですか?</span><span class="ko">숙박 중 주차 입출고가 자유인가요?</span><button type="button" data-copy="駐車場は滞在中、出し入れ自由ですか?">복사</button></div>
-    <div class="phrase"><span class="jp">この近くのガソリンスタンドはどこですか?</span><span class="ko">근처 주유소가 어디인가요?</span><button type="button" data-copy="この近くのガソリンスタンドはどこですか?">복사</button></div>
-  </div>
-</section>
-
-<section id="cost">
-  <div class="sec-head"><h2>렌터카 관련 비용</h2><span class="note">2인 · 숙박·항공 제외</span></div>
-  <div class="tbl-wrap">
-    <table>
-      <tbody>
-        <tr><td>렌터카 (면책·NOC·ETC 카드 포함)</td><td class="n">30,430엔</td></tr>
-        <tr><td>홋카이도 고속도로 패스 4일권</td><td class="n">7,700엔</td></tr>
-        <tr><td>스스키노 호텔 주차 2박</td><td class="n">1,800엔</td></tr>
-        <tr><td>오타루 주차 · 청의 호수 주차</td><td class="n">약 2,000엔</td></tr>
-        <tr><td>기름값 (약 550km)</td><td class="n">5,000–8,000엔</td></tr>
-      </tbody>
-      <tfoot><tr><td>합계</td><td class="n">약 46,900–49,900엔</td></tr></tfoot>
-    </table>
-  </div>
-</section>
-
-<footer>마지막 정리 2026년 10월 27일 · 체크 표시는 이 기기의 브라우저에만 저장돼요.</footer>
 </div>
+
+<main>
+
+<!-- 일정 -->
+<section class="panel" id="day">
+  <div class="daysel">
+    <button data-d="1" aria-pressed="true"><b>12.03</b><span>목 · 도착</span></button>
+    <button data-d="2" aria-pressed="false"><b>12.04</b><span>금 · 비에이</span></button>
+    <button data-d="3" aria-pressed="false"><b>12.05</b><span>토 · 오타루</span></button>
+    <button data-d="4" aria-pressed="false"><b>12.06</b><span>일 · 귀국</span></button>
+  </div>
+
+  <div class="card" data-day="1">
+    <h3>도착 · 삿포로 시내</h3>
+    <div class="sub">숙소: 삿포로 도큐 REI 호텔 · 운전 약 50km</div>
+    <ul class="tl">
+      <li><span class="h">전날</span><span>12/2 영종도 숙소 1박 (예약 전)</span></li>
+      <li><span class="h">07:10</span><span>숙소 체크아웃 → P5 (차로 약 10~20분)</span></li>
+      <li><span class="h">07:25</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EC%9A%B4%EC%84%9C%EB%8F%99%202851-76" target="_blank" rel="noopener">인천 P5 예약주차장</a><span class="ab"><button data-ad="인천광역시 영종구 운서동 2851-76" data-n="주소">주소</button></span> 입차<span class="x">예약 07:30 · 03:30~11:30 입차 가능 · <span class="sv" data-k="p5no">—</span></span></span></li>
+      <li><span class="h">07:45</span><span>순환버스 → T1 3G<span class="x">예비 7:52 · 일찍 오면 7:30</span></span></li>
+      <li><span class="h">07:55</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%9D%B8%EC%B2%9C%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%20%EC%A0%9C1%EC%97%AC%EA%B0%9D%ED%84%B0%EB%AF%B8%EB%84%90" target="_blank" rel="noopener">T1</a><span class="ab"><button data-ad="인천광역시 영종구 공항로 272 인천국제공항 제1여객터미널" data-n="주소">주소</button></span> 도착 · 체크인 (카운터 마감 약 09:05)</span></li>
+      <li><span class="h">09:35</span><span>탑승 시작</span></li>
+      <li><span class="h">10:05</span><span>인천 T1 출발 <span class="mono">WE0531</span></span></li>
+      <li><span class="h">12:45</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%96%B0%E5%8D%83%E6%AD%B3%E7%A9%BA%E6%B8%AF%20%E5%9B%BD%E9%9A%9B%E7%B7%9A%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%83%93%E3%83%AB" target="_blank" rel="noopener">신치토세 국제선</a><span class="ab"><button data-ad="北海道千歳市美々 新千歳空港 国際線ターミナルビル" data-n="일본어 주소">JP</button><button data-ad="New Chitose Airport International Terminal, Bibi, Chitose, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="e/e0/New_Chitose_Airport.jpg" data-cap="신치토세 공항" aria-label="신치토세 공항 사진">📷</button> 도착 → 입국·세관</span></li>
+      <li><span class="h">13:30</span><span><a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선 → 타임즈 카운터 가는 길</a> · 타임즈 <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BA%E3%82%AB%E3%83%BC%20%E5%8C%97%E6%B5%B7%E9%81%93%E5%8D%83%E6%AD%B3%E5%B8%82%E6%9F%8F%E5%8F%B0%E5%8D%972-1-4" target="_blank" rel="noopener">매장</a><span class="ab"><button data-ad="北海道千歳市柏台南2-1-4" data-n="일본어 주소">JP</button><button data-ad="2-1-4 Kashiwadaiminami, Chitose, Hokkaido" data-n="영어 주소">EN</button></span> 전화 <span class="mono copyable" data-c="0123458756">0123-45-8756</span> → 셔틀 약 10분</span></li>
+      <li><span class="h"></span><span>여권·한국면허·국제면허·카드 → 결제 → HEP 4일권 신청 → 흠집 사진</span></li>
+      <li><span class="h">14:30</span><span>출발 → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=Sapporo%20Tokyu%20REI%20Hotel" target="_blank" rel="noopener">삿포로 도큐 REI 호텔</a><span class="ab"><button data-ad="北海道札幌市中央区南4条西5丁目1 〒064-8509" data-n="일본어 주소">JP</button><button data-ad="5-1 Minami 4-Jo Nishi, Chuo-ku, Sapporo 064-8509" data-n="영어 주소">EN</button></span> 약 1시간<span class="x">체크인 15:00</span></span></li>
+      <li><span class="h">입고</span><span>주차권 → 프런트 제출</span></li>
+      <li><span class="h">저녁</span><span>도보: <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A7%E9%80%9A%E5%85%AC%E5%9C%92" target="_blank" rel="noopener">오도리 공원</a><span class="ab"><button data-ad="北海道札幌市中央区大通西1〜12丁目 大通公園" data-n="일본어 주소">JP</button><button data-ad="Odori Park, Odori Nishi 1-12, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span><button class="ph" data-f="f/fb/Sapporo_White_Illumination_2016_(184517289).jpeg" data-cap="오도리 공원 화이트 일루미네이션" aria-label="오도리 공원 화이트 일루미네이션 사진">📷</button> 화이트 일루미네이션 · <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%95%E3%81%A3%E3%81%BD%E3%82%8D%E3%83%86%E3%83%AC%E3%83%93%E5%A1%94" target="_blank" rel="noopener">TV타워</a><span class="ab"><button data-ad="北海道札幌市中央区大通西1丁目 さっぽろテレビ塔" data-n="일본어 주소">JP</button><button data-ad="Sapporo TV Tower, Odori Nishi 1-chome, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span><button class="ph" data-f="6/6b/Sapporo_television_tower_01.jpg" data-cap="삿포로 TV타워" aria-label="삿포로 TV타워 사진">📷</button> → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%99%E3%81%99%E3%81%8D%E3%81%AE" target="_blank" rel="noopener">스스키노</a><span class="ab"><button data-ad="北海道札幌市中央区南4条西4丁目 すすきの" data-n="일본어 주소">JP</button><button data-ad="Susukino, Minami 4-jo Nishi 4-chome, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span><button class="ph" data-f="3/34/Spectaculars_of_Susukino-Sapporo.jpg" data-cap="스스키노" aria-label="스스키노 사진">📷</button> 징기스칸 · <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%85%83%E7%A5%96%E3%81%95%E3%81%A3%E3%81%BD%E3%82%8D%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%E6%A8%AA%E4%B8%81" target="_blank" rel="noopener">라멘 요코초</a><span class="ab"><button data-ad="北海道札幌市中央区南5条西3丁目 元祖さっぽろラーメン横丁" data-n="일본어 주소">JP</button><button data-ad="Ganso Sapporo Ramen Yokocho, Minami 5-jo Nishi 3-chome, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span><button class="ph" data-f="b/b2/Sapporo_Ramen-Yokocho_North_exit.JPG" data-cap="원조 삿포로 라멘 요코초" aria-label="원조 삿포로 라멘 요코초 사진">📷</button> · 시메 파르페</span></li>
+    </ul>
+  </div>
+
+  <div class="card" data-day="2" hidden>
+    <h3>비에이 왕복</h3>
+    <div class="sub">운전 왕복 약 340km · 가장 긴 날</div>
+    <ul class="tl">
+      <li><span class="h">08:00</span><span>삿포로에서 주유 → 아사히카와 방면 고속도로<span class="x">약 2시간 30분</span></span></li>
+      <li><span class="h">오전</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%BE%8E%E7%91%9B%20%E3%83%91%E3%83%83%E3%83%81%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E8%B7%AF" target="_blank" rel="noopener">패치워크 길</a><span class="ab"><button data-ad="北海道上川郡美瑛町北瑛 パッチワークの路" data-n="일본어 주소">JP</button><button data-ad="Patchwork Road, Hokuei, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="f/f3/140724_Biei_Hokkaido_Japan01s8.jpg" data-cap="비에이 패치워크 길 (여름)" aria-label="비에이 패치워크 길 (여름) 사진">📷</button> · <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B1%E3%83%B3%E3%81%A8%E3%83%A1%E3%83%AA%E3%83%BC%E3%81%AE%E6%9C%A8" target="_blank" rel="noopener">켄과 메리 나무</a><span class="ab"><button data-ad="北海道上川郡美瑛町大久保協生 ケンとメリーの木" data-n="일본어 주소">JP</button><button data-ad="Ken and Mary Tree, Okubo Kyosei, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="0/00/Wiki-kenmerry1.jpg" data-cap="켄과 메리 나무" aria-label="켄과 메리 나무 사진">📷</button> · <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%BB%E3%83%96%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%AE%E6%9C%A8" target="_blank" rel="noopener">세븐스타 나무</a><span class="ab"><button data-ad="北海道上川郡美瑛町北瑛 セブンスターの木" data-n="일본어 주소">JP</button><button data-ad="Seven Star Tree, Hokuei, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="3/3f/Seven_star&#x27;s_tree_-_panoramio.jpg" data-cap="세븐스타 나무" aria-label="세븐스타 나무 사진">📷</button></span></li>
+      <li><span class="h">점심</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%BE%8E%E7%91%9B%E9%A7%85" target="_blank" rel="noopener">비에이 시내</a><span class="ab"><button data-ad="北海道上川郡美瑛町本町1丁目 美瑛駅" data-n="일본어 주소">JP</button><button data-ad="Biei Station, Honcho 1-chome, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span> · <b>주유 한 번 더</b></span></li>
+      <li><span class="h">오후</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%9E%E3%82%B9%E3%83%84%E3%83%AA%E3%83%BC%E3%81%AE%E6%9C%A8%20%E7%BE%8E%E7%91%9B" target="_blank" rel="noopener">크리스마스트리 나무</a><span class="ab"><button data-ad="北海道上川郡美瑛町美馬牛 クリスマスツリーの木" data-n="일본어 주소">JP</button><button data-ad="Christmas Tree, Bibaushi, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="f/f2/The_Christmas-tree_called_in_Biei,_Hokkaidou_-_panoramio.jpg" data-cap="크리스마스트리 나무" aria-label="크리스마스트리 나무 사진">📷</button> → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%99%BD%E3%81%B2%E3%81%92%E3%81%AE%E6%BB%9D" target="_blank" rel="noopener">흰수염폭포</a><span class="ab"><button data-ad="北海道上川郡美瑛町白金 白ひげの滝" data-n="일본어 주소">JP</button><button data-ad="Shirahige Falls, Shirogane, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="f/f5/Shirahige-no-taki_Shirogane_Onsen_Biei_Hokkaido_Japan01s3.jpg" data-cap="흰수염폭포" aria-label="흰수염폭포 사진">📷</button></span></li>
+      <li><span class="h">16:30</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%99%BD%E9%87%91%20%E9%9D%92%E3%81%84%E6%B1%A0" target="_blank" rel="noopener">청의 호수</a><span class="ab"><button data-ad="北海道上川郡美瑛町白金 白金青い池" data-n="일본어 주소">JP</button><button data-ad="Shirogane Blue Pond, Shirogane, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="d/d4/Biei_Blue-pond.jpg" data-cap="청의 호수 (여름)" aria-label="청의 호수 (여름) 사진">📷</button> 조명<span class="x">~21:00 · 30분이면 충분</span></span></li>
+      <li><span class="h">밤</span><span>삿포로 복귀 약 3시간 · 밤 눈길 · 호텔 재입고</span></li>
+    </ul>
+  </div>
+
+  <div class="card" data-day="3" hidden>
+    <h3>오타루 → 아사리가와 료칸</h3>
+    <div class="sub">숙소: OTARU RETREAT by Onko Chishin · 운전 약 60km · 료칸 ↔ 운하 차로 15분</div>
+    <ul class="tl">
+      <li><span class="h">09:00</span><span>도큐 REI 체크아웃(~11:00) → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E9%81%8B%E6%B2%B3" target="_blank" rel="noopener">오타루</a><span class="ab"><button data-ad="北海道小樽市港町 小樽運河" data-n="일본어 주소">JP</button><button data-ad="Otaru Canal, Minatomachi, Otaru, Hokkaido" data-n="영어 주소">EN</button></span> 약 1시간</span></li>
+      <li><span class="h">주차</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E7%A8%B2%E7%A9%82%E9%A7%90%E8%BB%8A%E5%A0%B4%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E7%A8%B2%E7%A9%823-19-10" target="_blank" rel="noopener">이나호 주차장</a><span class="ab"><button data-ad="北海道小樽市稲穂3-19-10" data-n="일본어 주소">JP</button><button data-ad="3-19-10 Inaho, Otaru, Hokkaido" data-n="영어 주소">EN</button></span> 등<span class="x">운하 도보 10분</span></span></li>
+      <li><span class="h">오전</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E9%81%8B%E6%B2%B3" target="_blank" rel="noopener">운하</a><span class="ab"><button data-ad="北海道小樽市港町 小樽運河" data-n="일본어 주소">JP</button><button data-ad="Otaru Canal, Minatomachi, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="f/fd/Otaru_Hokkaido_Japan.jpg" data-cap="오타루 운하" aria-label="오타루 운하 사진">📷</button> → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A0%BA%E7%94%BA%E9%80%9A%E3%82%8A%20%E5%B0%8F%E6%A8%BD" target="_blank" rel="noopener">사카이마치 거리</a><span class="ab"><button data-ad="北海道小樽市堺町 堺町通り" data-n="일본어 주소">JP</button><button data-ad="Sakaimachi Street, Sakaimachi, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="9/9c/Sakaimachi_street_Otaru_Hokkaido11n.jpg" data-cap="사카이마치 거리" aria-label="사카이마치 거리 사진">📷</button> → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB%E5%A0%82%20%E6%9C%AC%E9%A4%A8" target="_blank" rel="noopener">오르골당</a><span class="ab"><button data-ad="北海道小樽市住吉町4-1" data-n="일본어 주소">JP</button><button data-ad="4-1 Sumiyoshicho, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="4/44/Otaru_Music_Box_Museum_2014.jpg" data-cap="오타루 오르골당" aria-label="오타루 오르골당 사진">📷</button> → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AB%E3%82%BF%E3%82%AA%20%E6%9C%AC%E5%BA%97%20%E5%B0%8F%E6%A8%BD" target="_blank" rel="noopener">르타오</a><span class="ab"><button data-ad="北海道小樽市堺町7-16" data-n="일본어 주소">JP</button><button data-ad="7-16 Sakaimachi, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="0/06/Patisserie_Letao.jpg" data-cap="르타오 본점" aria-label="르타오 본점 사진">📷</button><span class="x">상점 18시 전후 마감</span></span></li>
+      <li><span class="h">점심</span><span>스시 · 카이센동 (<a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E5%87%BA%E6%8A%9C%E5%B0%8F%E8%B7%AF" target="_blank" rel="noopener">데누키코지</a><span class="ab"><button data-ad="北海道小樽市色内1-1 小樽出抜小路" data-n="일본어 주소">JP</button><button data-ad="Otaru Denuki Koji, 1-1 Ironai, Otaru, Hokkaido" data-n="영어 주소">EN</button></span>, <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%20%E4%B8%89%E8%A7%92%E5%B8%82%E5%A0%B4" target="_blank" rel="noopener">삼각시장</a><span class="ab"><button data-ad="北海道小樽市稲穂3-10-16" data-n="일본어 주소">JP</button><button data-ad="3-10-16 Inaho, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="2/26/三角市場,_小樽,_北海道,_日本,_Otaru,_Hokkaido,_Japan,_おたるし,_ほっかいどう,_にっぽん,_にほん_(47763328802).jpg" data-cap="오타루 삼각시장" aria-label="오타루 삼각시장 사진">📷</button>, <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%8A%E3%81%9F%E3%82%8B%E6%94%BF%E5%AF%BF%E5%8F%B8%20%E3%81%9C%E3%82%93%E5%BA%B5" target="_blank" rel="noopener">마사즈시 젠안</a><span class="ab"><button data-ad="北海道小樽市色内1-2-1" data-n="일본어 주소">JP</button><button data-ad="1-2-1 Ironai, Otaru, Hokkaido" data-n="영어 주소">EN</button></span>)</span></li>
+      <li><span class="h">15:00</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=OTARU%20RETREAT%20by%20Onko%20Chishin" target="_blank" rel="noopener">료칸</a><span class="ab"><button data-ad="北海道小樽市朝里川温泉2-685 〒047-0154" data-n="일본어 주소">JP</button><button data-ad="2-685 Asarigawa Onsen, Otaru 047-0154" data-n="영어 주소">EN</button></span><button class="ph" data-f="9/99/130824_Asarigawa_Onsen_Otaru_Hokkaido_Japan07s3.jpg" data-cap="아사리가와 온천 (료칸 아님 · 지역 사진)" aria-label="아사리가와 온천 (료칸 아님 · 지역 사진) 사진">📷</button> 체크인 → 료칸 둘러보기 · 온천<span class="x">체크인 때 석식 시간(18:00/19:00) · 조식 8:00 정하기</span></span></li>
+      <li><span class="h">16:30</span><span>(선택) <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E5%A4%A9%E7%8B%97%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A8%E3%82%A4" target="_blank" rel="noopener">텐구야마 로프웨이</a><span class="ab"><button data-ad="北海道小樽市最上2-16-15" data-n="일본어 주소">JP</button><button data-ad="2-16-15 Mogami, Otaru, Hokkaido" data-n="영어 주소">EN</button></span><button class="ph" data-f="8/86/Otaru_Tengu-yama_ski_resort_View.JPG" data-cap="텐구야마 전망" aria-label="텐구야마 전망 사진">📷</button> 야경 → 18:00 복귀<span class="x">왕복 40분 · 마지막 상행 19:48 · 주차 무료</span></span></li>
+      <li><span class="h">18:00~</span><span>가이세키 석식 (정한 시간)</span></li>
+      <li><span class="h">저녁 후</span><span>20:00 오타루 운하 야경 (푸른 운하 · 가스등)<span class="x">점등 일몰~22:30 · 11/1~1/31 · 밤 눈길 왕복 30분</span></span></li>
+      <li><span class="h">21:00</span><span>료칸 복귀 → 온천 → 취침<span class="x">12/6 08:40 출발</span></span></li>
+    </ul>
+  </div>
+
+  <div class="card" data-day="4" hidden>
+    <h3>귀국</h3>
+    <div class="sub">반납 기한 <b>11:05</b> (국제선 출발 3시간 전) · 예약상 12:00</div>
+    <ul class="tl">
+      <li><span class="h">08:00</span><span>조식 · 아침 온천</span></li>
+      <li><span class="h">08:40</span><span>출발 → 치토세 약 90분</span></li>
+      <li><span class="h">10:10</span><span>주유 <b>가득</b> · 영수증 보관<br><span class="tag staff">1순위 · 직원</span> · 반납지 약 1.3km<br><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=ENEOS%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%97%A5%E3%81%AE%E5%87%BA3-15-16" target="_blank" rel="noopener">ENEOS 히노데</a><span class="ab"><button data-ad="北海道千歳市日の出3丁目15-16" data-n="일본어 주소">JP</button><button data-ad="3-15-16 Hinode, Chitose, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0123242031">0123-24-2031</span><span class="x">일 08:00–19:00 · 렌터카 반납 차량 많음 · 결제 금액 직접 확인</span><span class="tag self">2순위 · 셀프</span> · 반납지 약 1.8km<br><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B3%E3%82%B9%E3%83%A2%E7%9F%B3%E6%B2%B9%20%E5%8D%83%E6%AD%B3%E7%A9%BA%E6%B8%AFSS%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%97%AD%E7%94%BA8-1206-63" target="_blank" rel="noopener">COSMO 치토세공항 SS</a><span class="ab"><button data-ad="北海道千歳市旭町8丁目1206-63" data-n="일본어 주소">JP</button><button data-ad="8-1206-63 Asahicho, Chitose, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0123232324">0123-23-2324</span><span class="x">24시간 · 카드 거절 후기 → 현금 준비</span><span class="x">✗ 공항 앞 ENEOS(美々) · 아폴로(旭ヶ丘) 일요일 휴무</span></span></li>
+      <li><span class="h">10:30</span><span><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%8D%83%E6%AD%B3%E5%B8%82%E6%9F%8F%E5%8F%B0%E5%8D%972-1-4" target="_blank" rel="noopener">타임즈 영업소</a><span class="ab"><button data-ad="北海道千歳市柏台南2-1-4" data-n="일본어 주소">JP</button><button data-ad="2-1-4 Kashiwadaiminami, Chitose, Hokkaido" data-n="영어 주소">EN</button></span> 반납 (늦어도 11:05) → 셔틀 → 국제선</span></li>
+      <li><span class="h">14:05</span><span>신치토세 출발 <span class="mono">WE0532</span> → 17:30 인천</span></li>
+      <li><span class="h">18:30</span><span>입국·짐 → 순환버스 → <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EC%9A%B4%EC%84%9C%EB%8F%99%202851-76" target="_blank" rel="noopener">P5 예약주차장</a><span class="ab"><button data-ad="인천광역시 영종구 운서동 2851-76" data-n="주소">주소</button></span></span></li>
+      <li><span class="h">19:00</span><span>출차 · 정산</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 항공 -->
+<section class="panel" id="flight" hidden>
+  <h2>파라타항공</h2>
+  <div class="card">
+    <div class="row"><span class="k">가는 편</span><span class="v"><b class="mono">WE0531</b> 12/3 10:05 ICN T1 → 12:45 CTS</span></div>
+    <div class="row"><span class="k">오는 편</span><span class="v"><b class="mono">WE0532</b> 12/6 14:05 CTS → 17:30 ICN</span></div>
+    <div class="row"><span class="k">수하물</span><span class="v">위탁 1인 15kg</span></div>
+    <div class="row"><span class="k">항공사 예약</span><span class="v big copyable sv" data-k="pnr" data-c="">—</span></div>
+  </div>
+</section>
+
+<!-- 숙소 -->
+<section class="panel" id="stay" hidden>
+  <h2>숙소 1 · 삿포로 도큐 REI 호텔 (2박)</h2>
+  <div class="card">
+    <div class="row"><span class="k">호텔</span><span class="v">Sapporo Tokyu REI Hotel · 札幌東急REIホテル</span></div>
+    <div class="row"><span class="k">날짜</span><span class="v">12/3(목) 15:00 → 12/5(토) 11:00 · 2박</span></div>
+    <div class="row"><span class="k">객실</span><span class="v">Superior Twin Non Smoking · 1실 · 성인 2</span></div>
+    <div class="row"><span class="k">예약자</span><span class="v sv" data-k="stayName">—</span></div>
+    <div class="row"><span class="k">주소</span><span class="v">5-1 Minami 4-Jo Nishi, Chuo-ku, Sapporo 064-8509 <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=Sapporo%20Tokyu%20REI%20Hotel" target="_blank" rel="noopener">지도</a><span class="ab"><button data-ad="北海道札幌市中央区南4条西5丁目1 〒064-8509" data-n="일본어 주소">JP</button><button data-ad="5-1 Minami 4-Jo Nishi, Chuo-ku, Sapporo 064-8509" data-n="영어 주소">EN</button></span></span></div>
+    <div class="row"><span class="k">주차</span><span class="v">기계식 · 24시간</span></div>
+    <div class="row"><span class="k">제한</span><span class="v">통로 1.98m · 178cm 이하 구간</span></div>
+    <div class="row"><span class="k">방법</span><span class="v">一旦停止 → 턴테이블 → 직원 안내 · 주차권 프런트 제출</span></div>
+  </div>
+
+  <h2>숙소 2 · OTARU RETREAT by Onko Chishin (1박)</h2>
+  <div class="card">
+    <div class="row"><span class="k">료칸</span><span class="v">오타루 리트리트 바이 온코치신 · 아사리가와 온천</span></div>
+    <div class="row"><span class="k">날짜</span><span class="v">12/5(토) 15:00 → 12/6(일) 11:00 · 1박</span></div>
+    <div class="row"><span class="k">객실</span><span class="v">Japanese-Western Maisonette (개인 온천 화양실 메조네트) · 1실 · 성인 2 · 금연·트윈</span></div>
+    <div class="row"><span class="k">식사</span><span class="v">체크인 15:00 때 정하기 · 석식 18:00 또는 19:00 · 조식 8:00</span></div>
+    <div class="row"><span class="k">주차</span><span class="v">무료 · 호텔 앞 좌우</span></div>
+    <div class="row"><span class="k">무료 취소</span><span class="v">11/28 전</span></div>
+    <div class="row"><span class="k">주소</span><span class="v">2-685 Asarigawa Onsen, Otaru 047-0154 <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=OTARU%20RETREAT%20by%20Onko%20Chishin" target="_blank" rel="noopener">지도</a><span class="ab"><button data-ad="北海道小樽市朝里川温泉2-685 〒047-0154" data-n="일본어 주소">JP</button><button data-ad="2-685 Asarigawa Onsen, Otaru 047-0154" data-n="영어 주소">EN</button></span></span></div>
+    <div class="row"><span class="k">이동</span><span class="v">도큐 REI → 료칸 직행 약 44분 · 33km</span></div>
+  </div>
+</section>
+
+<!-- 인천 -->
+<section class="panel" id="icn" hidden>
+  <h2>인천 예약주차장</h2>
+  <div class="card">
+    <div class="row"><span class="k">예약번호</span><span class="v big copyable sv" data-k="p5no" data-c="">—</span></div>
+    <div class="row"><span class="k">상태</span><span class="v">예약완료</span></div>
+    <div class="row"><span class="k">전화</span><span class="v mono sv" data-k="phone">—</span></div>
+    <div class="row"><span class="k">차량</span><span class="v mono copyable sv" data-k="p5car" data-c="">—</span></div>
+    <div class="row"><span class="k">주차장</span><span class="v"><b>1터미널 예약주차장(P5)</b> · 사전예약 전용 (단·장기주차장 아님)</span></div>
+    <div class="row"><span class="k">주소</span><span class="v"><span class="copyable" data-c="인천광역시 영종구 운서동 2851-76">인천광역시 영종구 운서동 2851-76</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EC%9A%B4%EC%84%9C%EB%8F%99%202851-76" target="_blank" rel="noopener">지도</a><span class="ab"><button data-ad="인천광역시 영종구 운서동 2851-76" data-n="주소">주소</button></span></span></div>
+    <div class="row"><span class="k">예약기간</span><span class="v"><b>12/3 07:30 ~ 12/6 19:00</b></span></div>
+    <div class="row"><span class="k">입차 가능</span><span class="v">12/3 03:30 ~ 11:30 (±4시간)</span></div>
+    <div class="row"><span class="k">계획</span><span class="v">12/2 영종도 1박 → 07:10 숙소 출발 → 07:25 입차 → 07:45 버스 → 07:55 T1</span></div>
+    <div class="row"><span class="k">터미널</span><span class="v">T1 [3G] (오는 편 도착 터미널 확인)</span></div>
+    <div class="row"><span class="k">문의</span><span class="v mono copyable" data-c="032-743-3460">032-743-3460~1</span></div>
+    <div class="row"><span class="k">정류장</span><span class="v">하얏트 호텔 / 예약주차장</span></div>
+    <div class="row"><span class="k">노선</span><span class="v">T2 → 하얏트·예약주차장 → T1 [3G]</span></div>
+  </div>
+
+  <h2>링크</h2>
+  <div class="card"><ul class="list">
+    <li><a class="lk" href="https://parking.airport.kr/reserve/6210_01" target="_blank" rel="noopener">조회·변경·취소</a><span class="x">parking.airport.kr</span><span class="x">차량번호 <span class="sv mono copyable" data-k="p5car" data-c="">—</span> · 비밀번호 <span class="sv mono copyable" data-k="p5pw" data-c="">—</span></span></li>
+    <li><a class="lk" href="https://parking.airport.kr/reserve/6310_02/NT2022070019" target="_blank" rel="noopener">순환버스 안내</a><span class="x">parking.airport.kr</span></li>
+  </ul></div>
+
+  <h2>순환버스 시간표</h2>
+  <div class="card scroll"><table class="tt">
+    <tbody>
+      <tr><td>04</td><td colspan="5">4:52</td></tr>
+      <tr><td>05</td><td>5:04</td><td>5:14</td><td>5:31</td><td>5:40</td><td>5:52</td></tr>
+      <tr><td>06</td><td>6:00</td><td>6:20</td><td>6:28</td><td>6:41</td><td>6:53</td></tr>
+      <tr class="pick"><td>07</td><td>7:03</td><td>7:14</td><td>7:30</td><td>7:45</td><td>7:52</td></tr>
+      <tr><td>08</td><td>8:01</td><td>8:13</td><td>8:26</td><td>8:41</td><td>8:52</td></tr>
+      <tr><td>09</td><td>9:04</td><td>9:16</td><td>9:28</td><td>9:45</td><td></td></tr>
+      <tr><td>10</td><td>10:02</td><td>10:19</td><td>10:36</td><td>10:53</td><td></td></tr>
+      <tr><td>11</td><td>11:10</td><td>11:27</td><td>11:44</td><td></td><td></td></tr>
+      <tr><td>12</td><td>12:01</td><td>12:18</td><td>12:35</td><td>12:52</td><td></td></tr>
+      <tr><td>13</td><td>13:09</td><td>13:26</td><td>13:43</td><td></td><td></td></tr>
+      <tr><td>14</td><td>14:00</td><td>14:17</td><td>14:34</td><td>14:51</td><td></td></tr>
+      <tr><td>15</td><td>15:08</td><td>15:25</td><td>15:42</td><td>15:59</td><td></td></tr>
+      <tr><td>16</td><td>16:16</td><td>16:28</td><td>16:40</td><td>16:52</td><td></td></tr>
+      <tr><td>17</td><td>17:02</td><td>17:16</td><td>17:25</td><td>17:37</td><td>17:52</td></tr>
+      <tr class="pick"><td>18</td><td>18:06</td><td>18:17</td><td>18:32</td><td>18:39</td><td>18:47</td></tr>
+      <tr class="pick"><td>19</td><td>19:04</td><td>19:16</td><td>19:24</td><td>19:36</td><td>19:48</td></tr>
+      <tr><td>20</td><td>20:02</td><td>20:16</td><td>20:28</td><td>20:42</td><td></td></tr>
+      <tr><td>21</td><td>21:02</td><td>21:22</td><td>21:42</td><td></td><td></td></tr>
+      <tr><td>22</td><td>22:02</td><td>22:22</td><td>22:42</td><td></td><td></td></tr>
+      <tr><td>23</td><td>23:02</td><td>23:22</td><td>23:42</td><td></td><td></td></tr>
+      <tr><td>24</td><td colspan="5">0:02</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card"><ul class="list">
+    <li>출국 12/3: 7:45 탑승 (예비 7:52 · 일찍 오면 7:30) → T1 3G</li>
+    <li>귀국 12/6: 18시~19시대 탑승</li>
+  </ul></div>
+</section>
+
+<!-- 렌터카 -->
+<section class="panel" id="car" hidden>
+  <h2>예약 정보</h2>
+  <div class="card">
+    <div class="row"><span class="k">예약번호</span><span class="v big copyable sv" data-k="carno" data-c="">—</span></div>
+    <div class="row"><span class="k">패스워드</span><span class="v mono copyable sv" data-k="carpw" data-c="">—</span></div>
+    <div class="row"><span class="k">예약자</span><span class="v mono sv" data-k="nameEn">—</span></div>
+    <div class="row"><span class="k">예약처</span><span class="v">타비라이 · 타임즈카 신치토세공항점</span></div>
+    <div class="row"><span class="k">차량</span><span class="v">CX-30 (O-2) · 금연 · <b>4WD · 스터드리스 보장</b></span></div>
+    <div class="row"><span class="k">픽업</span><span class="v">12/3 14:00 · 공항 송영</span></div>
+    <div class="row"><span class="k">반납</span><span class="v">12/6 <b>10:30 목표 · 기한 11:05</b> (국제선 3시간 전) · 예약상 12:00 · 셔틀로 공항</span></div>
+    <div class="row"><span class="k">포함</span><span class="v">면책 · NOC · ETC 카드·단말기 · 스터드리스 · 내비</span></div>
+    <div class="row"><span class="k">주소</span><span class="v"><span class="copyable" data-c="北海道千歳市柏台南2-1-4">北海道千歳市柏台南2-1-4</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%8D%83%E6%AD%B3%E5%B8%82%E6%9F%8F%E5%8F%B0%E5%8D%972-1-4" target="_blank" rel="noopener">지도</a><span class="ab"><button data-ad="北海道千歳市柏台南2-1-4" data-n="일본어 주소">JP</button><button data-ad="2-1-4 Kashiwadaiminami, Chitose, Hokkaido" data-n="영어 주소">EN</button></span></span></div>
+    <div class="row"><span class="k">영업</span><span class="v">매일 09:00–19:00 (셔틀도 동일)</span></div>
+    <div class="row"><span class="k">무료 취소</span><span class="v">11/26까지 · 변경 불가(재예약)</span></div>
+    <div class="row"><span class="k">글로벌 데스크</span><span class="v"><span class="mono copyable" data-c="+815037860056">+81-50-3786-0056</span> · 매일 09–18 · 예약 문의</span></div>
+    <div class="row"><span class="k">매장 전화</span><span class="v mono copyable" data-c="0123458756">0123-45-8756</span></div>
+    <div class="row"><span class="k">말하기</span><span class="v">"Reservation number is <b class="sv" data-k="carno" data-fmt="words">—</b>."<br>予約番号は <span class="sv" data-k="carno">—</span> です。</span></div>
+  </div>
+  <h2>픽업 (12/3)</h2>
+  <div class="card"><ul class="list">
+    <li><a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선 → 타임즈 카운터 가는 길</a><span class="x">카운터 → 셔틀 약 10분 → 영업소 · 매장 <span class="mono copyable" data-c="0123458756">0123-45-8756</span></span></li>
+    <li>여권 · 한국면허 · 국제면허 · 본인 신용카드</li>
+    <li>HEP <b>4일권</b> 신청 · 당일 결제 (여권 + ETC 카드)<span class="x"><a class="lk" href="https://en.driveplaza.com/drawari/hokkaido_expass/" target="_blank" rel="noopener">HEP 안내</a></span></li>
+    <li>흠집 확인 · 사진 · 연료 종류 확인</li>
+    <li>근처 주유소 위치 물어보고 지도 저장</li>
+  </ul></div>
+
+  <h2>반납 (12/6)</h2>
+  <div class="card"><ul class="list">
+    <li>근처 주유소 가득 · 영수증</li>
+    <li>영업소 → 차 상태 확인 → 셔틀 약 10분</li>
+    <li>기한: 국제선 출발 3시간 전 → <b>11:05</b></li>
+    <li>미주유 시 단가×주행거리 청구</li>
+  </ul></div>
+
+  <h2>사고 시</h2>
+  <div class="card warnbox"><ul class="list">
+    <li>현장에서 경찰(110) + 타임즈 연락 필수</li>
+    <li>연락 안 하면 보상 불가</li>
+    <li>NOC 보상 가입: NOC 면제 · 펑크·휠캡 · 로드서비스</li>
+  </ul></div>
+
+  <h2>차 크기 · CX-30</h2>
+  <div class="card">
+    <div class="row"><span class="k">길이</span><span class="v">4.40m</span></div>
+    <div class="row"><span class="k">폭</span><span class="v">1.80m</span></div>
+    <div class="row"><span class="k">높이</span><span class="v">1.54m</span></div>
+  </div>
+</section>
+
+<!-- 운전 -->
+<section class="panel" id="drive" hidden>
+  <h2>톨게이트</h2>
+  <div class="card"><ul class="list">
+    <li><b>ETC</b> 칸(보라) · 시속 20km 이하</li>
+    <li><b>ETC/一般</b> 겸용 OK · <b>一般</b>(초록) 피하기</li>
+    <li>출발 전 ETC 카드 꽂혔는지 확인</li>
+    <li>一般 칸 실수 → 통행권 → 출구 一般 칸에서 통행권 + ETC 카드 제출</li>
+    <li>무인 정산기 → 호출 버튼 → 통행권 → ETC 카드</li>
+    <li>현금·신용카드 결제 금지 (패스 미적용)</li>
+    <li>차단기 안 열림 → 후진 금지 · 비상등 · 대기</li>
+  </ul></div>
+
+  <h2>주유</h2>
+  <div class="card">
+    <div class="fuel"><span style="background:#c62828">빨강 레귤러 ✓</span><span style="background:#b88a00">노랑 하이오크</span><span style="background:#2e7d32">초록 경유</span></div>
+    <ul class="list">
+      <li><b>軽油</b> = 경유(디젤) ✗</li>
+      <li>풀서비스: "레규라 만탄"</li>
+      <li>셀프(セルフ): 레귤러 → 만탄 → 결제 → 정전기 패드 → 주유</li>
+      <li>구글 지도 'gas station' + 영업 중</li>
+    </ul>
+  </div>
+
+  <h2>지역별 주유소</h2>
+  <div class="card"><h3>삿포로 · 호텔 근처 (12/4 출발 전)</h3><ul class="list">
+    <li><span class="tag staff">직원</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=ENEOS%20%E5%8D%974%E6%9D%A1%E8%A5%BFSS%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8D%974%E6%9D%A1%E8%A5%BF8%E4%B8%81%E7%9B%AE11-1" target="_blank" rel="noopener">ENEOS 南4条西SS</a><span class="ab"><button data-ad="北海道札幌市中央区南4条西8丁目11-1" data-n="일본어 주소">JP</button><button data-ad="8-11-1 Minami 4-jo Nishi, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0112516623">011-251-6623</span><span class="x">금 07:30–19:30 · 일 휴무 · 호텔에서 약 400m</span></li>
+    <li><span class="tag self">셀프</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=apollostation%20%E3%82%BB%E3%83%AB%E3%83%95%E5%8D%975%E6%9D%A1SS%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8D%975%E6%9D%A1%E8%A5%BF10%E4%B8%81%E7%9B%AE" target="_blank" rel="noopener">apollostation 셀프 南5条</a><span class="ab"><button data-ad="北海道札幌市中央区南5条西10丁目1015" data-n="일본어 주소">JP</button><button data-ad="10-1015 Minami 5-jo Nishi, Chuo-ku, Sapporo" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0115317852">011-531-7852</span><span class="x">24시간 · 렌터카 지정 주유소</span></li>
+  </ul></div>
+  <div class="card"><h3>비에이 시내 (12/4)</h3><ul class="list">
+    <li><span class="tag staff">직원</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%98%AD%E5%92%8C%E3%82%B7%E3%82%A7%E3%83%AB%20%E7%BE%8E%E7%91%9B%20%E4%B8%AD%E7%94%BA1%E4%B8%81%E7%9B%AE8-16" target="_blank" rel="noopener">Showa Shell 美瑛</a><span class="ab"><button data-ad="北海道上川郡美瑛町中町1丁目8-16" data-n="일본어 주소">JP</button><button data-ad="1-8-16 Nakamachi, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0166921561">0166-92-1561</span><span class="x">07:00–19:00 · 일 휴무 · 영어 OK</span></li>
+    <li><span class="tag staff">직원</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%9D%89%E7%9F%B3%E6%B2%B9%20%E7%BE%8E%E7%91%9B%E7%94%BA%E8%A5%BF%E7%94%BA1%E4%B8%81%E7%9B%AE3-20" target="_blank" rel="noopener">小杉石油</a><span class="ab"><button data-ad="北海道上川郡美瑛町西町1丁目3-20" data-n="일본어 주소">JP</button><button data-ad="1-3-20 Nishimachi, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0166921101">0166-92-1101</span><span class="x">07:00–19:00 · 일 휴무</span></li>
+    <li><span class="tag self">셀프</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%9B%E3%82%AF%E3%83%AC%E3%83%B3%20%E7%BE%8E%E7%91%9B%E5%A4%A7%E7%94%BA%E3%82%BB%E3%83%AB%E3%83%95SS" target="_blank" rel="noopener">호쿠렌 美瑛大町 셀프</a><span class="ab"><button data-ad="北海道上川郡美瑛町大町2丁目6-26" data-n="일본어 주소">JP</button><button data-ad="2-6-26 Omachi, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0166920021">0166-92-0021</span><span class="x">07:00–20:00 · 매일</span></li>
+  </ul></div>
+  <div class="card"><h3>오타루 · 아사리 (12/5~6)</h3><ul class="list">
+    <li><span class="tag staff">직원</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=Dr.Drive%20ENEOS%20%E5%85%A5%E8%88%B9SS%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E5%85%A5%E8%88%B91%E4%B8%81%E7%9B%AE3-6" target="_blank" rel="noopener">Dr.Drive ENEOS 入船</a><span class="ab"><button data-ad="北海道小樽市入船1丁目3-6" data-n="일본어 주소">JP</button><button data-ad="1-3-6 Irifune, Otaru, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0134240618">0134-24-0618</span><span class="x">07:30–21:00 · 매일 · 운하 근처</span></li>
+    <li><span class="tag self">셀프</span> <a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=apollostation%20%E3%82%BB%E3%83%AB%E3%83%95%E6%9C%9D%E9%87%8CSS%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E6%9C%9D%E9%87%8C3%E4%B8%81%E7%9B%AE18-11" target="_blank" rel="noopener">apollostation 셀프 朝里</a><span class="ab"><button data-ad="北海道小樽市朝里3丁目18-11" data-n="일본어 주소">JP</button><button data-ad="3-18-11 Asari, Otaru, Hokkaido" data-n="영어 주소">EN</button></span> <span class="mono copyable" data-c="0134514332">0134-51-4332</span><span class="x">06:00–23:45 · 매일 · 료칸 쪽 · 朝里IC 근처</span></li>
+  </ul></div>
+  <div class="card"><ul class="list"><li>치토세(반납 전)는 일정 12/6 참고</li></ul></div>
+
+  <h2>눈길</h2>
+  <div class="card"><ul class="list">
+    <li>밤 주차 시 와이퍼 세우기</li>
+    <li>눈 털이 브러시 확인</li>
+  </ul></div>
+</section>
+
+<!-- 주차 -->
+<section class="panel" id="park" hidden>
+  <h2>장소별</h2>
+  <div class="card">
+    <div class="row"><span class="k">도큐 REI</span><span class="v">호텔 기계식</span></div>
+    <div class="row"><span class="k">청의 호수</span><span class="v"><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%99%BD%E9%87%91%20%E9%9D%92%E3%81%84%E6%B1%A0%20%E9%A7%90%E8%BB%8A%E5%A0%B4" target="_blank" rel="noopener">주차장</a><span class="ab"><button data-ad="北海道上川郡美瑛町白金 青い池駐車場" data-n="일본어 주소">JP</button><button data-ad="Blue Pond Parking, Shirogane, Biei-cho, Hokkaido" data-n="영어 주소">EN</button></span></span></div>
+    <div class="row"><span class="k">오타루</span><span class="v"><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E7%A8%B2%E7%A9%82%E9%A7%90%E8%BB%8A%E5%A0%B4%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E7%A8%B2%E7%A9%823-19-10" target="_blank" rel="noopener">이나호 주차장</a><span class="ab"><button data-ad="北海道小樽市稲穂3-19-10" data-n="일본어 주소">JP</button><button data-ad="3-19-10 Inaho, Otaru, Hokkaido" data-n="영어 주소">EN</button></span> 등</span></div>
+    <div class="row"><span class="k">텐구야마</span><span class="v"><a class="mp" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B0%8F%E6%A8%BD%E5%A4%A9%E7%8B%97%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A8%E3%82%A4%20%E9%A7%90%E8%BB%8A%E5%A0%B4" target="_blank" rel="noopener">주차장</a><span class="ab"><button data-ad="北海道小樽市最上2-16-15" data-n="일본어 주소">JP</button><button data-ad="2-16-15 Mogami, Otaru, Hokkaido" data-n="영어 주소">EN</button></span></span></div>
+    <div class="row"><span class="k">료칸</span><span class="v">호텔 앞 좌우</span></div>
+  </div>
+  <h2>코인 파킹</h2>
+  <div class="card"><ul class="list">
+    <li>空 = 빈자리 · 満 = 만차</li>
+    <li>最大料金 = 최대 요금</li>
+    <li>잠금판식: 칸 번호 입력 → 결제</li>
+    <li>게이트식: 주차권 → 출구 정산</li>
+    <li>지폐·동전 준비 (고액권 불가 기계 있음)</li>
+  </ul></div>
+  <h2>주차장 종류</h2>
+  <div class="card"><ul class="list">
+    <li>自走式 · 平置き = 직접 주차 (크기 제한 적음)</li>
+    <li>機械式 · タワー式 = 기계식 (높이·폭 제한)</li>
+  </ul></div>
+</section>
+
+<!-- 할 일 -->
+<section class="panel" id="todo" hidden>
+  <div class="prog"><div class="b"><i id="todo-bar"></i></div><span id="todo-n" class="mono">0/0</span></div>
+  <h2>지금</h2>
+  <div class="card"><ul class="checks" data-l="todo">
+    <li><label><input type="checkbox" id="t13"><span>인천공항 근처 숙소 예약 (12/2 1박)<span class="x">영종도 · 12/3 아침 P5 입차 가능 11:30까지</span></span></label></li>
+    <li><label><input type="checkbox" id="t1"><span>국제운전면허증 수령<span class="x">10/26 신청 · 발급 완료 · 회사(DX팀)로 등기 · 11/2~11/9경 도착 · 발송 당일 문자</span><span class="x">둘 다 운전 시 둘 다 · 종이 원본 지참</span></span></label></li>
+  </ul></div>
+  <h2>1~2주 전</h2>
+  <div class="card"><ul class="checks" data-l="todo">
+    <li><label><input type="checkbox" id="t4"><span>Visit Japan Web 등록<span class="x"><a class="lk" href="https://vjw-lp.digital.go.jp" target="_blank" rel="noopener">vjw-lp.digital.go.jp</a> · 착륙 6시간 전까지 · 한 계정에 2인 · 숙소: 도큐 REI · 입국·세관 QR 2개 스크린샷</span></span></label></li>
+    <li><label><input type="checkbox" id="t5"><span>엔화 환전<span class="x">금액은 비용 탭</span></span></label></li>
+    <li><label><input type="checkbox" id="t6"><span>카드 해외결제·PIN 확인<span class="x">비자 + 마스터</span></span></label></li>
+    <li><label><input type="checkbox" id="t7"><span>식당 예약<span class="x">징기스칸 · 오타루 스시</span></span></label></li>
+    <li><label><input type="checkbox" id="t8"><span>청의 호수 · 푸른 운하 일정 확인</span></label></li>
+  </ul></div>
+  <h2>직전</h2>
+  <div class="card"><ul class="checks" data-l="todo">
+    <li><label><input type="checkbox" id="t9"><span>구글맵 오프라인 지도 다시 받기 (11/26경)<span class="x">10/28 1차 다운로드 완료 · 출발 1주일 전 업데이트 · 공항~삿포로~오타루 / 비에이~아사히카와 2구역</span></span></label></li>
+    <li><label><input type="checkbox" id="t10"><span>파라타항공 온라인 체크인</span></label></li>
+    <li><label><input type="checkbox" id="t11"><span>이심 설치 · 한국 번호 데이터 로밍 끄기<span class="x">출국 전 한국에서 설치 → 설치 후 이심 꺼두기 → 도착 후 데이터 회선을 이심으로</span><span class="x">비상시 공항 Wi-Fi: NewChitose_Airport_Free_Wi-Fi (국제선 OK)</span><span class="x">도시락이심 · 도코모 로컬망 · 하루 5GB 후 저속 · 4일 · 유효 90일</span><span class="x">듀얼심: 데이터 = 이심 · 한국 번호 = 데이터 로밍 끄고 회선 ON</span><span class="x">내비 폰 = 도코모 · 문의 1566-9070</span></span></label></li>
+    <li><label><input type="checkbox" id="t12"><span>비에이 날씨·도로 확인</span></label></li>
+  </ul></div>
+</section>
+
+<!-- 짐 -->
+<section class="panel" id="pack" hidden>
+  <div class="prog"><div class="b"><i id="pack-bar"></i></div><span id="pack-n" class="mono">0/0</span></div>
+  <h2>서류·돈</h2>
+  <div class="card"><ul class="checks" data-l="pack">
+    <li><label><input type="checkbox" id="p1"><span>여권</span></label></li>
+    <li><label><input type="checkbox" id="p2"><span>한국 운전면허증</span></label></li>
+    <li><label><input type="checkbox" id="p3"><span>국제운전면허증</span></label></li>
+    <li><label><input type="checkbox" id="p4"><span>본인 신용카드 2장</span></label></li>
+    <li><label><input type="checkbox" id="p5"><span>엔화 · 동전 지갑</span></label></li>
+  </ul></div>
+  <h2>차</h2>
+  <div class="card"><ul class="checks" data-l="pack">
+    <li><label><input type="checkbox" id="p6"><span>주파집 CWC08 Qi2.2 25W 쿨링 거치대 <b>구매 완료</b> · 챙기기<span class="x">송풍구 클립 + 연장 거치대 · 시거잭 C포트 → 거치대 C to C 케이블 (45W 이상 PD)</span></span></label></li>
+    <li><label><input type="checkbox" id="p7"><span>UGREEN 130W 시거잭 충전기 + 100W 케이블 <b>구매 완료</b> · 챙기기<span class="x">C2(100W) → 거치대 · C1(30W) → 동승자 폰 25W · A포트는 비우기(같이 쓰면 C1이 5V로 떨어짐)</span></span></label></li>
+  </ul></div>
+  <h2>방한</h2>
+  <div class="card"><ul class="checks" data-l="pack">
+    <li><label><input type="checkbox" id="p19"><span>방수 신발 <b>구매</b><span class="x">눈에 안 젖는 것 · 밑창 미끄럼 방지</span></span></label></li>
+    <li><label><input type="checkbox" id="p11"><span>핫팩</span></label></li>
+    <li><label><input type="checkbox" id="p12"><span>립밤 · 보습제</span></label></li>
+  </ul></div>
+  <h2>기타</h2>
+  <div class="card"><ul class="checks" data-l="pack">
+    <li><label><input type="checkbox" id="p13"><span>멀티 어댑터 1 + 110V 돼지코 2~3개<span class="x">일본 콘센트 = 납작 2구(A타입) · 100V</span></span></label></li>
+    <li><label><input type="checkbox" id="p14"><span>보조배터리 (기내)</span></label></li>
+    <li><label><input type="checkbox" id="p16"><span>고데기 · <b>배터리 내장 무선은 반입 불가</b><span class="x">파라타: 배터리 분리 불가 무선 고데기 = 기내·위탁 모두 불가 (벨리곰 무선 미니 ✗)</span><span class="x">가능: 비행기 모드 모델(기내 휴대만) · 배터리 분리형(배터리 빼서 기내) · 유선 프리볼트 100–240V</span></span></label></li>
+    <li><label><input type="checkbox" id="p17"><span>핸드폰 충전기 · 케이블</span></label></li>
+    <li><label><input type="checkbox" id="p18"><span>물티슈</span></label></li>
+  </ul></div>
+</section>
+
+<!-- 일본어 -->
+<section class="panel" id="jp" hidden>
+  <div class="card">
+    <div class="jp"><b>レギュラー満タンでお願いします</b><span>레귤러 가득이요</span><button data-cp="レギュラー満タンでお願いします">복사</button></div>
+    <div class="jp"><b>ETCカードでお願いします</b><span>ETC 카드로 할게요</span><button data-cp="ETCカードでお願いします">복사</button></div>
+    <div class="jp"><b>北海道エクスプレスウェイパスを申し込みたいです</b><span>고속도로 패스 신청할게요</span><button data-cp="北海道エクスプレスウェイパスを申し込みたいです">복사</button></div>
+    <div class="jp"><b>駐車場は滞在中、出し入れ自由ですか?</b><span>숙박 중 주차 입출고 자유인가요?</span><button data-cp="駐車場は滞在中、出し入れ自由ですか?">복사</button></div>
+    <div class="jp"><b>この近くのガソリンスタンドはどこですか?</b><span>근처 주유소 어디예요?</span><button data-cp="この近くのガソリンスタンドはどこですか?">복사</button></div>
+    <div class="jp"><b>予約しています。ホンです</b><span>예약한 홍입니다</span><button data-cp="予約しています。ホンです">복사</button></div>
+  </div>
+  <h2>표지</h2>
+  <div class="card">
+    <div class="row"><span class="k">一旦停止</span><span class="v">일단 정지</span></div>
+    <div class="row"><span class="k">止まれ</span><span class="v">정지</span></div>
+    <div class="row"><span class="k">一般</span><span class="v">일반 차로 (현금·통행권)</span></div>
+    <div class="row"><span class="k">軽油</span><span class="v">경유 (디젤)</span></div>
+    <div class="row"><span class="k">空 / 満</span><span class="v">빈자리 / 만차</span></div>
+    <div class="row"><span class="k">最大料金</span><span class="v">최대 요금</span></div>
+    <div class="row"><span class="k">高さ制限</span><span class="v">높이 제한</span></div>
+  </div>
+</section>
+
+<!-- 비용 -->
+<section class="panel" id="cost" hidden>
+  <h2>결제 완료 (원)</h2>
+  <div class="card">
+    <div class="row"><span class="k">항공권</span><span class="v"><b class="mono">888,400원</b><br>항공 요금 868,400 + 대행수수료 20,000</span></div>
+    <div class="row"><span class="k">도큐 REI 2박</span><span class="v"><b class="mono">267,751원</b><br>객실 221,280 + 세금·봉사료 46,471 · Master <span class="sv" data-k="card4" data-fmt="card"></span></span></div>
+    <div class="row"><span class="k">료칸 1박</span><span class="v"><b class="mono">854,129원</b><br>객실 705,881 + 세금·봉사료 148,248 · Master <span class="sv" data-k="card4" data-fmt="card"></span></span></div>
+    <div class="row"><span class="k">이심</span><span class="v"><b class="mono">22,840원</b><br>도시락이심 · 네이버페이 · 10/26</span></div>
+    <div class="row"><span class="k">여행자 보험</span><span class="v"><b class="mono">11,440원</b></span></div>
+    <div class="row"><span class="k">인천 P5</span><span class="v"><b class="mono">10,000원</b><br>보증금 · 잔액은 출차 시</span></div>
+    <div class="row"><span class="k"><b>합계</b></span><span class="v mono"><b>2,054,560원</b></span></div>
+  </div>
+
+  <h2>현장 · 렌터카 관련 (엔)</h2>
+  <div class="card">
+    <div class="row"><span class="k">렌터카</span><span class="v"><b class="mono">30,430엔</b> · 픽업 때 카드<br>기본 26,800(면책 포함) + NOC 3,300 + ETC 카드 330</span></div>
+    <div class="row"><span class="k">HEP 4일</span><span class="v"><b class="mono">7,700엔</b> · 픽업 때</span></div>
+    <div class="row"><span class="k">호텔 주차</span><span class="v"><b class="mono">3,600엔</b> · 1박 1,800 × 2</span></div>
+    <div class="row"><span class="k">청의 호수 주차</span><span class="v mono">1,000엔</span></div>
+    <div class="row"><span class="k">오타루 주차</span><span class="v">이나호 <b class="mono">최대 1,000엔</b>/24h · 20분 100엔</span></div>
+    <div class="row"><span class="k">기름</span><span class="v"><b class="mono">5,000–8,000엔</b> · 레귤러 약 172엔/L</span></div>
+    <div class="row"><span class="k"><b>합계</b></span><span class="v mono"><b>약 48,700–51,700엔</b></span></div>
+  </div>
+
+  <h2>현장 · 기타</h2>
+  <div class="card">
+    <div class="row"><span class="k">텐구야마</span><span class="v">로프웨이 왕복 <b class="mono">2,000엔</b>/인 · 2인 4,000엔</span></div>
+    <div class="row"><span class="k">료칸</span><span class="v">입욕세 약 2,530원 · 체크인 때</span></div>
+    <div class="row"><span class="k">도시세</span><span class="v">부과 시 두 숙소 체크인 때</span></div>
+    <div class="row"><span class="k">인천 P5</span><span class="v">주차 잔액 · 12/6 출차 시</span></div>
+    <div class="row"><span class="k">무료</span><span class="v">청의 호수 조명 · 텐구야마 주차 · 료칸 주차</span></div>
+  </div>
+
+  <h2>현금</h2>
+  <div class="card"><ul class="list">
+    <li>엔화 3~5만 엔 · 1,000엔권 넉넉히</li>
+  </ul></div>
+
+  <h2>현금 필요한 곳</h2>
+  <div class="card"><ul class="list">
+    <li>라멘 식권기 · 시장 · 노점 · 작은 이자카야</li>
+    <li>일부 주차장 · 시골 주유소</li>
+    <li>부족 시 세븐일레븐 ATM</li>
+  </ul></div>
+</section>
+
+<!-- 기타 -->
+<section class="panel" id="info" hidden>
+
+  <h2>예약자 정보</h2>
+  <div class="card">
+    <div class="row"><span class="k">이름</span><span class="v"><span class="sv" data-k="name">—</span> · <span class="sv" data-k="nameEn">—</span></span></div>
+    <div class="row"><span class="k">이메일</span><span class="v sv" data-k="email">—</span></div>
+    <div class="row"><span class="k">전화</span><span class="v mono sv" data-k="phone" data-fmt="intl">—</span></div>
+  </div>
+
+  <h2>연락처</h2>
+  <div class="card">
+    <div class="row"><span class="k">타임즈</span><span class="v mono copyable" data-c="0123458756">0123-45-8756</span></div>
+    <div class="row"><span class="k">료칸</span><span class="v mono copyable" data-c="+81134515151">+81 134-51-5151</span></div>
+    <div class="row"><span class="k">인천 예약주차</span><span class="v mono copyable" data-c="032-743-3460">032-743-3460~1</span></div>
+    <div class="row"><span class="k">경찰</span><span class="v mono">110</span></div>
+    <div class="row"><span class="k">구급·화재</span><span class="v mono">119</span></div>
+  </div>
+
+  <h2>시간 정보</h2>
+  <div class="card">
+    <div class="row"><span class="k">일몰</span><span class="v">16시 전후</span></div>
+    <div class="row"><span class="k">일루미네이션</span><span class="v">오도리 회장 11/20–12/25</span></div>
+    <div class="row"><span class="k">청의 호수</span><span class="v">12월 16:30–21:00 점등</span></div>
+    <div class="row"><span class="k">텐구야마</span><span class="v">겨울 9–20시 · 마지막 상행 19:48</span></div>
+    <div class="row"><span class="k">오타루 상점</span><span class="v">18시 전후 마감</span></div>
+    <div class="row"><span class="k">타임즈</span><span class="v">09:00–19:00</span></div>
+  </div>
+
+
+</section>
+
+<!-- 설정 -->
+<section class="panel" id="set" hidden>
+
+  <h2>내 정보</h2>
+  <div class="card set">
+    <div class="sub">이 폰 브라우저에만 저장 · 파일이나 깃허브에는 안 올라감 · 입력하면 일정·항공·숙소·인천·렌터카·비용·기타 탭에 자동 표시</div>
+    <div class="row"><label class="k" for="s-name">이름</label><span class="v"><input id="s-name" data-s="name" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="홍길동"></span></div>
+    <div class="row"><label class="k" for="s-nameEn">영문 이름</label><span class="v"><input id="s-nameEn" data-s="nameEn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="HONG GILDONG"></span></div>
+    <div class="row"><label class="k" for="s-stayName">숙소 예약자명</label><span class="v"><input id="s-stayName" data-s="stayName" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gil dong"></span></div>
+    <div class="row"><label class="k" for="s-phone">전화</label><span class="v"><input id="s-phone" data-s="phone" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="010-0000-0000"></span></div>
+    <div class="row"><label class="k" for="s-email">이메일</label><span class="v"><input id="s-email" data-s="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="me@example.com"></span></div>
+    <div class="row"><label class="k" for="s-pnr">항공 예약번호</label><span class="v"><input id="s-pnr" data-s="pnr" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="6자리"></span></div>
+    <div class="row"><label class="k" for="s-p5no">P5 예약번호</label><span class="v"><input id="s-p5no" data-s="p5no" autocomplete="off" autocapitalize="off" spellcheck="false"></span></div>
+    <div class="row"><label class="k" for="s-p5car">차량번호</label><span class="v"><input id="s-p5car" data-s="p5car" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="12가3456"></span></div>
+    <div class="row"><label class="k" for="s-p5pw">P5 비밀번호</label><span class="v"><input id="s-p5pw" data-s="p5pw" autocomplete="off" autocapitalize="off" spellcheck="false"></span></div>
+    <div class="row"><label class="k" for="s-carno">타임즈 예약번호</label><span class="v"><input id="s-carno" data-s="carno" autocomplete="off" autocapitalize="off" spellcheck="false"></span></div>
+    <div class="row"><label class="k" for="s-carpw">타임즈 패스워드</label><span class="v"><input id="s-carpw" data-s="carpw" autocomplete="off" autocapitalize="off" spellcheck="false"></span></div>
+    <div class="row"><label class="k" for="s-card4">카드 뒷 4자리</label><span class="v"><input id="s-card4" data-s="card4" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="0000"></span></div>
+    <div class="pad"><div class="btns"><button id="s-save" class="pri">저장</button><button id="s-export">내 코드 복사</button><button id="s-clear">전체 지우기</button></div><div class="st" id="s-st"></div></div>
+  </div>
+
+  <h2>한 번에 넣기</h2>
+  <div class="card set">
+    <div class="sub">코드(SG1.…)를 붙여넣고 적용 → 위 칸이 전부 채워짐</div>
+    <div class="pad"><textarea id="s-code" rows="3" placeholder="SG1.…" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="s-apply" class="pri">적용</button></div></div>
+  </div>
+
+</section>
+
+</main>
+<div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>
+<div class="toast" id="toast">복사됨</div>
 
 <script>
 (function(){
-  var KEY='sapporo-trip-checks';
+  var tabs=document.querySelectorAll('.tabs button'), panels=document.querySelectorAll('.panel');
+  function show(id){
+    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.tab===id?'true':'false');});
+    panels.forEach(function(p){p.hidden=p.id!==id;});
+    window.scrollTo(0,0);
+    try{localStorage.setItem('sg-tab',id);}catch(e){}
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab);});});
+
+  var days=document.querySelectorAll('.daysel button'), cards=document.querySelectorAll('[data-day]');
+  function day(n){
+    days.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d==n?'true':'false');});
+    cards.forEach(function(c){c.hidden=c.dataset.day!=n;});
+  }
+  days.forEach(function(b){b.addEventListener('click',function(){day(b.dataset.d);});});
+  var now=new Date(), y=now.getFullYear(), m=now.getMonth()+1, d=now.getDate();
+  if(y===2026&&m===12&&d>=3&&d<=6){day(d-2);}
+  else{try{var tb=localStorage.getItem('sg-tab');if(tb&&document.getElementById(tb))show(tb);}catch(e){}}
+
   var saved={};
-  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
-  var boxes=document.querySelectorAll('.checks input[type=checkbox]');
-  function update(){
-    ['todo','pack'].forEach(function(name){
-      var list=document.querySelectorAll('[data-list="'+name+'"] input');
-      var done=0; list.forEach(function(b){if(b.checked)done++;});
-      document.getElementById(name+'-count').textContent=done+'/'+list.length;
-      document.getElementById(name+'-bar').style.width=(list.length?done/list.length*100:0)+'%';
+  try{saved=JSON.parse(localStorage.getItem('sg-checks')||'{}')||{};}catch(e){}
+  function prog(){
+    ['todo','pack'].forEach(function(n){
+      var l=document.querySelectorAll('[data-l="'+n+'"] input'),c=0;
+      l.forEach(function(b){if(b.checked)c++;});
+      document.getElementById(n+'-n').textContent=c+'/'+l.length;
+      document.getElementById(n+'-bar').style.width=(l.length?c/l.length*100:0)+'%';
     });
   }
-  boxes.forEach(function(b){
+  document.querySelectorAll('.checks input').forEach(function(b){
     if(saved[b.id])b.checked=true;
-    b.addEventListener('change',function(){
-      saved[b.id]=b.checked;
-      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
-      update();
-    });
+    b.addEventListener('change',function(){saved[b.id]=b.checked;try{localStorage.setItem('sg-checks',JSON.stringify(saved));}catch(e){}prog();});
   });
-  update();
-  document.querySelectorAll('[data-copy]').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var text=btn.getAttribute('data-copy');
-      var done=function(){btn.textContent='복사됨';setTimeout(function(){btn.textContent='복사';},1500);};
-      try{
-        navigator.clipboard.writeText(text).then(done,function(){selectFallback(btn);});
-      }catch(e){selectFallback(btn);}
-    });
-  });
-  function selectFallback(btn){
-    var jp=btn.parentNode.querySelector('.jp');
-    var r=document.createRange(); r.selectNodeContents(jp);
-    var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
-    btn.textContent='선택됨';
+  prog();
+
+  var toast=document.getElementById('toast'),tm;
+  function flash(msg,ms){toast.textContent=msg;toast.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){toast.classList.remove('on');},ms||1300);}
+  function legacy(text){
+    var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
+    var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);try{getSelection().removeAllRanges();}catch(e){}
+    if(document.activeElement)document.activeElement.blur();
+    return ok;
   }
+  function cp(text,el,name){
+    var msg=(name||'')+(name?' ':'')+'복사됨';
+    var done=function(){flash(msg);}, fail=function(){flash(legacy(text)?msg:text);};
+    try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done,fail);}else{fail();}}catch(e){fail();}
+  }
+  document.querySelectorAll('.copyable').forEach(function(el){el.addEventListener('click',function(){if(el.classList.contains('sv')&&!el.dataset.c){show('set');return;}cp(el.dataset.c,el);});});
+  document.querySelectorAll('[data-cp]').forEach(function(b){b.addEventListener('click',function(){cp(b.dataset.cp,b.parentNode.querySelector('b'));});});
+
+
+  var S={},SK='sg-secrets',KEYS=['name','nameEn','stayName','phone','email','pnr','p5no','p5car','p5pw','carno','carpw','card4'];
+  try{S=JSON.parse(localStorage.getItem(SK)||'{}')||{};}catch(e){}
+  function fmt(v,f){if(!v)return '';
+    if(f==='intl'){var d=v.replace(/\D/g,'');return d.charAt(0)==='0'?'82'+d.slice(1):d;}
+    if(f==='words'){var W=['zero','one','two','three','four','five','six','seven','eight','nine'];return v.toUpperCase().split('').filter(function(c){return c!==' ';}).map(function(c){return /\d/.test(c)?W[+c]:c;}).join('-');}
+    if(f==='card'){return '**'+v.replace(/\D/g,'').slice(-4);}
+    return v;}
+  function cnt(){var n=0;KEYS.forEach(function(k){if((S[k]||'').trim())n++;});return n;}
+  function fill(){
+    document.querySelectorAll('.sv').forEach(function(el){var v=fmt((S[el.dataset.k]||'').trim(),el.dataset.fmt);
+      el.textContent=v||(el.dataset.fmt==='card'?'':'—');el.classList.toggle('empty',!v);if(el.classList.contains('copyable'))el.dataset.c=v;});
+    document.querySelectorAll('[data-s]').forEach(function(i){var v=S[i.dataset.s]||'';if(i.value!==v)i.value=v;});
+    var st=document.getElementById('s-st');st.textContent=cnt()?cnt()+'/'+KEYS.length+' 입력됨 · 이 기기에 저장됨':'아직 입력 안 함';}
+  function saveS(quiet){var ok=true;try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){ok=false;}fill();if(!ok)flash('저장 실패 · 브라우저 저장소 사용 불가',2500);else if(!quiet)flash('저장됨');}
+  document.querySelectorAll('[data-s]').forEach(function(i){i.addEventListener('input',function(){S[i.dataset.s]=i.value;saveS(true);});});
+  document.getElementById('s-save').addEventListener('click',function(){saveS(false);});
+  function enc(o){return 'SG1.'+btoa(unescape(encodeURIComponent(JSON.stringify(o))));}
+  function dec(c){c=(c||'').replace(/\s+/g,'');if(c.indexOf('SG1.')!==0)throw 0;return JSON.parse(decodeURIComponent(escape(atob(c.slice(4)))));}
+  document.getElementById('s-export').addEventListener('click',function(){if(!cnt()){flash('입력된 값이 없음');return;}cp(enc(S),null,'코드');});
+  document.getElementById('s-apply').addEventListener('click',function(){var ta=document.getElementById('s-code');try{var o=dec(ta.value);var n=0;KEYS.forEach(function(k){if(typeof o[k]==='string'){S[k]=o[k];n++;}});if(!n)throw 0;saveS(true);ta.value='';flash(n+'개 적용됨 · 이 기기에 저장됨',2200);}catch(e){flash('코드 형식이 아님 (SG1.…)',2200);}});
+  var clr=document.getElementById('s-clear'),clrT;
+  clr.addEventListener('click',function(){if(clr.dataset.arm){S={};try{localStorage.removeItem(SK);}catch(e){}fill();clr.textContent='전체 지우기';delete clr.dataset.arm;flash('지웠음');}else{clr.dataset.arm='1';clr.textContent='정말 지우기?';clearTimeout(clrT);clrT=setTimeout(function(){clr.textContent='전체 지우기';delete clr.dataset.arm;},3000);}});
+  document.querySelectorAll('.sv').forEach(function(el){if(!el.classList.contains('copyable'))el.addEventListener('click',function(){if(el.classList.contains('empty'))show('set');});});
+  fill();
+  if(!cnt()){setTimeout(function(){if(!cnt())flash('설정 탭에서 내 정보 입력 → 예약번호·비밀번호 표시',3000);},600);}
+  var lb=document.getElementById('lb'),lbi=document.getElementById('lbi'),lbc=document.getElementById('lbc'),lbs=document.getElementById('lbs');
+  function wurl(f,w){var p=f.split('/');var n=p[2];return 'https://upload.wikimedia.org/wikipedia/commons/thumb/'+p[0]+'/'+p[1]+'/'+encodeURIComponent(n)+'/'+w+'px-'+encodeURIComponent(n);}
+  function openPh(f,cap){var ws=[960,500,330],i=0;lbs.textContent='불러오는 중…';lbi.style.display='';lbi.removeAttribute('src');lbi.alt=cap;
+    lbc.innerHTML='';var t=document.createElement('div');t.textContent=cap;var a=document.createElement('a');a.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(f.split('/')[2]);a.target='_blank';a.rel='noopener';a.textContent='사진: Wikimedia Commons';lbc.appendChild(t);lbc.appendChild(a);
+    lbi.onload=function(){lbs.textContent='';lbi.style.display='';};
+    lbi.onerror=function(){i++;if(i<ws.length){lbi.src=wurl(f,ws[i]);}else{lbi.style.display='none';lbs.textContent='사진을 불러올 수 없어요 (인터넷 필요)';}};
+    lbi.src=wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden';}
+  function closePh(){lb.classList.remove('on');lbi.removeAttribute('src');document.body.style.overflow='';}
+  document.querySelectorAll('.ph').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh(b.dataset.f,b.dataset.cap);});});
+  document.getElementById('lbx').addEventListener('click',closePh);
+  lb.addEventListener('click',function(e){if(e.target===lb)closePh();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePh();});
+  document.querySelectorAll('[data-ad]').forEach(function(b){b.addEventListener('click',function(){cp(b.dataset.ad,b,b.dataset.n);});});
+  document.querySelectorAll('[data-cpid]').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.cpid);cp(el.textContent,el);});});
 })();
 </script>
+</body>
+</html>

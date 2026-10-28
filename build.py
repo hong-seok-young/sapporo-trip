@@ -48,6 +48,11 @@ PL = {
  'P_TENGU': ('텐구야마 주차장','小樽天狗山ロープウエイ 駐車場',['北海道小樽市最上2-16-15','2-16-15 Mogami, Otaru, Hokkaido'],None),
 }
 
+import hashlib
+def cf(name):
+    """Commons 파일명 → 'a/ab/Name' 경로"""
+    n=name.replace(' ','_'); h=hashlib.md5(n.encode('utf-8')).hexdigest()
+    return f'{h[0]}/{h[:2]}/{n}'
 def mapurl(q): return 'https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)
 def thumb(f,w=500):
     a,b,n=f.split('/',2); n=urllib.parse.quote(n)
@@ -81,6 +86,10 @@ def tile(k, cap=None, tag=None, phone=None, note=None):
     x=f'<div class="tx">{esc(note)}</div>' if note else ''
     return f'<div class="tile{"" if f else " nop"}">{img}{n}{x}<div class="ta">{acts(k,phone)}</div></div>'
 
+def tile_img(src, name, cap, note=None):
+    x=f'<div class="tx">{esc(note)}</div>' if note else ''
+    return f'<div class="tile"><button class="ti" data-src="{esc(src)}" data-cap="{esc(cap)}" aria-label="{esc(cap)}"><img src="{esc(src)}" loading="lazy" alt="" onerror="this.hidden=true"></button><div class="tn">{esc(name)}</div>{x}</div>'
+
 def tiles(*items):
     return '<div class="strip">'+''.join(t.replace('<div class="tile',f'<div style="--k:{i}" class="tile',1) for i,t in enumerate(items))+'</div>'
 
@@ -111,7 +120,7 @@ TL={
  stop('전날','12/2 영종도 숙소 1박','예약 전',ic='🛏️'),
  stop('07:10','숙소 체크아웃 → P5','차로 10~20분',ic='🚗'),
  stop('07:25','P5 입차','예약 07:30',tiles(tile('P5')),ic='🅿️'),
- stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',ic='🚌'),
+ stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',tiles(tile_img('./bus.jpg','순환버스 시간표','순환버스 시간표 (T1 3G ↔ 하얏트·예약주차장 ↔ T2)','누르면 크게')),ic='🚌'),
  stop('07:55','T1 도착 · 체크인','카운터 마감 약 09:05',tiles(tile('T1')),ic='🛫'),
  stop('09:35','탑승 시작',ic='🎫'),
  stop('10:05','인천 출발 <span class="code">WE0531</span>',ic='✈️'),
@@ -148,7 +157,7 @@ TL={
             tile('COSMO',tag=('self','2순위 셀프'),phone=('0123232324','0123-23-2324'),note='반납지 1.8km · 24시간 · 카드 거절 후기 → 현금')),ic='⛽'),
  stop('10:30','타임즈 반납','늦어도 11:05 → 셔틀 → 국제선',tiles(tile('TIMES')),ic='🔑'),
  stop('14:05','신치토세 출발 <span class="code">WE0532</span>','17:30 인천 도착',ic='✈️'),
- stop('18:30','입국 · 짐 → 순환버스 → P5','18~19시대 탑승',tiles(tile('P5')),ic='🚌'),
+ stop('18:30','입국 · 짐 → 순환버스 → P5','18~19시대 탑승',tiles(tile_img('./bus.jpg','순환버스 시간표','순환버스 시간표 (T1 3G ↔ 하얏트·예약주차장 ↔ T2)','누르면 크게'),tile('P5')),ic='🚌'),
  stop('19:00','출차 · 정산',ic='🏁'),
 ]),
 }
@@ -254,7 +263,7 @@ ICN=f'''
   {row('순환버스','정류장 하얏트 호텔 / 예약주차장 · 노선 T2 → 하얏트·예약주차장 → T1 3G<br><a class="lk" href="https://parking.airport.kr/reserve/6310_02/NT2022070019" target="_blank" rel="noopener">순환버스 안내</a>')}
   <div class="barcode"></div>
 </article>
-<details class="dt"><summary>순환버스 시간표</summary>
+<details class="dt"><summary>순환버스 시간표 (사진은 일정 12/3 07:45)</summary>
 <div class="scroll"><table class="tt"><tbody>
 <tr><td>04</td><td colspan="5">4:52</td></tr>
 <tr><td>05</td><td>5:04</td><td>5:14</td><td>5:31</td><td>5:40</td><td>5:52</td></tr>
@@ -604,24 +613,32 @@ FOOD=[
  ]),
 ]
 
+PH={'수아게+ 본점': 'A soup curry dish in Sapporo - Flickr - odako1.jpg', '라멘 요코초': 'Ganso Ramen Street by zezebono in Sapporo, Hokkaido.jpg', '네무로 하나마루 스텔라플레이스': 'Sushi Nemuro Hanamaru Tokei Dai (184517515).jpeg', 'GARAKU 본점': 'スープカレー Soup Curry.jpg', '키타카로 삿포로 본관': 'Choux à la crème (19387655069).jpg', '롯카테이 삿포로 본점': 'SAKURAKO - RokkaTei Sapporo flagship store. (20603602119).jpg', '키노토야 오도리공원점': 'Hokkaido Milk Creamy Tart.jpg', '유키지루시 파를러 본점': 'Ice-cream.jpg', '다루마 본점': 'Tsukisappu genghis khan club genghis khan.JPG', '스시젠 스스키노점': 'Nigiri Sushi (26571110455).jpg', '타쿠즈시': 'Nigiri Sushi (26478732232).jpg', '스시킨': 'Sushi Set (50857770).jpeg', '아리마': 'Chirashizushi by The Wong Family Pictures in Hokkaido.jpg', '하치쿄 본점': 'Ikura don.jpg', '후지야 누들': '151010 Sapporo ramen at Susukino Sapporo Hokkaido Japan01s.jpg', '신게츠': 'Japanese Salt flavor Sapporo Ramen.JPG', '스스키노 프렌치 1★': 'Menu gastronomique - Plat (1).jpg', '참고 · 홋카이도 3★': 'Cuisine Trois étoiles.jpg', '파르페테리아 PaL': 'Strawberry Parfait, Senbikiya (6639279479).jpg', '사토': 'Parfait samples by pinguino in Osaka, Japan.jpg', '이니셜': 'Parfait.jpg', '니조시장 오이소': 'Nijo fish Market 2014.jpg', '호텔 조식 · 편의점': 'Japanese rice balls (onigiri).jpg', '준페이': 'Fried-shrimp.jpg', '블랑 루주': 'Gratin dauphinois.jpg', '오키라쿠테이': 'Pot-au-feu - Josselin 3.jpg', '페름 라 테르': 'Hokkaido cheesecake.jpg', '비블레 · 아스페르주': 'Haute Cuisine.jpg', '비에이 선카': 'Soft Ice cream.jpg', '시로가네 비르케 (道の駅)': '@POND', '다루마 5.5점': 'Jingisukan at Asahi Beer Community Hall.jpg', '삼각시장 타키나미 식당': 'Kaisendon.jpg', '아지도코로 타케다': 'Kaisendon 001.jpg', '쿠키젠': 'Omakase.jpg', '이세즈시': 'Hokkaido hotatekai nigiri.jpg', '마사즈시 젠안': 'Nigiri Sushi (26478725732).jpg', '우오마사': 'Nigiri Sushi (26505096851).jpg', '나루토 본점': 'Tori no Karaage - Japanese style Fried chicken.jpg', '케이엔': 'Yakisoba - 01.jpg', '르타오 본점 카페': '220721 LeTAO Otaru Hokkaido Japan02s3.jpg', '키타카로 오타루 본관': 'Cream puff Spivack.jpg', '롯카테이 오타루운하점': 'Marusei butter sand of Rokkatei (1).jpg', '아마토 본점': 'Fraisier hk jp.jpg', '쿠와타야 팡쥬': '', '오타루 창고 No.1': '@CANAL', '료칸 가이세키': '@RYOKAN', '홋카이도 라멘도조': 'Sapporo ramen Kyowakoku1.jpg', '함타로': 'Kaiten-zushi 005.jpg', '라비': 'A soup curry dish in Sapporo - Flickr - odako1.jpg', '마츠오 징기스칸': 'Matsuo Jingisukan.jpg', '기타노하나 하야시': 'Nigiri Sushi (25966163204).jpg', '르타오': 'Hokkaido cheesecake.jpg', '키노토야 · 로이즈': 'Royce chocolate.jpg', '데즈카수산 · 사케노마루가메': 'Banshu deep-fried Kamaboko.JPG', '밀크스탠드': 'Milk-bottle&cap,japan.JPG', '삿포로 비어엔': 'Sapporo beer teien01.jpg', '멘야 사이미': 'Miso Ramen.JPG', '아사히카와 라멘무라': 'Baikohken Ramen.jpg', '스시 미야카와': 'Nigiri Sushi (25966163204).jpg', '스시 잇코': 'Omakase.jpg', '모리에르': 'Cuisine Trois étoiles.jpg', '하치쿄': 'Ikura don.jpg'}
+
+def food_photo(name):
+    v=PH.get(name,'')
+    if not v: return None
+    if v.startswith('@'): return PL[v[1:]][3]
+    return cf(v)
+
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
+    data=[]
     for i,(area,sub,slots) in enumerate(FOOD):
         out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}><p class="hint">{esc(sub)}</p>')
         for slot,items in slots:
-            out.append(f'<h3 class="sec">{esc(slot)}</h3><ul class="food">')
+            out.append(f'<h3 class="sec">{esc(slot)}</h3><div class="fgrid">')
             for n,ja,cat,mi,q,tel,ht,menu,tip,x in items:
-                badge=''
-                if mi=='빕': badge='<span class="mi bib">빕구르망</span>'
-                elif mi: badge=f'<span class="mi">{mi}</span>'
-                xx='<span class="tg x">휴무</span>' if x else ''
-                acts=f'<a class="map" href="{esc(mapurl(q))}" target="_blank" rel="noopener">지도</a>'
-                if tel: acts+=f'<button class="tel" data-c="{esc(tel)}">{esc(tel)}</button>'
-                out.append(f'<li{" class=closed" if x else ""}><div class="fh"><b>{esc(n)}</b>{badge}{xx}<span class="fj">{esc(ja)}</span></div><div class="fm"><em>{esc(cat)}</em> · {esc(ht)}</div><div class="fu">🍽 {esc(menu)}</div><div class="fx">{esc(tip)}</div><div class="ta">{acts}</div></li>')
-            out.append('</ul>')
+                f=food_photo(n); idx=len(data)
+                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':mapurl(q),'tel':tel,'ht':ht,'menu':menu,'tip':tip,'x':bool(x),'f':f})
+                badge=('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
+                xx='<span class="mi x">휴무</span>' if x else ''
+                img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
+                out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div></div><div class="fcn">{esc(n)}</div><div class="fcm">{esc(cat)}</div></button>')
+            out.append('</div>')
         out.append('</div>')
-    out.append('<p class="hint">영업시간·휴무는 2025~26 자료 기준 · 가기 전 구글 지도에서 당일 영업 확인 · ★ = 미슐랭 홋카이도(2017 특별판) 별 · 빕구르망 = 가성비 추천</p>')
-    return ''.join(out)
+    out.append('<p class="hint">카드를 누르면 메뉴·시간·팁 · 영업시간·휴무는 2025~26 자료 기준, 가기 전 구글 지도에서 당일 확인 · ★ 미슐랭 홋카이도(2017 특별판) · 빕 = 빕구르망 · 사진은 대표 메뉴 참고용(Wikimedia Commons)</p>')
+    return ''.join(out), json.dumps(data,ensure_ascii=False)
 
 # ───────────── 아이콘 ─────────────
 ICONS={
@@ -678,6 +695,32 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .achips button{border:0;background:none;color:var(--mut);border-radius:999px;padding:7px 0;font-size:14px;font-weight:700}
 .achips button[aria-pressed="true"]{background:var(--night);color:#fff}
 .fa{display:flex;flex-direction:column;gap:12px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fc{border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;padding:0;text-align:left;display:flex;flex-direction:column;transition:transform .15s}
+.fc:active{transform:scale(.97)}
+.fc.closed{opacity:.5}
+.fci{position:relative;height:112px;background:var(--night2)}
+.fci img{width:100%;height:100%;object-fit:cover;display:block}
+.fcb{position:absolute;left:6px;top:6px;display:flex;gap:4px}
+.fcn{font-size:14px;font-weight:700;padding:8px 10px 0;line-height:1.3}
+.fcm{font-size:11.5px;color:var(--mut);padding:1px 10px 9px}
+.mi.x{background:var(--warn);color:#fff}
+.sheet{position:fixed;inset:0;z-index:55}
+.sh-bg{position:absolute;inset:0;background:rgba(5,10,18,.6)}
+.sh-c{position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;background:var(--card);border-radius:20px 20px 0 0;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));animation:sheetup .25s cubic-bezier(.2,.7,.2,1)}
+@keyframes sheetup{from{transform:translateY(40px);opacity:0}}
+.sh-img{height:46vw;max-height:260px;background:var(--night2);position:relative}
+.sh-img img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-img .x{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:18px}
+.sh-b{padding:14px 18px 6px}
+.sh-b h4{margin:0;font-size:20px;line-height:1.25;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.sh-b .fj{font-size:12.5px;color:var(--mut);margin-top:2px}
+.sh-b .kv2{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px 8px;margin-top:12px;font-size:14px;line-height:1.5}
+.sh-b .kv2 span:nth-child(odd){text-align:center}
+.sh-b .ta{padding:12px 0 0}
+.sh-b .ta a,.sh-b .ta button{font-size:13px;padding:9px 14px;border-radius:10px}
+.sh-b .cr{font-size:11px;color:var(--mut);margin-top:10px}
+.sh-b .cr a{color:var(--mut)}
 .food{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .food li{padding:11px 16px;border-top:1px solid var(--line)}
 .food li:first-child{border-top:0}
@@ -799,6 +842,9 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .steps li{padding:10px 16px;border-top:1px solid var(--line);font-size:14px;line-height:1.45}
 .steps li:first-child{border-top:0}
 .warn{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:12px 16px;font-size:13.5px;line-height:1.5}
+.imgcard{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card);text-align:left}
+.imgcard img{width:100%;display:block;aspect-ratio:1079/731;object-fit:cover}
+.imgcard span{display:block;padding:9px 14px;font-size:13px;font-weight:700}
 .dt{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .dt summary{padding:12px 16px;font-weight:700;font-size:14px;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
 .dt summary::-webkit-details-marker{display:none}
@@ -1024,6 +1070,22 @@ JS = r'''
   $$('.bn button,.days button').forEach(function(b){b.addEventListener('click',function(){buzz(6)})});
   setDay(tripDay||1);
 
+  /* 맛집 시트 */
+  var sheet=$('#sheet'),shI=$('#sh-img'),shB=$('#sh-b');
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e}
+  function openFood(i){var d=FOOD_DATA[i];if(!d)return;shI.innerHTML='';shB.innerHTML='';
+    if(d.f){var im=document.createElement('img');im.alt='';im.src=wurl(d.f,960);im.onerror=function(){im.hidden=true};shI.appendChild(im)}
+    var x=el('button','x','✕');x.setAttribute('aria-label','닫기');x.addEventListener('click',closeFood);shI.appendChild(x);
+    var h=el('h4',null,d.n);if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
+    shB.appendChild(el('div','fj',d.ja+' · '+d.cat));
+    var kv=el('div','kv2');[['🕐',d.ht],['🍽',d.menu],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
+    var ta=el('div','ta');var a=el('a','map','지도 열기');a.href=d.q;a.target='_blank';a.rel='noopener';ta.appendChild(a);if(d.tel){var tb=el('button','tel',d.tel);tb.addEventListener('click',function(){cp(d.tel,'전화번호')});ta.appendChild(tb)}shB.appendChild(ta);
+    if(d.f){var cr=el('div','cr');cr.textContent='사진은 메뉴 참고용 · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(d.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);shB.appendChild(cr)}
+    sheet.hidden=false;document.body.style.overflow='hidden';buzz(6)}
+  function closeFood(){sheet.hidden=true;document.body.style.overflow=''}
+  $('#sh-bg').addEventListener('click',closeFood);
+  $$('.fc').forEach(function(b){b.addEventListener('click',function(){openFood(+b.dataset.i)})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFood()});
   /* 맛집 지역 */
   function foodArea(i){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i)}
   $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
@@ -1043,13 +1105,14 @@ JS = r'''
   /* 사진 팝업 */
   var lb=$('#lb'),lbi=$('#lbi'),lbc=$('#lbc'),lbs=$('#lbs');
   function wurl(f,w){var p=f.split('/');var n=p.slice(2).join('/');return 'https://upload.wikimedia.org/wikipedia/commons/thumb/'+p[0]+'/'+p[1]+'/'+encodeURIComponent(n)+'/'+w+'px-'+encodeURIComponent(n)}
-  function openPh(f,cap){var ws=[960,500,330],i=0;lbs.textContent='불러오는 중…';lbi.style.display='';lbi.removeAttribute('src');lbi.alt=cap;
-    lbc.innerHTML='';var t=document.createElement('div');t.textContent=cap;var a=document.createElement('a');a.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(f.split('/').slice(2).join('/'));a.target='_blank';a.rel='noopener';a.textContent='사진 · Wikimedia Commons';lbc.appendChild(t);lbc.appendChild(a);
+  function openPh(f,cap,src){var ws=[960,500,330],i=0;if(src){ws=[0];}lbs.textContent='불러오는 중…';lbi.style.display='';lbi.removeAttribute('src');lbi.alt=cap;
+    lbc.innerHTML='';var t=document.createElement('div');t.textContent=cap;lbc.appendChild(t);if(!src){var a=document.createElement('a');a.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(f.split('/').slice(2).join('/'));a.target='_blank';a.rel='noopener';a.textContent='사진 · Wikimedia Commons';lbc.appendChild(a)}
     lbi.onload=function(){lbs.textContent='';lbi.style.display=''};
     lbi.onerror=function(){i++;if(i<ws.length){lbi.src=wurl(f,ws[i])}else{lbi.style.display='none';lbs.textContent='사진을 불러올 수 없음 (인터넷 필요)'}};
-    lbi.src=wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden'}
+    lbi.src=src||wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden'}
   function closePh(){lb.classList.remove('on');lbi.removeAttribute('src');document.body.style.overflow=''}
   $$('[data-f]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh(b.dataset.f,b.dataset.cap)})});
+  $$('[data-src]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh('',b.dataset.cap,b.dataset.src)})});
   $('#hero').addEventListener('click',function(){openPh($('#hero').dataset.f,$('#hero').dataset.cap)});
   $('#lbx').addEventListener('click',closePh);lb.addEventListener('click',function(e){if(e.target===lb)closePh()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closePh()});
@@ -1120,13 +1183,14 @@ def view(id, subs):
     inner=''.join(f'<div class="sub" data-sub="{s}" data-label="{l}">{c}</div>' for s,l,c in subs)
     return f'<section class="view" id="v-{id}" hidden>{inner}</section>'
 
+FOOD_HTML,FOOD_JSON=food_html()
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
 <div class="sub plan" data-sub="plan" data-label="📅 일정">
 <div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><div class="hero-t"><div class="mood" id="hero-mood"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
 {day_cards()}
 </div>
-<div class="sub" data-sub="food" data-label="🍽️ 맛집">{food_html()}</div>
+<div class="sub" data-sub="food" data-label="🍽️ 맛집">{FOOD_HTML}</div>
 </section>'''
 
 PAGE=f'''<!doctype html>
@@ -1161,8 +1225,9 @@ PAGE=f'''<!doctype html>
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>
+<div class="sheet" id="sheet" hidden><div class="sh-bg" id="sh-bg"></div><div class="sh-c"><div class="sh-img" id="sh-img"></div><div class="sh-b" id="sh-b"></div></div></div>
 <div class="toast" id="toast"></div>
-<script>var HERO_DATA={HERO_JSON};{JS}</script>
+<script>var HERO_DATA={HERO_JSON};var FOOD_DATA={FOOD_JSON};{JS}</script>
 </body>
 </html>
 '''
@@ -1171,7 +1236,7 @@ MANIFEST={"name":"삿포로 여행","short_name":"삿포로","description":"2026
  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png"},{"src":"./icon-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 
 SW = r'''const V='sg-'+'%VER%';const IMG='sg-img',FONT='sg-font';
-const CORE=['./','./index.html','./app.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./apple-touch-icon.png'];
+const CORE=['./','./index.html','./app.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./apple-touch-icon.png','./bus.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('sg-')&&k!==V&&k!==IMG&&k!==FONT).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);

@@ -1133,7 +1133,9 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 
 /* 모션 */
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
-.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;will-change:transform;transform:translateZ(0)}
+.hero #snow{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.hero #snow i{position:absolute;top:-8px;border-radius:50%;background:#fff;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(10px,calc(var(--h) * .5),0)}100%{transform:translate3d(-6px,calc(var(--h) + 16px),0)}}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .sub:not([hidden]){animation:up .28s ease-out}
 .tl li{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -1182,8 +1184,8 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .sv.empty{animation:glow 2.4s ease-in-out infinite}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
-@media (prefers-reduced-motion:reduce){:root:not(.motion-on) *{animation:none!important;transition:none!important}:root:not(.motion-on) .hero canvas{display:none}}
-:root.motion-off *{animation:none!important;transition:none!important}:root.motion-off .hero canvas{display:none}
+@media (prefers-reduced-motion:reduce){:root:not(.motion-on) *{animation:none!important;transition:none!important}:root:not(.motion-on) .hero #snow{display:none}}
+:root.motion-off *{animation:none!important;transition:none!important}:root.motion-off .hero #snow{display:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
 '''
@@ -1339,18 +1341,18 @@ JS = r'''
 
 
   /* 눈 */
-  var cv=$('#snow'),cx=cv.getContext&&cv.getContext('2d'),fl=[],raf=0,snowOn=false,rm=false;
+  var snow=$('#snow'),rm=false;
+  (function(){if(!snow)return;var h='';for(var i=0;i<26;i++){var w=(Math.random()*2.2+1.4).toFixed(1),d=(Math.random()*9+9).toFixed(1),dl=(-Math.random()*18).toFixed(1),o=(Math.random()*.45+.35).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}snow.innerHTML=h})();
+  function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
+  function snowSet(){}
   function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
   $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
   motion(ls.get('sg-motion')||'auto');
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
   theme(ls.get('sg-theme'));
-  function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<50;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
-  var snowLast=0;function snowTick(ts){if(!snowOn)return;if(ts&&ts-snowLast<30){raf=requestAnimationFrame(snowTick);return}snowLast=ts||0;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
-  function snowSet(){var want=!rm&&cx&&!document.hidden&&cur==='day'&&heroVis;if(want&&!snowOn){snowOn=true;if(!fl.length)snowSize();snowTick()}else if(!want&&snowOn){snowOn=false;cancelAnimationFrame(raf)}}
-  var heroVis=true;if('IntersectionObserver' in window){new IntersectionObserver(function(es){heroVis=es[0].isIntersecting;snowSet()}).observe(cv)}
-  document.addEventListener('visibilitychange',snowSet);window.addEventListener('resize',function(){if(cx){snowSize()}});
+
+
   var _showView=showView;
   /* 시작 뷰 + 뒤로가기 */
   restoring=true;showView(VIEWS.indexOf(cur)>=0?cur:'day');restoring=false;snowSet();
@@ -1395,7 +1397,7 @@ def view(id, subs):
 FOOD_HTML,FOOD_JSON=food_html()
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
 <div class="sub plan" data-sub="plan" data-label="📅 일정">
-<div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><div class="hero-t"><div class="mood" id="hero-mood"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
+<div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><div id="snow" aria-hidden="true"></div><div class="hero-t"><div class="mood" id="hero-mood"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
 {day_cards()}
 </div>

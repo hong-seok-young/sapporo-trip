@@ -541,7 +541,9 @@ b{font-weight:700}
 .brand small{font-family:var(--f);font-size:11px;opacity:.7;margin-top:2px;letter-spacing:.02em}
 .dday{font-family:var(--d);font-size:20px;color:var(--lamp);line-height:1}
 .hd-r{display:flex;flex-direction:column;align-items:flex-end;margin-left:auto}
-.clock{margin-left:8px;opacity:1;color:var(--lamp)}
+.clock{margin-left:6px;display:inline-flex;gap:8px}
+.clock .ck{opacity:.55}
+.clock .ck.on{opacity:1;color:var(--lamp)}
 .clock b{font-family:var(--d);font-size:13px;font-weight:400;margin-left:3px;letter-spacing:.03em}
 .off{font-size:11px;font-weight:700;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:3px 9px;margin-left:8px}
 .hd-in .dday+.off{margin-left:8px}
@@ -568,7 +570,7 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .hero-t .dw{font-family:var(--d);font-size:15px;letter-spacing:.06em;color:var(--lamp)}
 .hero-t h1{margin:2px 0 0;font-family:var(--d);font-size:28px;line-height:1.1;font-weight:400;letter-spacing:.01em;text-shadow:0 2px 10px rgba(0,0,0,.4)}
 .hero-t p{margin:4px 0 0;font-size:13px;opacity:.85}
-.hero .ph{position:absolute;right:12px;top:12px;z-index:1;border:0;background:rgba(0,0,0,.35);color:#fff;border-radius:999px;padding:6px 10px;font-size:12px;backdrop-filter:blur(4px)}
+.hero{cursor:pointer}
 .days{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 16px 4px}
 .days button{position:relative;height:62px;border:2px solid transparent;border-radius:12px;overflow:hidden;background:var(--night2) var(--im) center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:6px 8px;line-height:1.15;text-align:left}
 .days button::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,28,46,.15),rgba(15,28,46,.85))}
@@ -853,7 +855,7 @@ JS = r'''
     $$('.tl').forEach(function(c){c.hidden=c.dataset.day!=n});
     $('#hero-dw').textContent=d.d+' '+d.w+'요일';$('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;$('#hero-mood').textContent=d.mood;
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
-    $('#hero-ph').dataset.f=d.f;$('#hero-ph').dataset.cap=d.title;
+    $('#hero').dataset.f=d.f;$('#hero').dataset.cap=d.title;
     var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
     markNext();reveal()}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
@@ -864,7 +866,7 @@ JS = r'''
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
   function tz(){var z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}if(z==='Asia/Tokyo')return '일본';if(z==='Asia/Seoul')return '한국';var t=new Date();return (t>=new Date(2026,11,3,12,45)&&t<=new Date(2026,11,6,14,5))?'일본':'한국'}
   function hhmm(t){return (t.getHours()<10?'0':'')+t.getHours()+':'+(t.getMinutes()<10?'0':'')+t.getMinutes()}
-  function clock(){var t=new Date(),c=$('#clock'),w=tz(),pl=(tripDay&&w==='일본')?H[tripDay-1].place:(w==='한국'?'서울':'');c.innerHTML='';var a=document.createElement('span');a.textContent=w+(pl?' · '+pl:'');var b=document.createElement('b');b.textContent=hhmm(t);c.appendChild(a);c.appendChild(b)}
+  function clock(){var t=new Date(),c=$('#clock'),w=tz();c.innerHTML='';var kr=new Date(t.getTime()+(t.getTimezoneOffset()+540)*60000),jp=kr;[['🇰🇷',kr,w==='한국'],['🇯🇵',jp,w==='일본']].forEach(function(x){var s=document.createElement('span');s.className='ck'+(x[2]?' on':'');s.textContent=x[0];var b=document.createElement('b');b.textContent=hhmm(x[1]);s.appendChild(b);c.appendChild(s)})}
   clock();setInterval(clock,20000);
   function markNext(){var list=$('.tl[data-day="'+curDay+'"]');if(!list)return;$$('.tl li.next,.tl li.done').forEach(function(l){l.classList.remove('next');l.classList.remove('done')});$$('.tl li.now').forEach(function(l){l.remove()});
     var t=new Date(),hm=t.getHours()*60+t.getMinutes(),live=tripDay===curDay,lis=$$('li',list),last=-1,ins=null;if(!live)return;
@@ -914,6 +916,7 @@ JS = r'''
     lbi.src=wurl(f,ws[0]);lb.classList.add('on');document.body.style.overflow='hidden'}
   function closePh(){lb.classList.remove('on');lbi.removeAttribute('src');document.body.style.overflow=''}
   $$('[data-f]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPh(b.dataset.f,b.dataset.cap)})});
+  $('#hero').addEventListener('click',function(){openPh($('#hero').dataset.f,$('#hero').dataset.cap)});
   $('#lbx').addEventListener('click',closePh);lb.addEventListener('click',function(e){if(e.target===lb)closePh()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closePh()});
 
@@ -984,7 +987,7 @@ def view(id, subs):
     return f'<section class="view" id="v-{id}" hidden>{inner}</section>'
 
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
-<div class="hero"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="mood" id="hero-mood"></div><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
+<div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><div class="hero-t"><div class="mood" id="hero-mood"></div><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
 <div class="ribbon" id="ribbon"></div>
 {day_cards()}

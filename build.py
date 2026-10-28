@@ -82,7 +82,7 @@ def tile(k, cap=None, tag=None, phone=None, note=None):
     return f'<div class="tile{"" if f else " nop"}">{img}{n}{x}<div class="ta">{acts(k,phone)}</div></div>'
 
 def tiles(*items):
-    return '<div class="strip">'+''.join(items)+'</div>'
+    return '<div class="strip">'+''.join(t.replace('<div class="tile',f'<div style="--k:{i}" class="tile',1) for i,t in enumerate(items))+'</div>'
 
 def link(k, text=None):
     name,q,ads,f=PL[k]
@@ -744,7 +744,17 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .sub:not([hidden]){animation:up .28s ease-out}
-.tl li{animation:up .4s ease-out both;animation-delay:calc(var(--i,0)*45ms)}
+.tl li{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s cubic-bezier(.2,.7,.2,1)}
+.tl li.in{opacity:1;transform:none}
+.tl li::after{transform:scale(0);transition:transform .4s cubic-bezier(.3,1.7,.5,1);transition-delay:inherit}
+.tl li.in::after{transform:scale(1)}
+.tl li::before{transform:scaleY(0);transform-origin:top;transition:transform .6s ease-out;transition-delay:inherit}
+.tl li.in::before{transform:scaleY(1);background:linear-gradient(180deg,var(--line) 0%,var(--line) 38%,var(--ice) 50%,var(--line) 62%,var(--line) 100%);background-size:100% 300%;animation:flow 3.4s linear infinite;animation-delay:calc(var(--i,0)*-.45s)}
+@keyframes flow{from{background-position:0 100%}to{background-position:0 0}}
+.tl time{opacity:0;transform:translateX(-8px);transition:opacity .4s ease-out,transform .4s ease-out;transition-delay:inherit}
+.tl li.in time{opacity:1;transform:none}
+.tl .tile{opacity:0;transform:translateX(18px);transition:opacity .4s ease-out,transform .4s cubic-bezier(.2,.7,.2,1)}
+.tl li.in .tile{opacity:1;transform:none;transition-delay:calc(var(--k,0)*80ms + .15s)}
 .hero-t.re{animation:up .5s ease-out}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(233,150,42,.6)}100%{box-shadow:0 0 0 12px rgba(233,150,42,0)}}
 .tl li.next::after{animation:pulse 1.6s ease-out infinite}
@@ -791,7 +801,7 @@ JS = r'''
     VIEWS.forEach(function(v){$('#v-'+v).hidden=v!==id});
     var ss=$$('#v-'+id+' .sub');seg.innerHTML='';
     if(ss.length>1){var want=subs[id]||ss[0].dataset.sub;ss.forEach(function(s){var b=document.createElement('button');b.textContent=s.dataset.label;b.dataset.sub=s.dataset.sub;b.setAttribute('aria-selected',s.dataset.sub===want?'true':'false');b.addEventListener('click',function(){showSub(id,s.dataset.sub)});seg.appendChild(b)});showSub(id,want,true)}
-    window.scrollTo(0,0);if(typeof snowSet==='function')snowSet()}
+    window.scrollTo(0,0);if(typeof snowSet==='function')snowSet();if(id==='day'&&typeof reveal==='function')reveal()}
   function showSub(id,sub,quiet){subs[id]=sub;ls.set('sg-subs',JSON.stringify(subs));
     $$('#v-'+id+' .sub').forEach(function(s){s.hidden=s.dataset.sub!==sub});
     $$('#v-'+id+' .sub:not([hidden]) .ring .fg').forEach(function(r){r.classList.remove('go');void r.getBoundingClientRect();r.classList.add('go')});
@@ -808,7 +818,11 @@ JS = r'''
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
     $('#hero-ph').dataset.f=d.f;$('#hero-ph').dataset.cap=d.title;
     var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
-    markNext()}
+    markNext();reveal()}
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
+  function reveal(){var lis=$$('.tl:not([hidden]) li');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
+    if(!io||rm){lis.forEach(function(l){l.classList.add('in')});return}
+    void document.body.offsetWidth;var vis=0;lis.forEach(function(l){var r=l.getBoundingClientRect();if(r.top<innerHeight)l.style.transitionDelay=(vis++*70)+'ms';io.observe(l)})}
   $$('.days button').forEach(function(b){b.addEventListener('click',function(){setDay(+b.dataset.d)})});
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
   function markNext(){$$('.tl li.next').forEach(function(l){l.classList.remove('next')});if(tripDay!==curDay)return;

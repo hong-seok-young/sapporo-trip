@@ -92,62 +92,64 @@ def sv(k, cls='', fmt=''):
     c=('sv '+cls).strip(); f=f' data-fmt="{fmt}"' if fmt else ''; dc=' data-c=""' if 'copyable' in cls else ''
     return f'<span class="{c}" data-k="{k}"{f}{dc}>—</span>'
 
-def stop(t, title, note=None, extra='', cls=''):
-    tt=f' data-t="{t}"' if re.match(r'^\d\d:\d\d',t) else ''
+def stop(t, title, note=None, extra='', cls='', at=None, ic=''):
+    st=at or (t[:5] if re.match(r'^\d\d:\d\d',t) else None)
+    tt=f' data-t="{st}"' if st else ''
     n=f'<div class="sn">{note}</div>' if note else ''
-    return f'<li{tt} class="{cls}"><time>{esc(t)}</time><div class="sb"><div class="sh">{title}</div>{n}{extra}</div></li>'
+    i=f'<span class="ic">{ic}</span>' if ic else ''
+    return f'<li{tt} class="{cls}"><time>{esc(t)}</time><div class="sb"><div class="sh">{i}{title}</div>{n}{extra}</div></li>'
 
 # ───────────── 일정 ─────────────
 DAYS=[
- dict(n=1,d='12.03',w='목',title='도착 · 삿포로 시내',sub='숙소 도큐 REI 호텔 · 운전 약 50km',hero='f/fb/Sapporo_White_Illumination_2016_(184517289).jpeg',short='도착'),
- dict(n=2,d='12.04',w='금',title='비에이 왕복',sub='운전 왕복 약 340km · 가장 긴 날',hero='f/f5/Shirahige-no-taki_Shirogane_Onsen_Biei_Hokkaido_Japan01s3.jpg',short='비에이'),
- dict(n=3,d='12.05',w='토',title='오타루 → 아사리가와 료칸',sub='운전 약 60km · 료칸 ↔ 운하 차로 15분',hero='f/fd/Otaru_Hokkaido_Japan.jpg',short='오타루'),
- dict(n=4,d='12.06',w='일',title='귀국',sub='렌터카 반납 기한 11:05 · 예약상 12:00',hero='e/e0/New_Chitose_Airport.jpg',short='귀국'),
+ dict(n=1,d='12.03',w='목',title='도착 · 삿포로 시내',sub='숙소 도큐 REI 호텔 · 운전 약 50km',hero='f/fb/Sapporo_White_Illumination_2016_(184517289).jpeg',short='도착',place='삿포로',mood='✈️ 드디어 출발!'),
+ dict(n=2,d='12.04',w='금',title='비에이 왕복',sub='운전 왕복 약 340km · 가장 긴 날',hero='f/f5/Shirahige-no-taki_Shirogane_Onsen_Biei_Hokkaido_Japan01s3.jpg',short='비에이',place='비에이',mood='🌨️ 눈 덮인 언덕으로'),
+ dict(n=3,d='12.05',w='토',title='오타루 → 아사리가와 료칸',sub='운전 약 60km · 료칸 ↔ 운하 차로 15분',hero='f/fd/Otaru_Hokkaido_Japan.jpg',short='오타루',place='오타루',mood='♨️ 운하 야경, 그리고 온천'),
+ dict(n=4,d='12.06',w='일',title='귀국',sub='렌터카 반납 기한 11:05 · 예약상 12:00',hero='e/e0/New_Chitose_Airport.jpg',short='귀국',place='신치토세',mood='👋 다음에 또 보자, 삿포로'),
 ]
 TL={
 1:''.join([
- stop('전날','12/2 영종도 숙소 1박','예약 전'),
- stop('07:10','숙소 체크아웃 → P5','차로 10~20분'),
- stop('07:25','P5 입차','예약 07:30 · 입차 가능 03:30~11:30 · 예약번호 '+sv('p5no'),tiles(tile('P5'))),
- stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30'),
- stop('07:55','T1 도착 · 체크인','카운터 마감 약 09:05',tiles(tile('T1'))),
- stop('09:35','탑승 시작'),
- stop('10:05','인천 출발 <span class="code">WE0531</span>'),
- stop('12:45','신치토세 도착','입국 · 세관',tiles(tile('CTS',cap='신치토세 공항'))),
- stop('13:30','타임즈 카운터 → 셔틀 약 10분','<a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선에서 카운터 가는 길</a>',tiles(tile('TIMES',phone=('0123458756','0123-45-8756')))),
- stop('','렌터카 픽업','여권 · 한국면허 · 국제면허 · 카드 → 결제 → HEP 4일권 신청 → 흠집 사진'),
- stop('14:30','호텔로 출발 · 약 1시간','체크인 15:00 · 입고 후 주차권 프런트 제출',tiles(tile('REI',cap='삿포로 도큐 REI 호텔'))),
- stop('저녁','시내 도보','일루미네이션 → 징기스칸 → 라멘 → 시메 파르페',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초'))),
+ stop('전날','12/2 영종도 숙소 1박','예약 전',ic='🛏️'),
+ stop('07:10','숙소 체크아웃 → P5','차로 10~20분',ic='🚗'),
+ stop('07:25','P5 입차','예약 07:30 · 입차 가능 03:30~11:30 · 예약번호 '+sv('p5no'),tiles(tile('P5')),ic='🅿️'),
+ stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',ic='🚌'),
+ stop('07:55','T1 도착 · 체크인','카운터 마감 약 09:05',tiles(tile('T1')),ic='🛫'),
+ stop('09:35','탑승 시작',ic='🎫'),
+ stop('10:05','인천 출발 <span class="code">WE0531</span>',ic='✈️'),
+ stop('12:45','신치토세 도착','입국 · 세관',tiles(tile('CTS',cap='신치토세 공항')),ic='🛬'),
+ stop('13:30','타임즈 카운터 → 셔틀 약 10분','<a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선에서 카운터 가는 길</a>',tiles(tile('TIMES',phone=('0123458756','0123-45-8756'))),ic='🚐'),
+ stop('','렌터카 픽업','여권 · 한국면허 · 국제면허 · 카드 → 결제 → HEP 4일권 신청 → 흠집 사진',at='13:45',ic='🔑'),
+ stop('14:30','호텔로 출발 · 약 1시간','체크인 15:00 · 입고 후 주차권 프런트 제출',tiles(tile('REI',cap='삿포로 도큐 REI 호텔')),ic='🏨'),
+ stop('저녁','시내 도보','일루미네이션 → 징기스칸 → 라멘 → 시메 파르페',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초')),at='18:30',ic='🍜'),
 ]),
 2:''.join([
- stop('08:00','주유 → 아사히카와 방면 고속도로','약 2시간 30분 · 주유소는 운전 탭'),
- stop('오전','언덕 길',None,tiles(tile('PATCH',cap='비에이 패치워크 길 (여름)'),tile('KEN'),tile('SEVEN'))),
- stop('점심','비에이 시내','<b>주유 한 번 더</b>',tiles(tile('BIEI'))),
- stop('오후','나무 → 폭포',None,tiles(tile('XMAS'),tile('FALLS'))),
- stop('16:30','청의 호수 조명','~21:00 · 30분이면 충분',tiles(tile('POND',cap='청의 호수 (여름)'))),
- stop('밤','삿포로 복귀 약 3시간','밤 눈길 · 호텔 재입고'),
+ stop('08:00','주유 → 아사히카와 방면 고속도로','약 2시간 30분 · 주유소는 운전 탭',ic='⛽'),
+ stop('오전','언덕 길',None,tiles(tile('PATCH',cap='비에이 패치워크 길 (여름)'),tile('KEN'),tile('SEVEN')),at='10:30',ic='🌾'),
+ stop('점심','비에이 시내','<b>주유 한 번 더</b>',tiles(tile('BIEI')),at='12:30',ic='🍱'),
+ stop('오후','나무 → 폭포',None,tiles(tile('XMAS'),tile('FALLS')),at='14:00',ic='🎄'),
+ stop('16:30','청의 호수 조명','~21:00 · 30분이면 충분',tiles(tile('POND',cap='청의 호수 (여름)')),ic='🌌'),
+ stop('밤','삿포로 복귀 약 3시간','밤 눈길 · 호텔 재입고',at='20:30',ic='🌙'),
 ]),
 3:''.join([
- stop('09:00','도큐 REI 체크아웃 → 오타루','체크아웃 ~11:00 · 약 1시간'),
- stop('주차','이나호 주차장 등','운하 도보 10분',tiles(tile('INAHO'))),
- stop('오전','운하 → 사카이마치 → 오르골당 → 르타오','상점 18시 전후 마감',tiles(tile('CANAL'),tile('SAKAI'),tile('ORGEL',cap='오타루 오르골당'),tile('LETAO',cap='르타오 본점'))),
- stop('점심','스시 · 카이센동',None,tiles(tile('DENUKI'),tile('SANKAKU',cap='오타루 삼각시장'),tile('MASA'))),
- stop('15:00','료칸 체크인 → 둘러보기 · 온천','체크인 때 석식 시간(18:00/19:00) · 조식 8:00 정하기',tiles(tile('RYOKAN',cap='아사리가와 온천 (료칸 아님 · 지역 사진)',note='OTARU RETREAT by Onko Chishin'))),
- stop('16:30','(선택) 텐구야마 야경 → 18:00 복귀','왕복 40분 · 마지막 상행 19:48 · 주차 무료',tiles(tile('TENGU',cap='텐구야마 전망'))),
- stop('18:00','가이세키 석식','정한 시간에'),
- stop('20:00','오타루 운하 야경','푸른 운하 · 가스등 · 점등 일몰~22:30 (11/1~1/31) · 밤 눈길 왕복 30분'),
- stop('21:00','료칸 복귀 → 온천 → 취침','내일 08:40 출발'),
+ stop('09:00','도큐 REI 체크아웃 → 오타루','체크아웃 ~11:00 · 약 1시간',ic='🚗'),
+ stop('주차','이나호 주차장 등','운하 도보 10분',tiles(tile('INAHO')),at='10:00',ic='🅿️'),
+ stop('오전','운하 → 사카이마치 → 오르골당 → 르타오','상점 18시 전후 마감',tiles(tile('CANAL'),tile('SAKAI'),tile('ORGEL',cap='오타루 오르골당'),tile('LETAO',cap='르타오 본점')),at='10:15',ic='🛍️'),
+ stop('점심','스시 · 카이센동',None,tiles(tile('DENUKI'),tile('SANKAKU',cap='오타루 삼각시장'),tile('MASA')),at='12:30',ic='🍣'),
+ stop('15:00','료칸 체크인 → 둘러보기 · 온천','체크인 때 석식 시간(18:00/19:00) · 조식 8:00 정하기',tiles(tile('RYOKAN',cap='아사리가와 온천 (료칸 아님 · 지역 사진)',note='OTARU RETREAT by Onko Chishin')),ic='♨️'),
+ stop('16:30','(선택) 텐구야마 야경 → 18:00 복귀','왕복 40분 · 마지막 상행 19:48 · 주차 무료',tiles(tile('TENGU',cap='텐구야마 전망')),ic='🚡'),
+ stop('18:00~','가이세키 석식','정한 시간에',at='18:00',ic='🍽️'),
+ stop('20:00','오타루 운하 야경','푸른 운하 · 가스등 · 점등 일몰~22:30 (11/1~1/31) · 밤 눈길 왕복 30분',ic='🌃'),
+ stop('21:00','료칸 복귀 → 온천 → 취침','내일 08:40 출발',ic='🛌'),
 ]),
 4:''.join([
- stop('08:00','조식 · 아침 온천'),
- stop('08:40','출발 → 치토세 약 90분'),
+ stop('08:00','조식 · 아침 온천',ic='🍳'),
+ stop('08:40','출발 → 치토세 약 90분',ic='🚗'),
  stop('10:10','주유 <b>가득</b> · 영수증','✗ 공항 앞 ENEOS(美々) · 아폴로(旭ヶ丘) 일요일 휴무',
       tiles(tile('ENEOS_H',tag=('staff','1순위 직원'),phone=('0123242031','0123-24-2031'),note='반납지 1.3km · 일 08–19 · 금액 직접 확인'),
-            tile('COSMO',tag=('self','2순위 셀프'),phone=('0123232324','0123-23-2324'),note='반납지 1.8km · 24시간 · 카드 거절 후기 → 현금'))),
- stop('10:30','타임즈 반납','늦어도 11:05 → 셔틀 → 국제선',tiles(tile('TIMES'))),
- stop('14:05','신치토세 출발 <span class="code">WE0532</span>','17:30 인천 도착'),
- stop('18:30','입국 · 짐 → 순환버스 → P5','18~19시대 탑승',tiles(tile('P5'))),
- stop('19:00','출차 · 정산'),
+            tile('COSMO',tag=('self','2순위 셀프'),phone=('0123232324','0123-23-2324'),note='반납지 1.8km · 24시간 · 카드 거절 후기 → 현금')),ic='⛽'),
+ stop('10:30','타임즈 반납','늦어도 11:05 → 셔틀 → 국제선',tiles(tile('TIMES')),ic='🔑'),
+ stop('14:05','신치토세 출발 <span class="code">WE0532</span>','17:30 인천 도착',ic='✈️'),
+ stop('18:30','입국 · 짐 → 순환버스 → P5','18~19시대 탑승',tiles(tile('P5')),ic='🚌'),
+ stop('19:00','출차 · 정산',ic='🏁'),
 ]),
 }
 
@@ -167,7 +169,7 @@ def day_btns():
         out.append(f'<button data-d="{d["n"]}" aria-pressed="{"true" if d["n"]==1 else "false"}" style="--im:url({esc(thumb(d["hero"]))})"><b>{d["d"]}</b><span>{d["w"]} · {d["short"]}</span></button>')
     return ''.join(out)
 
-HERO_JSON=json.dumps([{'d':d['d'],'w':d['w'],'title':d['title'],'sub':d['sub'],'img':thumb(d['hero'],960),'f':d['hero']} for d in DAYS],ensure_ascii=False)
+HERO_JSON=json.dumps([{'d':d['d'],'w':d['w'],'title':d['title'],'sub':d['sub'],'img':thumb(d['hero'],960),'f':d['hero'],'place':d['place'],'mood':d['mood']} for d in DAYS],ensure_ascii=False)
 
 # ───────────── 예약 ─────────────
 def row(k,v,cls=''): return f'<div class="row{(" "+cls) if cls else ""}"><span class="k">{k}</span><span class="v">{v}</span></div>'
@@ -181,6 +183,7 @@ FLIGHT=f'''
   <div class="leg"><div><b>14:05</b><span>CTS · 신치토세</span></div><div class="pl"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M2 16l20-8-7 9-3-3-5 3 2-5-7-3z" fill="currentColor"/></svg></div><div><b>17:30</b><span>ICN · T1</span></div></div>
   <div class="tk-cut"></div>
   <div class="kv"><div><span>예약번호</span>{sv('pnr','big copyable')}</div><div><span>위탁 수하물</span><b>15kg / 인</b></div></div>
+  <div class="barcode"></div>
 </article>
 <p class="hint">온라인 체크인은 할 일 탭 · 수하물 규정(고데기 등)은 짐 탭</p>
 '''
@@ -222,8 +225,9 @@ CAR=f'''
   {row('포함','면책 · NOC · ETC 카드·단말기 · 스터드리스 · 내비')}
   {row('취소','11/26까지 무료 · 변경 불가(재예약)')}
   {row('차 크기','길이 4.40 · 폭 1.80 · 높이 1.54 m')}
+  <div class="barcode"></div>
 </article>
-<h3 class="sec">픽업 12/3</h3>
+<h3 class="sec">🔑 픽업 12/3</h3>
 <ul class="steps">
   <li><a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선 → 카운터 가는 길</a> → 셔틀 약 10분 → 영업소</li>
   <li>여권 · 한국면허 · 국제면허 · 본인 신용카드</li>
@@ -231,7 +235,7 @@ CAR=f'''
   <li>흠집 확인 · 사진 · 연료 종류 확인</li>
   <li>근처 주유소 위치 묻고 지도 저장</li>
 </ul>
-<h3 class="sec">반납 12/6</h3>
+<h3 class="sec">🔁 반납 12/6</h3>
 <ul class="steps">
   <li>근처 주유소 가득 · 영수증 (미주유 시 단가 × 주행거리 청구)</li>
   <li>영업소 → 차 상태 확인 → 셔틀 약 10분 → 국제선</li>
@@ -252,6 +256,7 @@ ICN=f'''
   {row('주차장','1터미널 예약주차장 · 사전예약 전용 (단·장기 아님)<div class="ta">'+acts('P5',phone=('032-743-3460','032-743-3460'))+'</div>')}
   {row('순환버스','정류장 하얏트 호텔 / 예약주차장 · 노선 T2 → 하얏트·예약주차장 → T1 3G<br><a class="lk" href="https://parking.airport.kr/reserve/6310_02/NT2022070019" target="_blank" rel="noopener">순환버스 안내</a>')}
   {row('탑승','12/3 7:45 (예비 7:52 · 일찍 오면 7:30) · 12/6 18~19시대')}
+  <div class="barcode"></div>
 </article>
 <details class="dt"><summary>순환버스 시간표</summary>
 <div class="scroll"><table class="tt"><tbody>
@@ -329,7 +334,7 @@ PARK=f'''
 '''
 
 TIPS=f'''
-<h3 class="sec">톨게이트</h3>
+<h3 class="sec">🛣️ 톨게이트</h3>
 <ul class="steps">
   <li><b>ETC</b> 칸(보라) · 시속 20km 이하 · <b>ETC/一般</b> 겸용 OK · <b>一般</b>(초록) 피하기</li>
   <li>출발 전 ETC 카드 꽂혔는지 확인 · 현금·신용카드 결제 금지 (패스 미적용)</li>
@@ -337,7 +342,7 @@ TIPS=f'''
   <li>무인 정산기 → 호출 버튼 → 통행권 → ETC 카드</li>
   <li>차단기 안 열림 → 후진 금지 · 비상등 · 대기</li>
 </ul>
-<h3 class="sec">눈길</h3>
+<h3 class="sec">❄️ 눈길</h3>
 <ul class="steps">
   <li>밤 주차 시 와이퍼 세우기</li>
   <li>눈 털이 브러시 확인</li>
@@ -351,12 +356,12 @@ def chk(id,txt,*notes):
 
 TODO=f'''
 <div class="ring-wrap"><svg class="ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle cx="18" cy="18" r="15.5" class="fg" id="todo-ring"/></svg><div><b id="todo-n">0/0</b><span>할 일</span></div></div>
-<h3 class="sec">지금</h3>
+<h3 class="sec">📌 지금</h3>
 <ul class="checks" data-l="todo">
 {chk('t13','인천공항 근처 숙소 예약 (12/2 1박)','영종도 · 12/3 아침 P5 입차 가능 11:30까지')}
 {chk('t1','국제운전면허증 수령','10/26 신청 · 발급 완료 · 회사(DX팀)로 등기 · 11/2~11/9경 도착 · 발송 당일 문자','둘 다 운전 시 둘 다 · 종이 원본 지참')}
 </ul>
-<h3 class="sec">1~2주 전</h3>
+<h3 class="sec">🗓️ 1~2주 전</h3>
 <ul class="checks" data-l="todo">
 {chk('t4','Visit Japan Web 등록','<a class="lk" href="https://vjw-lp.digital.go.jp" target="_blank" rel="noopener">vjw-lp.digital.go.jp</a> · 착륙 6시간 전까지 · 한 계정에 2인 · 숙소: 도큐 REI · 입국·세관 QR 2개 스크린샷')}
 {chk('t5','엔화 환전','금액은 비용 탭')}
@@ -364,7 +369,7 @@ TODO=f'''
 {chk('t7','식당 예약','징기스칸 · 오타루 스시')}
 {chk('t8','청의 호수 · 푸른 운하 일정 확인')}
 </ul>
-<h3 class="sec">직전</h3>
+<h3 class="sec">⏰ 직전</h3>
 <ul class="checks" data-l="todo">
 {chk('t9','구글맵 오프라인 지도 다시 받기 (11/26경)','10/28 1차 다운로드 완료 · 출발 1주일 전 업데이트 · 공항~삿포로~오타루 / 비에이~아사히카와 2구역')}
 {chk('t10','파라타항공 온라인 체크인')}
@@ -375,7 +380,7 @@ TODO=f'''
 
 PACK=f'''
 <div class="ring-wrap"><svg class="ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle cx="18" cy="18" r="15.5" class="fg" id="pack-ring"/></svg><div><b id="pack-n">0/0</b><span>짐</span></div></div>
-<h3 class="sec">서류 · 돈</h3>
+<h3 class="sec">🛂 서류 · 돈</h3>
 <ul class="checks" data-l="pack">
 {chk('p1','여권')}
 {chk('p2','한국 운전면허증')}
@@ -383,18 +388,19 @@ PACK=f'''
 {chk('p4','본인 신용카드 2장')}
 {chk('p5','엔화 · 동전 지갑')}
 </ul>
-<h3 class="sec">차</h3>
+<h3 class="sec">🚗 차</h3>
 <ul class="checks" data-l="pack">
 {chk('p6','차량용 거치대 챙기기')}
 {chk('p7','차량용 충전기 · 케이블 챙기기')}
 </ul>
-<h3 class="sec">방한</h3>
+<h3 class="sec">🧣 방한</h3>
 <ul class="checks" data-l="pack">
 {chk('p19','방수 신발 <b>구매</b>','눈에 안 젖는 것 · 밑창 미끄럼 방지')}
 {chk('p11','핫팩')}
+{chk('p20','눈오리 집게 🦆','눈 쌓인 데서 오리 만들기')}
 {chk('p12','립밤 · 보습제')}
 </ul>
-<h3 class="sec">기타</h3>
+<h3 class="sec">🧴 기타</h3>
 <ul class="checks" data-l="pack">
 {chk('p13','멀티 어댑터 1 + 110V 돼지코 2~3개','일본 콘센트 = 납작 2구(A타입) · 100V')}
 {chk('p14','보조배터리 (기내)')}
@@ -407,14 +413,16 @@ PACK=f'''
 # ───────────── 더보기 ─────────────
 JP=f'''
 <div class="jpl">
-  <div class="jp"><b>レギュラー満タンでお願いします</b><span>레귤러 가득이요</span><button data-cp="レギュラー満タンでお願いします">복사</button></div>
-  <div class="jp"><b>ETCカードでお願いします</b><span>ETC 카드로 할게요</span><button data-cp="ETCカードでお願いします">복사</button></div>
-  <div class="jp"><b>北海道エクスプレスウェイパスを申し込みたいです</b><span>고속도로 패스 신청할게요</span><button data-cp="北海道エクスプレスウェイパスを申し込みたいです">복사</button></div>
-  <div class="jp"><b>駐車場は滞在中、出し入れ自由ですか?</b><span>숙박 중 주차 입출고 자유인가요?</span><button data-cp="駐車場は滞在中、出し入れ自由ですか?">복사</button></div>
-  <div class="jp"><b>この近くのガソリンスタンドはどこですか?</b><span>근처 주유소 어디예요?</span><button data-cp="この近くのガソリンスタンドはどこですか?">복사</button></div>
-  <div class="jp"><b>予約しています。ホンです</b><span>예약한 홍입니다</span><button data-cp="予約しています。ホンです">복사</button></div>
+  <div class="jp"><b>レギュラー満タンでお願いします</b><i>레규라- 만탄데 오네가이시마스</i><span>레귤러 가득이요</span><button data-cp="レギュラー満タンでお願いします">복사</button></div>
+  <div class="jp"><b>ETCカードでお願いします</b><i>이-티-시- 카-도데 오네가이시마스</i><span>ETC 카드로 할게요</span><button data-cp="ETCカードでお願いします">복사</button></div>
+  <div class="jp"><b>北海道エクスプレスウェイパスを申し込みたいです</b><i>홋카이도- 에쿠스푸레스웨이파스오 모-시코미타이데스</i><span>고속도로 패스 신청할게요</span><button data-cp="北海道エクスプレスウェイパスを申し込みたいです">복사</button></div>
+  <div class="jp"><b>駐車場は滞在中、出し入れ自由ですか?</b><i>츄-샤죠-와 타이자이츄-, 다시이레 지유-데스카?</i><span>숙박 중 주차 입출고 자유인가요?</span><button data-cp="駐車場は滞在中、出し入れ自由ですか?">복사</button></div>
+  <div class="jp"><b>この近くのガソリンスタンドはどこですか?</b><i>코노 치카쿠노 가소린스탄도와 도코데스카?</i><span>근처 주유소 어디예요?</span><button data-cp="この近くのガソリンスタンドはどこですか?">복사</button></div>
+  <div class="jp"><b>予約しています。ホンです</b><i>요야쿠 시테이마스. 혼데스</i><span>예약한 홍입니다</span><button data-cp="予約しています。ホンです">복사</button></div>
+  <div class="jp"><b>チェックインお願いします</b><i>첵쿠인 오네가이시마스</i><span>체크인 부탁해요</span><button data-cp="チェックインお願いします">복사</button></div>
+  <div class="jp"><b>領収書をください</b><i>료-슈-쇼오 쿠다사이</i><span>영수증 주세요</span><button data-cp="領収書をください">복사</button></div>
 </div>
-<h3 class="sec">표지</h3>
+<h3 class="sec">🪧 표지</h3>
 <div class="signs">
   <div><b>一旦停止</b><span>일단 정지</span></div><div><b>止まれ</b><span>정지</span></div><div><b>一般</b><span>일반 차로 (현금·통행권)</span></div><div><b>軽油</b><span>경유 (디젤) ✗</span></div><div><b>空 / 満</b><span>빈자리 / 만차</span></div><div><b>最大料金</b><span>최대 요금</span></div><div><b>高さ制限</b><span>높이 제한</span></div>
 </div>
@@ -426,7 +434,7 @@ COST=f'''
   <div><span>현장 예상</span><b>약 5만<small>엔</small></b><em>렌터카·HEP·주차·기름 48,700–51,700</em></div>
   <div><span>현금 준비</span><b>3~5만<small>엔</small></b><em>1,000엔권 넉넉히</em></div>
 </div>
-<h3 class="sec">결제 완료 <small>원</small></h3>
+<h3 class="sec">💳 결제 완료 <small>원</small></h3>
 <div class="bars">
   <div style="--p:43.2"><span>항공권</span><b>888,400</b><i></i><em>항공 요금 868,400 + 대행수수료 20,000</em></div>
   <div style="--p:41.6"><span>료칸 1박</span><b>854,129</b><i></i><em>객실 705,881 + 세금·봉사료 148,248 · Master <span class="sv" data-k="card4" data-fmt="card"></span></em></div>
@@ -435,7 +443,7 @@ COST=f'''
   <div style="--p:.6"><span>여행자 보험</span><b>11,440</b><i></i></div>
   <div style="--p:.5"><span>인천 P5 보증금</span><b>10,000</b><i></i><em>잔액은 출차 시</em></div>
 </div>
-<h3 class="sec">현장 · 렌터카 관련 <small>엔</small></h3>
+<h3 class="sec">🚗 현장 · 렌터카 관련 <small>엔</small></h3>
 <div class="bars">
   <div style="--p:100"><span>렌터카 · 픽업 때 카드</span><b>30,430</b><i></i><em>기본 26,800(면책 포함) + NOC 3,300 + ETC 카드 330</em></div>
   <div style="--p:25.3"><span>HEP 4일 · 픽업 때</span><b>7,700</b><i></i></div>
@@ -444,7 +452,7 @@ COST=f'''
   <div style="--p:3.3"><span>청의 호수 주차</span><b>1,000</b><i></i></div>
   <div style="--p:3.3"><span>오타루 이나호 주차</span><b>최대 1,000</b><i></i><em>24h · 20분 100엔</em></div>
 </div>
-<h3 class="sec">현장 · 기타</h3>
+<h3 class="sec">💴 현장 · 기타</h3>
 <ul class="steps">
   <li>텐구야마 로프웨이 왕복 2,000엔/인 · 2인 4,000엔</li>
   <li>료칸 입욕세 약 2,530원 · 체크인 때 · 도시세는 부과 시 두 숙소 체크인 때</li>
@@ -455,14 +463,14 @@ COST=f'''
 '''
 
 INFO=f'''
-<h3 class="sec">연락처</h3>
+<h3 class="sec">☎️ 연락처</h3>
 <ul class="gas">
   <li><span class="tg ic">🚗</span><div><b>타임즈 신치토세공항점</b><div class="ta"><button class="tel" data-c="0123458756">0123-45-8756</button><button class="tel" data-c="+815037860056">글로벌 +81-50-3786-0056</button></div></div></li>
   <li><span class="tg ic">♨</span><div><b>료칸</b><div class="ta"><button class="tel" data-c="+81134515151">+81 134-51-5151</button></div></div></li>
   <li><span class="tg ic">🅿</span><div><b>인천 예약주차</b><div class="ta"><button class="tel" data-c="032-743-3460">032-743-3460~1</button></div></div></li>
   <li><span class="tg ic">🚨</span><div><b>경찰 110 · 구급·화재 119</b></div></li>
 </ul>
-<h3 class="sec">시간</h3>
+<h3 class="sec">🕐 시간</h3>
 <ul class="steps">
   <li>일몰 16시 전후</li>
   <li>오도리 일루미네이션 11/20–12/25</li>
@@ -470,7 +478,7 @@ INFO=f'''
   <li>텐구야마 겨울 9–20시 · 마지막 상행 19:48</li>
   <li>오타루 상점 18시 전후 마감 · 타임즈 09:00–19:00</li>
 </ul>
-<h3 class="sec">예약자</h3>
+<h3 class="sec">🙋 예약자</h3>
 <ul class="steps">
   <li>{sv('name')} · {sv('nameEn')}</li>
   <li>{sv('email')}</li>
@@ -531,6 +539,9 @@ b{font-weight:700}
 .brand b{font-family:var(--d);font-weight:400;font-size:19px;letter-spacing:.02em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand small{font-family:var(--f);font-size:11px;opacity:.7;margin-top:2px;letter-spacing:.02em}
 .dday{font-family:var(--d);font-size:20px;color:var(--lamp);line-height:1}
+.hd-r{display:flex;flex-direction:column;align-items:flex-end;margin-left:auto}
+.clock{margin-left:8px;opacity:1;color:var(--lamp)}
+.clock b{font-family:var(--d);font-size:13px;font-weight:400;margin-left:3px;letter-spacing:.03em}
 .off{font-size:11px;font-weight:700;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:3px 9px;margin-left:8px}
 .hd-in .dday+.off{margin-left:8px}
 .seg{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto;scrollbar-width:none}
@@ -552,6 +563,7 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .hero img.on{opacity:1}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,28,46,.05) 20%,rgba(15,28,46,.82) 100%)}
 .hero-t{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;color:#fff}
+.hero-t .mood{display:inline-block;font-size:12px;font-weight:700;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border-radius:999px;padding:3px 10px;margin-bottom:6px}
 .hero-t .dw{font-family:var(--d);font-size:15px;letter-spacing:.06em;color:var(--lamp)}
 .hero-t h1{margin:2px 0 0;font-family:var(--d);font-size:28px;line-height:1.1;font-weight:400;letter-spacing:.01em;text-shadow:0 2px 10px rgba(0,0,0,.4)}
 .hero-t p{margin:4px 0 0;font-size:13px;opacity:.85}
@@ -575,6 +587,16 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .tl li.next time{color:var(--lamp)}
 .tl .sb{padding-left:12px;min-width:0}
 .tl .sh{font-size:15.5px;font-weight:700;line-height:1.35}
+.tl .ic{margin-right:5px}
+.ribbon{margin:10px 16px 0;padding:9px 14px;border-radius:12px;background:var(--lamp-soft);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.ribbon small{font-weight:400;color:var(--mut);margin-left:auto;font-size:11.5px}
+.ribbon:empty{display:none}
+.tl time{cursor:pointer}
+.tl li.stamped::after{background:var(--ok);border-color:var(--ok);animation:stamp .4s cubic-bezier(.3,1.7,.5,1)}
+.tl li.stamped .sh{color:var(--mut);text-decoration:line-through;text-decoration-color:var(--mut)}
+.tl li.stamped time{color:var(--ok)}
+@keyframes stamp{0%{transform:scale(.4)}60%{transform:scale(1.5)}100%{transform:scale(1)}}
+.barcode{height:26px;margin:10px 16px 14px;opacity:.55;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 13px)}
 .tl .sn{font-size:12.5px;color:var(--mut);margin-top:2px;line-height:1.45}
 .code{font-family:var(--m);font-weight:600;color:var(--ice)}
 
@@ -680,11 +702,12 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 
 /* 일본어 */
 .jpl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.jp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:11px 16px;border-top:1px solid var(--line)}
+.jp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 10px;align-items:center;padding:11px 16px;border-top:1px solid var(--line)}
+.jp i{font-style:normal;font-size:12.5px;color:var(--ice);font-weight:600}
 .jp:first-child{border-top:0}
 .jp b{font-size:17px;font-weight:500;line-height:1.35}
 .jp span{font-size:12px;color:var(--mut)}
-.jp button{grid-row:1/span 2;grid-column:2;font-size:13px;border:1px solid var(--line);background:var(--snow);border-radius:8px;padding:8px 12px}
+.jp button{grid-row:1/span 3;grid-column:2;font-size:13px;border:1px solid var(--line);background:var(--snow);border-radius:8px;padding:8px 12px}
 .signs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .signs div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .signs b{display:block;font-size:19px;font-weight:500;line-height:1.2}
@@ -740,8 +763,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 
 /* 모션 */
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
-.hero img.on{animation:kb 26s ease-in-out infinite alternate}
-.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;will-change:transform;transform:translateZ(0)}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .sub:not([hidden]){animation:up .28s ease-out}
 .tl li{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -751,6 +773,20 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .tl li::before{transform:scaleY(0);transform-origin:top;transition:transform .6s ease-out;transition-delay:inherit}
 .tl li.in::before{transform:scaleY(1);background:linear-gradient(180deg,var(--line) 0%,var(--line) 38%,var(--ice) 50%,var(--line) 62%,var(--line) 100%);background-size:100% 300%;animation:flow 3.4s linear infinite;animation-delay:calc(var(--i,0)*-.45s)}
 @keyframes flow{from{background-position:0 100%}to{background-position:0 0}}
+.tl li.now{opacity:1;transform:none;padding-bottom:14px}
+.tl li.now time{opacity:1;transform:none;color:var(--lamp);font-size:13px}
+.tl li.now::after{transform:scale(1);background:var(--lamp);border-color:var(--lamp);box-shadow:0 0 0 4px var(--lamp-soft);animation:pulse 1.6s ease-out infinite}
+.tl li.now::before{display:none}
+.nowline{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;color:var(--lamp);font-weight:700;font-size:13.5px;border-top:2px dashed var(--lamp);padding-top:5px;margin-top:9px}
+.nowline svg{width:22px;height:22px;fill:currentColor;animation:bob 1.1s ease-in-out infinite}
+.nowline small{font-weight:400;color:var(--mut);font-size:12px;flex-basis:100%;padding-left:30px}
+.tl li.now.soft time,.tl li.now.soft .nowline{color:var(--mut)}
+.tl li.now.soft::after{background:var(--mut);border-color:var(--mut);box-shadow:none;animation:none}
+.tl li.now.soft .nowline{border-top-color:var(--line)}
+@keyframes bob{50%{transform:translateY(-2px)}}
+.tl li.done{opacity:.5}
+.tl li.done::after{background:var(--ice)}
+.tl li.done .sh{text-decoration:line-through;text-decoration-color:var(--mut)}
 .tl time{opacity:0;transform:translateX(-8px);transition:opacity .4s ease-out,transform .4s ease-out;transition-delay:inherit}
 .tl li.in time{opacity:1;transform:none}
 .tl .tile{opacity:0;transform:translateX(18px);transition:opacity .4s ease-out,transform .4s cubic-bezier(.2,.7,.2,1)}
@@ -814,28 +850,51 @@ JS = r'''
   function setDay(n){curDay=n;var d=H[n-1];
     $$('.days button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d==n?'true':'false')});
     $$('.tl').forEach(function(c){c.hidden=c.dataset.day!=n});
-    $('#hero-dw').textContent=d.d+' '+d.w+'요일';$('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;
+    $('#hero-dw').textContent=d.d+' '+d.w+'요일';$('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;$('#hero-mood').textContent=d.mood;
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
     $('#hero-ph').dataset.f=d.f;$('#hero-ph').dataset.cap=d.title;
     var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
     markNext();reveal()}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
-  function reveal(){var lis=$$('.tl:not([hidden]) li');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
+  function reveal(){var lis=$$('.tl:not([hidden]) li:not(.now)');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
     if(!io||rm){lis.forEach(function(l){l.classList.add('in')});return}
     void document.body.offsetWidth;var vis=0;lis.forEach(function(l){var r=l.getBoundingClientRect();if(r.top<innerHeight)l.style.transitionDelay=(vis++*70)+'ms';io.observe(l)})}
   $$('.days button').forEach(function(b){b.addEventListener('click',function(){setDay(+b.dataset.d)})});
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
-  function markNext(){$$('.tl li.next').forEach(function(l){l.classList.remove('next')});if(tripDay!==curDay)return;
-    var hm=now.getHours()*60+now.getMinutes(),li=$$('.tl[data-day="'+curDay+'"] li[data-t]').filter(function(l){var p=l.dataset.t.split(':');return (+p[0])*60+(+p[1])>=hm})[0];if(li)li.classList.add('next')}
+  function tz(){var z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}if(z==='Asia/Tokyo')return '일본';if(z==='Asia/Seoul')return '한국';var t=new Date();return (t>=new Date(2026,11,3,12,45)&&t<=new Date(2026,11,6,14,5))?'일본':'한국'}
+  function hhmm(t){return (t.getHours()<10?'0':'')+t.getHours()+':'+(t.getMinutes()<10?'0':'')+t.getMinutes()}
+  function clock(){var t=new Date(),c=$('#clock'),w=tz(),pl=(tripDay&&w==='일본')?H[tripDay-1].place:(w==='한국'?'서울':'');c.innerHTML='';var a=document.createElement('span');a.textContent=w+(pl?' · '+pl:'');var b=document.createElement('b');b.textContent=hhmm(t);c.appendChild(a);c.appendChild(b)}
+  clock();setInterval(clock,20000);
+  function markNext(){var list=$('.tl[data-day="'+curDay+'"]');if(!list)return;$$('.tl li.next,.tl li.done').forEach(function(l){l.classList.remove('next');l.classList.remove('done')});$$('.tl li.now').forEach(function(l){l.remove()});
+    var t=new Date(),hm=t.getHours()*60+t.getMinutes(),live=tripDay===curDay,lis=$$('li',list),last=-1,ins=null;
+    for(var i=0;i<lis.length;i++){var l=lis[i],m=last;if(l.dataset.t){var p=l.dataset.t.split(':');m=(+p[0])*60+(+p[1])}
+      if(m>hm){ins=l;break}last=m;if(live)l.classList.add('done')}
+    if(live&&ins)ins.classList.add('next');
+    var w=tz(),mk=document.createElement('li');mk.className='now in'+(live?'':' soft');
+    var tm=document.createElement('time');tm.textContent='지금';var sb=document.createElement('div');sb.className='sb';var nl=document.createElement('div');nl.className='nowline';
+    nl.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11h1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-1a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1zm2.1 0h9.8l-1-3H8.1l-1 3z"/></svg>';
+    var tx=document.createElement('span');tx.textContent=hhmm(t)+' · '+w+(live?' · '+H[curDay-1].place:'');var sm=document.createElement('small');sm.textContent=live?(ins?'다음 → '+(ins.querySelector('.sh')||{}).textContent:'오늘 일정 끝'):'여행 당일엔 이 자리에 자동 표시';
+    nl.appendChild(tx);nl.appendChild(sm);sb.appendChild(nl);mk.appendChild(tm);mk.appendChild(sb);
+    if(ins)list.insertBefore(mk,ins);else list.appendChild(mk)}
+  setInterval(function(){markNext()},60000);
   var start=new Date(2026,11,3),diff=Math.round((start-new Date(y,m-1,dd))/864e5),dl=$('#dday');
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
   if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
+  function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8)}catch(e){}}
+  function ribbon(){var r=$('#ribbon');if(diff>0){r.innerHTML='';var a=document.createElement('span');a.textContent='✈️ 출발까지 '+diff+'일';var b=document.createElement('small');b.textContent='12.03(목) 10:05 인천 출발 · 시간을 누르면 ✓';r.appendChild(a);r.appendChild(b)}
+    else if(tripDay){r.innerHTML='';var a2=document.createElement('span');a2.textContent='🧣 여행 '+tripDay+'일째 · '+H[tripDay-1].place;var b2=document.createElement('small');b2.textContent='시간을 누르면 ✓ 완료';r.appendChild(a2);r.appendChild(b2)}
+    else{r.textContent='🎞️ 다녀온 여행 · 2026.12.03–12.06'}}
+  ribbon();
+  var stamps={};try{stamps=JSON.parse(ls.get('sg-stamps')||'{}')||{}}catch(e){}
+  $$('.tl li').forEach(function(l,i){l.dataset.sid=l.closest('.tl').dataset.day+'-'+i;if(stamps[l.dataset.sid])l.classList.add('stamped');
+    var tm=$('time',l);if(tm)tm.addEventListener('click',function(){var on=!l.classList.contains('stamped');l.classList.toggle('stamped',on);stamps[l.dataset.sid]=on;ls.set('sg-stamps',JSON.stringify(stamps));buzz(on?12:6);flash(on?'완료 ✓':'완료 취소')})});
+  $$('.bn button,.days button').forEach(function(b){b.addEventListener('click',function(){buzz(6)})});
   setDay(tripDay||1);
 
   /* 체크리스트 */
   var saved={};try{saved=JSON.parse(ls.get('sg-checks')||'{}')||{}}catch(e){}
-  function prog(){['todo','pack'].forEach(function(n){var l=$$('[data-l="'+n+'"] input'),c=0;l.forEach(function(b){if(b.checked)c++});$('#'+n+'-n').textContent=c+'/'+l.length;$('#'+n+'-ring').style.strokeDashoffset=97.4*(1-(l.length?c/l.length:0))})}
-  $$('.checks input').forEach(function(b){if(saved[b.id])b.checked=true;b.addEventListener('change',function(){saved[b.id]=b.checked;ls.set('sg-checks',JSON.stringify(saved));prog()})});
+  function prog(){['todo','pack'].forEach(function(n){var l=$$('[data-l="'+n+'"] input'),c=0;l.forEach(function(b){if(b.checked)c++});$('#'+n+'-n').textContent=c+'/'+l.length;$('#'+n+'-ring').style.strokeDashoffset=97.4*(1-(l.length?c/l.length:0));var lab=$('#'+n+'-n').nextElementSibling;if(lab)lab.textContent=(c===l.length&&l.length)?(n==='todo'?'할 일 끝! 🎉':'짐 다 쌌다! 🎒✨'):(n==='todo'?'할 일':'짐')})}
+  $$('.checks input').forEach(function(b){if(saved[b.id])b.checked=true;b.addEventListener('change',function(){saved[b.id]=b.checked;ls.set('sg-checks',JSON.stringify(saved));prog();buzz(b.checked?10:5)})});
   prog();
 
   /* 복사 버튼들 */
@@ -885,8 +944,8 @@ JS = r'''
   function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
   $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
   motion(ls.get('sg-motion')||'auto');
-  function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<70;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
-  function snowTick(){if(!snowOn)return;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
+  function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<50;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
+  var snowLast=0;function snowTick(ts){if(!snowOn)return;if(ts&&ts-snowLast<30){raf=requestAnimationFrame(snowTick);return}snowLast=ts||0;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
   function snowSet(){var want=!rm&&cx&&!document.hidden&&cur==='day'&&heroVis;if(want&&!snowOn){snowOn=true;if(!fl.length)snowSize();snowTick()}else if(!want&&snowOn){snowOn=false;cancelAnimationFrame(raf)}}
   var heroVis=true;if('IntersectionObserver' in window){new IntersectionObserver(function(es){heroVis=es[0].isIntersecting;snowSet()}).observe(cv)}
   document.addEventListener('visibilitychange',snowSet);window.addEventListener('resize',function(){if(cx){snowSize()}});
@@ -924,8 +983,9 @@ def view(id, subs):
     return f'<section class="view" id="v-{id}" hidden>{inner}</section>'
 
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
-<div class="hero"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
+<div class="hero"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="mood" id="hero-mood"></div><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
+<div class="ribbon" id="ribbon"></div>
 {day_cards()}
 </section>'''
 
@@ -949,13 +1009,13 @@ PAGE=f'''<!doctype html>
 <style>{CSS}</style>
 </head>
 <body>
-<header class="hd"><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06</small></div><div class="dday" id="dday"></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 {DAYVIEW}
-{view('book',[('flight','항공',FLIGHT),('stay','숙소',STAY),('car','렌터카',CAR),('icn','인천 주차',ICN)])}
-{view('drive',[('fuel','주유',FUEL),('park','주차',PARK),('tips','톨게이트 · 눈길',TIPS)])}
-{view('check',[('todo','할 일',TODO),('pack','짐',PACK)])}
-{view('more',[('jp','일본어',JP),('cost','비용',COST),('info','연락처 · 시간',INFO),('set','설정',SET)])}
+{view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
+{view('drive',[('fuel','⛽ 주유',FUEL),('park','🅿️ 주차',PARK),('tips','🛣️ 톨게이트 · 눈길',TIPS)])}
+{view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
+{view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처 · 시간',INFO),('set','⚙️ 설정',SET)])}
 </main>
 <nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>

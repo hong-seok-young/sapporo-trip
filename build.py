@@ -495,29 +495,19 @@ SET='''
 </div></details>
 <h3 class="sec">✨ 움직임 효과 <small>눈 · 전환 애니메이션</small></h3>
 <div class="form"><div class="btns" id="motion"><button data-m="auto">자동</button><button data-m="on">켜기</button><button data-m="off">끄기</button></div><div class="st">자동 = 폰 접근성의 "애니메이션 제거" 설정을 따름</div></div>
+<h3 class="sec">🌙 다크 모드</h3>
+<div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
 <div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
 <p class="hint">입력한 값·체크·도장은 이 폰 브라우저에만 저장되고 파일·깃허브에는 올라가지 않음</p>
 <p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 '''+VER+'''</p>
-'''+''.join(f'<label><span>{l}</span><input id="s-{k}" data-s="{k}" autocomplete="off" autocapitalize="off" spellcheck="false"{" placeholder=\""+ph+"\"" if ph else ""}></label>' for k,l,ph in FIELDS)+'''
-<div class="btns"><button id="s-save" class="pri">저장</button><button id="s-export">내 코드 복사</button><button id="s-clear">전체 지우기</button></div>
-<div class="st" id="s-st"></div>
-</div>
-<h3 class="sec">한 번에 넣기</h3>
-<div class="form"><textarea id="s-code" rows="3" placeholder="SG1.… 코드 붙여넣기" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="s-apply" class="pri">적용</button></div></div>
-<h3 class="sec">움직임 효과 <small>눈·전환 애니메이션</small></h3>
-<div class="form"><div class="btns" id="motion"><button data-m="auto">자동</button><button data-m="on">켜기</button><button data-m="off">끄기</button></div><div class="st">자동 = 폰 접근성의 "애니메이션 제거" 설정을 따름</div></div>
-<h3 class="sec">오프라인</h3>
-<div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
-<p class="hint">입력한 값은 이 폰 브라우저(localStorage)에만 저장되고 파일·깃허브에는 올라가지 않음 · 체크리스트도 동일</p>
-<p class="hint">장소 사진 · Wikimedia Commons (각 사진 팝업에 원본 링크) · 버전 '''+VER+'''</p>
 '''
 
 
 # ───────────── 맛집 ─────────────
 # 메뉴 사진 라이브러리 (Wikimedia Commons 파일명)
 DISH={
- 'souffle':['Souffle Pan Cake in Japan.jpg','Souffe pancakes (76653).jpg'],
+ 'souffle':['Souffle Pan Cake in Japan.jpg','Souffe pancakes (76653).jpg','Cafe&pancakes gram Osaka Castle Park castle town store.jpg','Hot cake.jpg'],
  'souffle_cheese':['Soufflé-style cheesecake 001.jpg'],
  'tempura':['Tempura-Tsunahachi-Shinjuku-Main1.jpg','Kurumaebi (Japanese tiger prawn) Heads Tempura.jpg','Tempurainjapan-ikebukuro-dec312007.jpg'],
  'butadon':['Tokachi Butadon Ippin Butadon.jpg','Buta-don at Nakasatsunai.JPG','Buta-don 001.jpg'],
@@ -532,17 +522,17 @@ DISH={
  'uni':['Uni gunkan-maki.jpg','Sushi uni.jpg'],
  'ikura':['Ikura don.jpg','Ikura don by yoppy.jpg'],
  'crab':['Kani gunkan maki.jpg','09 Kani-miso (crab roe) sushi - Tsukiji Market (162068713).jpg'],
- 'kaisendon':['Kaisendon.jpg','Kaisendon 001.jpg','Kaisendon - sashimi fish bowl - July 2014.jpg'],
+ 'kaisendon':['Kaisendon.jpg','Kaisendon 001.jpg','Kaisendon - sashimi fish bowl - July 2014.jpg','Kaisen-don (8126073697).jpg','Kaisen-don in Kyoto.jpg'],
  'chirashi':['Chirashizushi by The Wong Family Pictures in Hokkaido.jpg'],
  'kaiten':['Kaiten-zushi 005.jpg','ConveyorBeltSushi.jpg'],
  'hanamaru':['Sushi Nemuro Hanamaru Tokei Dai (184517515).jpeg'],
- 'parfait':['Strawberry Parfait, Senbikiya (6639279479).jpg','Parfait samples by pinguino in Osaka, Japan.jpg','Parfait.jpg'],
+ 'parfait':['Strawberry Parfait, Senbikiya (6639279479).jpg','Parfait.jpg',"COCO'S Choco Minto Glass Parfait.jpg",'Parfait samples by pinguino in Osaka, Japan.jpg'],
  'cream_puff':['Choux à la crème (19387655069).jpg','Cream puff Spivack.jpg'],
  'baumkuchen':['Baumkuchen.jpg'],
  'omurice':['Rice omlet Hokkyokusei.JPG','Rice Omlette, Renga-Tei, Ginza (6639265687).jpg'],
  'butter_sand':['Marusei butter sand of Rokkatei (1).jpg','Marusei butter sand of Rokkatei (2).jpg','Marusei-butter.JPG'],
  'cheese_tart':['PABLO mini Akihabara shop - The Cheese Tart (2017-06-30 12.07.15 by othree).jpg'],
- 'soft_serve':['Soft Ice cream.jpg'],
+ 'soft_serve':['Soft Ice cream.jpg','Lavender soft serve at Farm Tomita.jpg','Peace icecream cone.jpg','Ice cream cone .jpg','Kuroame soft ice cream Nachikatsuura.JPG'],
  'ice_cream':['Ice-cream.jpg'],
  'cheesecake':['Hokkaido cheesecake.jpg','Japanese no-bake cheesecake.jpg','Soufflé-style cheesecake 001.jpg'],
  'letao':['220721 LeTAO Otaru Hokkaido Japan02s3.jpg','Patisserie Letao.jpg'],
@@ -560,7 +550,7 @@ DISH={
  'yakisoba':['Yakisoba - 01.jpg','Yakisoba.jpg'],
  'imagawayaki':['Imagawayaki 001.jpg'],
  'zenzai':['Shiruko(Zenzai)6.jpg'],
- 'cake':['Fraisier hk jp.jpg'],
+ 'cake':['Fraisier hk jp.jpg',"Takano's strawberry shortcake.jpg",'Cake (and telop).jpg'],
  'beer':['Otaru Beer Brewery 02.jpg'],
  'kaiseki':['Jisaku Kaiseki Ryori 01.jpg','Kaiseki - Kyoto.jpg'],
  'onigiri':['Japanese rice balls (onigiri).jpg','Salmon onigiri by yomi955.jpg'],
@@ -734,7 +724,9 @@ LOCAL={'수아게+ 본점','다루마 본점','롯카테이 삿포로 본점','�
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
     data=[]
+    used_all=set()
     for i,(area,sub,slots) in enumerate(FOOD):
+        used_area=set()
         out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}><p class="hint">{esc(sub)}</p>')
         for slot,items in slots:
             out.append(f'<h3 class="sec">{esc(slot)}</h3><div class="fgrid">')
@@ -743,7 +735,18 @@ def food_html():
                 tbl=('https://tabelog.com/kr/hokkaido/'+tb[2]+'/') if tb else ''
                 photos=[]
                 for label,key in menus:
-                    k,_,ix=key.partition(':'); photos.append({'l':label,'f':dish(k,int(ix) if ix else 0)})
+                    k,_,ix=key.partition(':'); photos.append({'l':label,'f':dish(k,int(ix) if ix else 0),'k':k})
+                # 대표사진(첫 장)이 이미 다른 카드 대표로 쓰였으면 같은 메뉴의 다른 사진으로 교체 (전역 우선, 안 되면 지역 내 기준)
+                if photos:
+                    k0=photos[0]['k']; have={w['f'] for w in photos}
+                    for scope in (used_all,used_area):
+                        if photos[0]['f'] not in scope: break
+                        alt=[cf(x) for x in DISH[k0] if cf(x) not in scope and cf(x) not in have]
+                        if alt: photos[0]['f']=alt[0]; break
+                        other=[w for w in photos[1:] if w['f'] not in scope]
+                        if other: photos.remove(other[0]); photos.insert(0,other[0]); break
+                    used_all.add(photos[0]['f']); used_area.add(photos[0]['f'])
+                for w in photos: w.pop('k',None)
                 link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
                 data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'loc':n in LOCAL,'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None})
                 badge=('<span class="mi loc">지역맛집</span>' if n in LOCAL else '')+('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
@@ -755,6 +758,19 @@ def food_html():
             out.append('</div>')
         out.append('</div>')
     out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 카드를 누르면 메뉴별 사진·시간·팁·타베로그/구글 링크 · 사진은 메뉴 참고용(Wikimedia Commons)</p>')
+    # ── 자체 검사: 이름 중복 · 지역 내 대표사진 중복 · 사진 인덱스 · 평점 누락
+    import collections as _c
+    names=[d['n'] for d in data]; dupn=[n for n,c in _c.Counter(names).items() if c>1]
+    byarea=_c.defaultdict(list)
+    for i,(area,sub,slots) in enumerate(FOOD):
+        for slot,items in slots:
+            for it in items: byarea[area].append(it[0])
+    lead={d['n']:(d['ph'][0]['f'] if d['ph'] else None) for d in data}
+    dupp=[(a,f) for a,ns in byarea.items() for f,c in _c.Counter(lead[n] for n in ns if lead[n]).items() if c>1]
+    miss=[d['n'] for d in data if not d['tb'] and d['n']!='료칸 가이세키']
+    if dupn or dupp or miss:
+        raise SystemExit(f'FOOD 검사 실패 · 이름중복={dupn} 대표사진중복={dupp} 타베로그누락={miss}')
+    print(f'FOOD 검사 통과 · {len(data)}곳 · 대표사진 전부 지역 내 유일')
     return ''.join(out), json.dumps(data,ensure_ascii=False)
 
 # ───────────── 아이콘 ─────────────
@@ -765,6 +781,23 @@ ICONS={
  'check':'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12 3 3 5-6"/></svg>',
  'more':'<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="1.8"/><circle cx="12" cy="6" r="1.8"/><circle cx="18" cy="6" r="1.8"/><circle cx="6" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="18" cy="12" r="1.8"/><circle cx="6" cy="18" r="1.8"/><circle cx="12" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>',
 }
+
+def themeize(css):
+    """@media (prefers-color-scheme:dark){...} 블록을 [data-theme=auto](미디어쿼리) + [data-theme=dark](항상) 두 벌로"""
+    key='@media (prefers-color-scheme:dark){'; out=[]; i=0
+    while True:
+        j=css.find(key,i)
+        if j<0: out.append(css[i:]); break
+        out.append(css[i:j]); k=j+len(key); depth=1
+        while depth:
+            c=css[k]; depth+=(c=='{')-(c=='}'); k+=1
+        inner=css[j+len(key):k-1]
+        rules=re.findall(r'([^{}]+)\{([^{}]*)\}',inner)
+        def pref(sel,p): return ','.join((p if x.strip()==':root' else p+' '+x.strip()) for x in sel.split(','))
+        out.append('@media (prefers-color-scheme:dark){'+''.join(pref(a,':root[data-theme="auto"]')+'{'+d+'}' for a,d in rules)+'}')
+        out.append(''.join(pref(a,':root[data-theme="dark"]')+'{'+d+'}' for a,d in rules))
+        i=k
+    return ''.join(out)
 
 CSS = r'''
 :root{
@@ -1291,6 +1324,9 @@ JS = r'''
   function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
   $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
   motion(ls.get('sg-motion')||'auto');
+  function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
+  $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
+  theme(ls.get('sg-theme'));
   function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<50;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
   var snowLast=0;function snowTick(ts){if(!snowOn)return;if(ts&&ts-snowLast<30){raf=requestAnimationFrame(snowTick);return}snowLast=ts||0;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
   function snowSet(){var want=!rm&&cx&&!document.hidden&&cur==='day'&&heroVis;if(want&&!snowOn){snowOn=true;if(!fl.length)snowSize();snowTick()}else if(!want&&snowOn){snowOn=false;cancelAnimationFrame(raf)}}
@@ -1348,8 +1384,9 @@ DAYVIEW=f'''<section class="view" id="v-day" hidden>
 </section>'''
 
 PAGE=f'''<!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
+<script>try{{var t=localStorage.getItem('sg-theme');if(t==="dark"||t==="auto")document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f1c2e">
@@ -1364,7 +1401,7 @@ PAGE=f'''<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
-<style>{CSS}</style>
+<style>{themeize(CSS)}</style>
 </head>
 <body>
 <header class="hd"><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>

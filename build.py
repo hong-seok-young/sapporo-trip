@@ -552,7 +552,7 @@ FOOD=[
   ('르타오 본점 카페','ルタオ 本店','더블 프로마쥬','','ルタオ 本店 小樽','','09:00–18:00 · 케이크 세트 1,000엔 전후','메르헨 교차로 · 본점 한정 생치즈케이크 조기 품절 · 3층 전망',''),
   ('오타루 창고 No.1','小樽倉庫No.1','오타루 맥주 · 비어홀','','小樽倉庫No.1 小樽ビール','','영업시간 확인','운하 바로 옆 · 20:00 운하 야경 때 한 잔 (운전자 ✗)',''),
  ]),
- ('신치토세 공항 · 12/6 일 점심',"렌터카 반납 후 · 국내선 터미널 3F (국제선과 연결통로 도보 10분) · 14:05 출발이라 12시 전후",[
+ ('공항 · 12/6 일 점심',"신치토세 · 렌터카 반납 후 · 국내선 터미널 3F (국제선과 연결통로 도보 10분) · 14:05 출발이라 12시 전후",[
   ('홋카이도 라멘도조','北海道ラーメン道場','라멘 10곳','','北海道ラーメン道場 新千歳空港','','09:00~ (けやき) · LO 20:30','국내선 3F · えびそば一幻(새우미소·줄 김) · けやき(미소) · 白樺山荘',''),
   ('함타로','回転寿司 函太郎 新千歳空港店','회전초밥','','函太郎 新千歳空港','','11:00~','국내선 3F · 홋카이도 네타',''),
   ('라비','スープカレー lavi','수프카레','','スープカレー lavi 新千歳空港','','11:00~','국내선 3F · 치킨 야채 카레',''),
@@ -563,9 +563,9 @@ FOOD=[
 ]
 
 def food_html():
-    out=[]
-    for area,sub,items in FOOD:
-        out.append(f'<h3 class="sec">{esc(area)}</h3><p class="hint">{esc(sub)}</p><ul class="food">')
+    out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0].split(" · ")[0])}<small>{esc(a[0].split(" · ")[1])}</small></button>' for i,a in enumerate(FOOD))+'</div>']
+    for i,(area,sub,items) in enumerate(FOOD):
+        out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}><h3 class="sec">{esc(area)}</h3><p class="hint">{esc(sub)}</p><ul class="food">')
         for n,ja,cat,mi,q,tel,ht,tip,x in items:
             badge=''
             if mi=='빕': badge='<span class="mi bib">빕구르망</span>'
@@ -574,7 +574,7 @@ def food_html():
             acts=f'<a class="map" href="{esc(mapurl(q))}" target="_blank" rel="noopener">지도</a>'
             if tel: acts+=f'<button class="tel" data-c="{esc(tel)}">{esc(tel)}</button>'
             out.append(f'<li{" class=closed" if x else ""}><div class="fh"><b>{esc(n)}</b>{badge}{xx}<span class="fj">{esc(ja)}</span></div><div class="fm"><em>{esc(cat)}</em> · {esc(ht)}</div><div class="fx">{esc(tip)}</div><div class="ta">{acts}</div></li>')
-        out.append('</ul>')
+        out.append('</ul></div>')
     out.append('<p class="hint">영업시간·휴무는 2025~26 자료 기준 · 가기 전 구글 지도에서 당일 영업 확인 · ★ = 미슐랭 홋카이도(2017 특별판) 별, 빕구르망 = 가성비 추천</p>')
     return ''.join(out)
 
@@ -629,6 +629,12 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .sub{padding:14px 16px 8px;display:flex;flex-direction:column;gap:12px}
 .sec{margin:10px 0 -4px;font-size:14px;font-weight:700;color:var(--ink)}
 .sub.plan{padding:0;gap:0;display:block}
+.achips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.achips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;line-height:1.2;font-size:14px;font-weight:700}
+.achips button small{font-size:10.5px;font-weight:400;color:var(--mut)}
+.achips button[aria-pressed="true"]{background:var(--night);border-color:var(--night);color:#fff}
+.achips button[aria-pressed="true"] small{color:rgba(255,255,255,.7)}
+.fa{display:flex;flex-direction:column;gap:12px}
 .food{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .food li{padding:11px 16px;border-top:1px solid var(--line)}
 .food li:first-child{border-top:0}
@@ -980,6 +986,10 @@ JS = r'''
   $$('.bn button,.days button').forEach(function(b){b.addEventListener('click',function(){buzz(6)})});
   setDay(tripDay||1);
 
+  /* 맛집 지역 */
+  function foodArea(i){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i)}
+  $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
+  foodArea(tripDay?tripDay-1:(ls.get('sg-food')||0));
   /* 체크리스트 */
   var saved={};try{saved=JSON.parse(ls.get('sg-checks')||'{}')||{}}catch(e){}
   function prog(){['todo','pack'].forEach(function(n){var l=$$('[data-l="'+n+'"] input'),c=0;l.forEach(function(b){if(b.checked)c++});$('#'+n+'-n').textContent=c+'/'+l.length;$('#'+n+'-ring').style.strokeDashoffset=97.4*(1-(l.length?c/l.length:0));var lab=$('#'+n+'-n').nextElementSibling;if(lab)lab.textContent=(c===l.length&&l.length)?(n==='todo'?'할 일 끝! 🎉':'짐 다 쌌다! 🎒✨'):(n==='todo'?'할 일':'짐')})}

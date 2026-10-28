@@ -11,7 +11,7 @@
 <title>삿포로 가이드</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -528,7 +528,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
   <li><span class="sv mono" data-k="phone" data-fmt="intl">—</span></li>
 </ul>
 </div><div class="sub" data-sub="set" data-label="설정">
-<div class="inst" id="inst" hidden><div><b>홈 화면에 추가</b><span>앱처럼 열리고 오프라인에서도 동작</span></div><button id="inst-b">설치</button></div>
+<div class="inst" id="inst" hidden><div><b>홈 화면에 추가</b><span id="inst-t">앱처럼 열리고 오프라인에서도 동작</span></div><button id="inst-b">설치</button></div>
 <h3 class="sec">내 정보 <small>이 폰에만 저장</small></h3>
 <div class="form">
 <label><span>이름</span><input id="s-name" data-s="name" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="홍길동"></label><label><span>영문 이름</span><input id="s-nameEn" data-s="nameEn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="HONG GILDONG"></label><label><span>숙소 예약자명</span><input id="s-stayName" data-s="stayName" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gil dong"></label><label><span>전화</span><input id="s-phone" data-s="phone" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="010-0000-0000"></label><label><span>이메일</span><input id="s-email" data-s="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="me@example.com"></label><label><span>항공 예약번호</span><input id="s-pnr" data-s="pnr" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="6자리"></label><label><span>P5 예약번호</span><input id="s-p5no" data-s="p5no" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>차량번호</span><input id="s-p5car" data-s="p5car" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="12가3456"></label><label><span>P5 비밀번호</span><input id="s-p5pw" data-s="p5pw" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>타임즈 예약번호</span><input id="s-carno" data-s="carno" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>타임즈 패스워드</span><input id="s-carpw" data-s="carpw" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>카드 뒷 4자리</span><input id="s-card4" data-s="card4" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="0000"></label>
@@ -538,7 +538,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 <h3 class="sec">한 번에 넣기</h3>
 <div class="form"><textarea id="s-code" rows="3" placeholder="SG1.… 코드 붙여넣기" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="s-apply" class="pri">적용</button></div></div>
 <p class="hint">입력한 값은 이 폰 브라우저(localStorage)에만 저장되고 파일·깃허브에는 올라가지 않음 · 체크리스트도 동일</p>
-<p class="hint">장소 사진 · Wikimedia Commons (각 사진 팝업에 원본 링크) · 버전 20261028-1444</p>
+<p class="hint">장소 사진 · Wikimedia Commons (각 사진 팝업에 원본 링크) · 버전 20261028-1519</p>
 </div></section>
 </main>
 <nav class="bn" aria-label="메뉴">
@@ -641,8 +641,9 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
   if(!cnt())setTimeout(function(){if(!cnt())flash('더보기 › 설정에서 내 정보 입력 → 예약번호·비밀번호 표시',3200)},800);
 
   /* PWA */
-  var dp=null,inst=$('#inst');
-  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;inst.hidden=false});
+  var dp=null,inst=$('#inst'),standalone=(navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches),ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(ios&&!standalone){$('#inst-t').textContent='Safari 하단 공유 버튼 → "홈 화면에 추가"';$('#inst-b').hidden=true;inst.hidden=false}
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;if(!standalone)inst.hidden=false});
   $('#inst-b').addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;inst.hidden=true})});
   window.addEventListener('appinstalled',function(){inst.hidden=true;flash('홈 화면에 추가됨')});
   if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){})})}

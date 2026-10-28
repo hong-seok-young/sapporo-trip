@@ -878,12 +878,12 @@ JS = r'''
   /* 오프라인 */
   var offb=$('#off');function offSet(){offb.hidden=navigator.onLine!==false}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
   function imgList(){var u=[];H.forEach(function(d){u.push(d.img)});$$('.ti img,.tk-img img,.days button').forEach(function(el){var src=el.tagName==='IMG'?el.getAttribute('src'):(el.style.getPropertyValue('--im')||'').replace(/^url\(|\)$/g,'');if(src&&u.indexOf(src)<0)u.push(src)});$$('[data-f]').forEach(function(b){if(b.dataset.f){var w=wurl(b.dataset.f,960);if(u.indexOf(w)<0)u.push(w)}});return u}
-  var warming=false,ost=$('#off-st');
+  var warming=false,warmTries=0,ost=$('#off-st');
   function warm(force){if(warming||!window.caches||!window.isSecureContext)return;if(navigator.onLine===false){ost.textContent='오프라인 · 인터넷 연결되면 사진 저장';return}warming=true;
     caches.open('sg-img').then(function(c){var list=imgList(),done=0,miss=[];
       return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
         ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
-        var i=0;function next(){if(i>=miss.length){warming=false;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(done===list.length?' · 오프라인에서도 전부 보임':' · 일부 실패 (다시 받기 가능)');return}
+        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<4)setTimeout(function(){warm()},20000);return}
           var u=miss[i++];fetch(u,{mode:'cors'}).then(function(r){if(r.ok){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
         next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
   $('#off-b').addEventListener('click',function(){warm(true)});

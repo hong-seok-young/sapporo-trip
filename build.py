@@ -490,6 +490,8 @@ SET='''
 </div>
 <h3 class="sec">한 번에 넣기</h3>
 <div class="form"><textarea id="s-code" rows="3" placeholder="SG1.… 코드 붙여넣기" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="s-apply" class="pri">적용</button></div></div>
+<h3 class="sec">움직임 효과 <small>눈·전환 애니메이션</small></h3>
+<div class="form"><div class="btns" id="motion"><button data-m="auto">자동</button><button data-m="on">켜기</button><button data-m="off">끄기</button></div><div class="st">자동 = 폰 접근성의 "애니메이션 제거" 설정을 따름</div></div>
 <h3 class="sec">오프라인</h3>
 <div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
 <p class="hint">입력한 값은 이 폰 브라우저(localStorage)에만 저장되고 파일·깃허브에는 올라가지 않음 · 체크리스트도 동일</p>
@@ -764,7 +766,8 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .sv.empty{animation:glow 2.4s ease-in-out infinite}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero canvas{display:none}}
+@media (prefers-reduced-motion:reduce){:root:not(.motion-on) *{animation:none!important;transition:none!important}:root:not(.motion-on) .hero canvas{display:none}}
+:root.motion-off *{animation:none!important;transition:none!important}:root.motion-off .hero canvas{display:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
 '''
@@ -812,7 +815,7 @@ JS = r'''
     var hm=now.getHours()*60+now.getMinutes(),li=$$('.tl[data-day="'+curDay+'"] li[data-t]').filter(function(l){var p=l.dataset.t.split(':');return (+p[0])*60+(+p[1])>=hm})[0];if(li)li.classList.add('next')}
   var start=new Date(2026,11,3),diff=Math.round((start-new Date(y,m-1,dd))/864e5),dl=$('#dday');
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
-  if(diff>0&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
+  if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   setDay(tripDay||1);
 
   /* 체크리스트 */
@@ -864,7 +867,10 @@ JS = r'''
 
 
   /* 눈 */
-  var cv=$('#snow'),cx=cv.getContext&&cv.getContext('2d'),fl=[],raf=0,snowOn=false,rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cv=$('#snow'),cx=cv.getContext&&cv.getContext('2d'),fl=[],raf=0,snowOn=false,rm=false;
+  function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
+  $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
+  motion(ls.get('sg-motion')||'auto');
   function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<70;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
   function snowTick(){if(!snowOn)return;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
   function snowSet(){var want=!rm&&cx&&!document.hidden&&cur==='day'&&heroVis;if(want&&!snowOn){snowOn=true;if(!fl.length)snowSize();snowTick()}else if(!want&&snowOn){snowOn=false;cancelAnimationFrame(raf)}}
@@ -957,7 +963,7 @@ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);
   if(u.origin===location.origin){
     if(r.mode==='navigate'||u.pathname.endsWith('/index.html')||u.pathname.endsWith('/')){
-      e.respondWith(fetch(r).then(res=>{if(res.ok){const c=res.clone();caches.open(V).then(x=>{x.put('./index.html',c.clone());x.put('./',c)})}return res}).catch(()=>caches.match('./index.html')));return}
+      e.respondWith(fetch(u.href,{cache:'no-cache',credentials:'same-origin'}).then(res=>{if(res.ok){const c=res.clone();caches.open(V).then(x=>{x.put('./index.html',c.clone());x.put('./',c)})}return res}).catch(()=>caches.match('./index.html')));return}
     e.respondWith(caches.match(r).then(c=>c||fetch(r).then(res=>{if(res.ok){const cc=res.clone();caches.open(V).then(x=>x.put(r,cc))}return res})));return}
   if(u.hostname==='upload.wikimedia.org'){
     e.respondWith(caches.open(IMG).then(async c=>{const h=await c.match(r);if(h)return h;const res=await fetch(r);if(res.ok)c.put(r,res.clone());return res}).catch(()=>new Response('',{status:504})));return}

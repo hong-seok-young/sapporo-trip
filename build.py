@@ -110,16 +110,16 @@ TL={
 1:''.join([
  stop('전날','12/2 영종도 숙소 1박','예약 전',ic='🛏️'),
  stop('07:10','숙소 체크아웃 → P5','차로 10~20분',ic='🚗'),
- stop('07:25','P5 입차','예약 07:30 · 입차 가능 03:30~11:30 · 예약번호 '+sv('p5no'),tiles(tile('P5')),ic='🅿️'),
+ stop('07:25','P5 입차','예약 07:30',tiles(tile('P5')),ic='🅿️'),
  stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',ic='🚌'),
  stop('07:55','T1 도착 · 체크인','카운터 마감 약 09:05',tiles(tile('T1')),ic='🛫'),
  stop('09:35','탑승 시작',ic='🎫'),
  stop('10:05','인천 출발 <span class="code">WE0531</span>',ic='✈️'),
  stop('12:45','신치토세 도착','입국 · 세관',tiles(tile('CTS',cap='신치토세 공항')),ic='🛬'),
- stop('13:30','타임즈 카운터 → 셔틀 약 10분','<a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선에서 카운터 가는 길</a>',tiles(tile('TIMES',phone=('0123458756','0123-45-8756'))),ic='🚐'),
- stop('','렌터카 픽업','여권 · 한국면허 · 국제면허 · 카드 → 결제 → HEP 4일권 신청 → 흠집 사진',at='13:45',ic='🔑'),
- stop('14:30','호텔로 출발 · 약 1시간','체크인 15:00 · 입고 후 주차권 프런트 제출',tiles(tile('REI',cap='삿포로 도큐 REI 호텔')),ic='🏨'),
- stop('저녁','시내 도보','일루미네이션 → 징기스칸 → 라멘 → 시메 파르페',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초')),at='18:30',ic='🍜'),
+ stop('13:30','타임즈 카운터 → 셔틀 약 10분','<a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선에서 카운터 가는 길</a>',tiles(tile('TIMES')),ic='🚐'),
+ stop('','렌터카 픽업','서류 · 결제 · HEP 4일권 · 흠집 사진 (상세는 예약 › 렌터카)',at='13:45',ic='🔑'),
+ stop('14:30','호텔로 출발 · 약 1시간','체크인 15:00',tiles(tile('REI',cap='삿포로 도큐 REI 호텔')),ic='🏨'),
+ stop('저녁','시내 도보','일몰 16시 · 일루미네이션 → 징기스칸 → 라멘 → 시메 파르페',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초')),at='18:30',ic='🍜'),
 ]),
 2:''.join([
  stop('08:00','주유 → 아사히카와 방면 고속도로','약 2시간 30분 · 주유소는 운전 탭',ic='⛽'),
@@ -134,7 +134,7 @@ TL={
  stop('주차','이나호 주차장 등','운하 도보 10분',tiles(tile('INAHO')),at='10:00',ic='🅿️'),
  stop('오전','운하 → 사카이마치 → 오르골당 → 르타오','상점 18시 전후 마감',tiles(tile('CANAL'),tile('SAKAI'),tile('ORGEL',cap='오타루 오르골당'),tile('LETAO',cap='르타오 본점')),at='10:15',ic='🛍️'),
  stop('점심','스시 · 카이센동',None,tiles(tile('DENUKI'),tile('SANKAKU',cap='오타루 삼각시장'),tile('MASA')),at='12:30',ic='🍣'),
- stop('15:00','료칸 체크인 → 둘러보기 · 온천','체크인 때 석식 시간(18:00/19:00) · 조식 8:00 정하기',tiles(tile('RYOKAN',cap='아사리가와 온천 (료칸 아님 · 지역 사진)',note='OTARU RETREAT by Onko Chishin')),ic='♨️'),
+ stop('15:00','료칸 체크인 → 둘러보기 · 온천','석식·조식 시간 정하기',tiles(tile('RYOKAN',cap='아사리가와 온천 (료칸 아님 · 지역 사진)',note='OTARU RETREAT by Onko Chishin')),ic='♨️'),
  stop('16:30','(선택) 텐구야마 야경 → 18:00 복귀','왕복 40분 · 마지막 상행 19:48 · 주차 무료',tiles(tile('TENGU',cap='텐구야마 전망')),ic='🚡'),
  stop('18:00~','가이세키 석식','정한 시간에',at='18:00',ic='🍽️'),
  stop('20:00','오타루 운하 야경','푸른 운하 · 가스등 · 점등 일몰~22:30 (11/1~1/31) · 밤 눈길 왕복 30분',ic='🌃'),
@@ -185,7 +185,6 @@ FLIGHT=f'''
   <div class="kv"><div><span>예약번호</span>{sv('pnr','big copyable')}</div><div><span>위탁 수하물</span><b>15kg / 인</b></div></div>
   <div class="barcode"></div>
 </article>
-<p class="hint">온라인 체크인은 할 일 탭 · 수하물 규정(고데기 등)은 짐 탭</p>
 '''
 
 STAY=f'''
@@ -239,7 +238,6 @@ CAR=f'''
 <ul class="steps">
   <li>근처 주유소 가득 · 영수증 (미주유 시 단가 × 주행거리 청구)</li>
   <li>영업소 → 차 상태 확인 → 셔틀 약 10분 → 국제선</li>
-  <li>기한 = 국제선 출발 3시간 전 <b>11:05</b></li>
 </ul>
 <div class="warn"><b>사고 시</b> 현장에서 경찰 110 + 타임즈 연락 필수 · 연락 안 하면 보상 불가 · NOC 보상 가입(NOC 면제 · 펑크·휠캡 · 로드서비스)</div>
 '''
@@ -252,10 +250,8 @@ ICN=f'''
   <div class="kv"><div><span>예약번호</span>{sv('p5no','big copyable')}</div><div><span>차량번호</span>{sv('p5car','copyable mono')}</div></div>
   {row('조회','<a class="lk" href="https://parking.airport.kr/reserve/6210_01" target="_blank" rel="noopener">조회 · 변경 · 취소</a><br>차량번호 '+sv('p5car','mono copyable')+' · 비밀번호 '+sv('p5pw','mono copyable'))}
   {row('입차 가능','12/3 03:30 ~ 11:30 (±4시간)')}
-  {row('계획','12/2 영종도 1박 → 07:10 숙소 출발 → 07:25 입차 → 07:45 버스 → 07:55 T1')}
   {row('주차장','1터미널 예약주차장 · 사전예약 전용 (단·장기 아님)<div class="ta">'+acts('P5',phone=('032-743-3460','032-743-3460'))+'</div>')}
   {row('순환버스','정류장 하얏트 호텔 / 예약주차장 · 노선 T2 → 하얏트·예약주차장 → T1 3G<br><a class="lk" href="https://parking.airport.kr/reserve/6310_02/NT2022070019" target="_blank" rel="noopener">순환버스 안내</a>')}
-  {row('탑승','12/3 7:45 (예비 7:52 · 일찍 오면 7:30) · 12/6 18~19시대')}
   <div class="barcode"></div>
 </article>
 <details class="dt"><summary>순환버스 시간표</summary>
@@ -309,19 +305,14 @@ FUEL=f'''
 {gas('G_OTA_S','staff',('0134240618','0134-24-0618'),'07:30–21:00 · 매일 · 운하 근처')}
 {gas('G_OTA_F','self',('0134514332','0134-51-4332'),'06:00–23:45 · 매일 · 료칸 쪽 · 朝里IC 근처')}
 </ul>
-<h3 class="sec">치토세 · 반납 전 <small>12/6</small></h3>
-<ul class="gas">
-{gas('ENEOS_H','staff',('0123242031','0123-24-2031'),'1순위 · 반납지 1.3km · 일 08:00–19:00 · 금액 직접 확인')}
-{gas('COSMO','self',('0123232324','0123-23-2324'),'2순위 · 반납지 1.8km · 24시간 · 카드 거절 후기 → 현금')}
-</ul>
-<p class="hint">✗ 공항 앞 ENEOS(美々) · 아폴로(旭ヶ丘) 일요일 휴무</p>
+<p class="hint">치토세(12/6 반납 전) 주유소는 일정 12/6 10:10에</p>
 '''
 
 PARK=f'''
 <ul class="gas">
-  <li><span class="tg ic">🏨</span><div><b>도큐 REI</b><span class="sn">호텔 기계식 · 1박 1,800엔</span></div></li>
-  <li><span class="tg ic">🅿</span><div><b>청의 호수 주차장</b><span class="sn">1,000엔</span><div class="ta">{acts('P_POND')}</div></div></li>
-  <li><span class="tg ic">🅿</span><div><b>오타루 이나호 주차장</b><span class="sn">20분 100엔 · 최대 1,000엔/24h · 운하 도보 10분</span><div class="ta">{acts('INAHO')}</div></div></li>
+  <li><span class="tg ic">🏨</span><div><b>도큐 REI</b><span class="sn">호텔 기계식 (상세는 예약 › 숙소)</span></div></li>
+  <li><span class="tg ic">🅿</span><div><b>청의 호수 주차장</b><span class="sn">유료 · 조명 시간엔 붐빔</span><div class="ta">{acts('P_POND')}</div></div></li>
+  <li><span class="tg ic">🅿</span><div><b>오타루 이나호 주차장</b><span class="sn">운하 도보 10분 · 만차면 근처 코인파킹</span><div class="ta">{acts('INAHO')}</div></div></li>
   <li><span class="tg ic">🅿</span><div><b>텐구야마 주차장</b><span class="sn">무료</span><div class="ta">{acts('P_TENGU')}</div></div></li>
   <li><span class="tg ic">♨</span><div><b>료칸</b><span class="sn">무료 · 호텔 앞 좌우</span></div></li>
 </ul>
@@ -466,24 +457,14 @@ COST=f'''
 INFO=f'''
 <h3 class="sec">☎️ 연락처</h3>
 <ul class="gas">
-  <li><span class="tg ic">🚗</span><div><b>타임즈 신치토세공항점</b><div class="ta"><button class="tel" data-c="0123458756">0123-45-8756</button><button class="tel" data-c="+815037860056">글로벌 +81-50-3786-0056</button></div></div></li>
-  <li><span class="tg ic">♨</span><div><b>료칸</b><div class="ta"><button class="tel" data-c="+81134515151">+81 134-51-5151</button></div></div></li>
   <li><span class="tg ic">🅿</span><div><b>인천 예약주차</b><div class="ta"><button class="tel" data-c="032-743-3460">032-743-3460~1</button></div></div></li>
-  <li><span class="tg ic">🚨</span><div><b>경찰 110 · 구급·화재 119</b></div></li>
+  <li><span class="tg ic">🚨</span><div><b>경찰 110 · 구급·화재 119</b><span class="sn">타임즈·료칸 번호는 예약 탭 티켓에</span></div></li>
   <li><span class="tg ic">🇰🇷</span><div><b>주삿포로 대한민국 총영사관</b><span class="sn">여권 분실·사고 시 · 평일 09–17</span><div class="ta"><button class="tel" data-c="+81112180288">+81-11-218-0288</button></div></div></li>
 </ul>
 <h3 class="sec">🌨️ 날씨</h3>
 <ul class="gas">
   <li><span class="tg ic">☁️</span><div><b>tenki.jp</b><div class="ta"><a class="map" href="https://tenki.jp/forecast/1/2/1400/1100/" target="_blank" rel="noopener">삿포로</a><a class="map" href="https://tenki.jp/forecast/1/3/1200/1459/" target="_blank" rel="noopener">비에이</a><a class="map" href="https://tenki.jp/forecast/1/2/1400/1203/" target="_blank" rel="noopener">오타루</a><a class="map" href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=016000" target="_blank" rel="noopener">기상청</a></div></div></li>
   <li><span class="tg ic">🛣️</span><div><b>도로 상황</b><div class="ta"><a class="map" href="https://www.e-nexco.co.jp/en/road_info/" target="_blank" rel="noopener">고속도로(NEXCO)</a><a class="map" href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">홋카이도 국도 통행규제</a></div></div></li>
-</ul>
-<h3 class="sec">🕐 시간</h3>
-<ul class="steps">
-  <li>일몰 16시 전후</li>
-  <li>오도리 일루미네이션 11/20–12/25</li>
-  <li>청의 호수 조명 12월 16:30–21:00</li>
-  <li>텐구야마 겨울 9–20시 · 마지막 상행 19:48</li>
-  <li>오타루 상점 18시 전후 마감 · 타임즈 09:00–19:00</li>
 </ul>
 <h3 class="sec">🙋 예약자</h3>
 <ul class="steps">
@@ -746,9 +727,6 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .tl .sb{padding-left:12px;min-width:0}
 .tl .sh{font-size:15.5px;font-weight:700;line-height:1.35}
 .tl .ic{margin-right:5px}
-.ribbon{margin:10px 16px 0;padding:9px 14px;border-radius:12px;background:var(--lamp-soft);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
-.ribbon small{font-weight:400;color:var(--mut);margin-left:auto;font-size:11.5px}
-.ribbon:empty{display:none}
 .tl time{cursor:pointer}
 .tl li.stamped::after{background:var(--ok);border-color:var(--ok);animation:stamp .4s cubic-bezier(.3,1.7,.5,1)}
 .tl li.stamped .sh{color:var(--mut);text-decoration:line-through;text-decoration-color:var(--mut)}
@@ -1009,7 +987,7 @@ JS = r'''
   function setDay(n){curDay=n;var d=H[n-1];
     $$('.days button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d==n?'true':'false')});
     $$('.tl').forEach(function(c){c.hidden=c.dataset.day!=n});
-    $('#hero-dw').textContent=d.d+' '+d.w+'요일';$('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;$('#hero-mood').textContent=d.mood;
+    $('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;$('#hero-mood').textContent=d.mood;
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
     $('#hero').dataset.f=d.f;$('#hero').dataset.cap=d.title;
     var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
@@ -1029,7 +1007,6 @@ JS = r'''
     for(var i=0;i<lis.length;i++){var l=lis[i],m=last;if(l.dataset.t){var p=l.dataset.t.split(':');m=(+p[0])*60+(+p[1])}
       if(m>hm){ins=l;break}last=m;if(live)l.classList.add('done')}
     if(live&&ins)ins.classList.add('next');
-    if(live){var rs=$('#ribbon small');if(rs)rs.textContent=ins?('다음 '+(ins.dataset.t||'')+' '+((ins.querySelector('.sh')||{}).textContent||'').trim()):'오늘 일정 끝 · 푹 쉬기'}
     var w=tz(),mk=document.createElement('li');mk.className='now in'+(live?'':' soft');
     var tm=document.createElement('time');tm.textContent='지금';var sb=document.createElement('div');sb.className='sb';var nl=document.createElement('div');nl.className='nowline';
     nl.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11h1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-1a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1zm2.1 0h9.8l-1-3H8.1l-1 3z"/></svg>';
@@ -1041,10 +1018,6 @@ JS = r'''
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
   if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8)}catch(e){}}
-  function ribbon(){var r=$('#ribbon');if(diff>0){r.innerHTML='';var a=document.createElement('span');a.textContent='✈️ 출발까지 '+diff+'일';var b=document.createElement('small');b.textContent='12.03(목) 10:05 인천 출발 · 당일엔 지금 위치 표시';r.appendChild(a);r.appendChild(b)}
-    else if(tripDay){r.innerHTML='';var a2=document.createElement('span');a2.textContent='🧣 여행 '+tripDay+'일째 · '+H[tripDay-1].place;var b2=document.createElement('small');b2.textContent='시간을 누르면 ✓ 완료';r.appendChild(a2);r.appendChild(b2)}
-    else{r.textContent='🎞️ 다녀온 여행 · 2026.12.03–12.06'}}
-  ribbon();
   var stamps={};try{stamps=JSON.parse(ls.get('sg-stamps')||'{}')||{}}catch(e){}
   $$('.tl li').forEach(function(l,i){l.dataset.sid=l.closest('.tl').dataset.day+'-'+i;if(stamps[l.dataset.sid])l.classList.add('stamped');
     var tm=$('time',l);if(tm)tm.addEventListener('click',function(){var on=!l.classList.contains('stamped');l.classList.toggle('stamped',on);stamps[l.dataset.sid]=on;ls.set('sg-stamps',JSON.stringify(stamps));buzz(on?12:6);flash(on?'완료 ✓':'완료 취소')})});
@@ -1149,9 +1122,8 @@ def view(id, subs):
 
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
 <div class="sub plan" data-sub="plan" data-label="📅 일정">
-<div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><div class="hero-t"><div class="mood" id="hero-mood"></div><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
+<div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><div class="hero-t"><div class="mood" id="hero-mood"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
-<div class="ribbon" id="ribbon"></div>
 {day_cards()}
 </div>
 <div class="sub" data-sub="food" data-label="🍽️ 맛집">{food_html()}</div>
@@ -1183,7 +1155,7 @@ PAGE=f'''<!doctype html>
 {view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
 {view('drive',[('fuel','⛽ 주유',FUEL),('park','🅿️ 주차 · 톨게이트',PARK+TIPS)])}
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
-{view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처 · 시간',INFO),('set','⚙️ 설정',SET)])}
+{view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
 <nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>

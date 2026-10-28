@@ -1098,7 +1098,12 @@ JS = r'''
     $$('#v-'+id+' .sub:not([hidden]) .ring .fg').forEach(function(r){r.classList.remove('go');void r.getBoundingClientRect();r.classList.add('go')});
     $$('#seg button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.sub===sub?'true':'false')});
     if(!quiet){window.scrollTo(0,0);navPush()}}
-  $$('.bn button').forEach(function(b){b.addEventListener('click',function(){showView(b.dataset.v)})});
+  /* 하단 탭: 이미 켜진 탭을 다시 누르면 그 안의 다음 서브탭으로 (손가락 동선 최소화) */
+  $$('.bn button').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.v;
+    if(v!==cur){showView(v);return}
+    var ss=$$('#v-'+v+' .sub');if(ss.length<2){window.scrollTo({top:0,behavior:'smooth'});return}
+    var i=ss.findIndex(function(x){return x.dataset.sub===(subs[v]||ss[0].dataset.sub)});
+    showSub(v,ss[(i+1)%ss.length].dataset.sub);buzz(6)})});
 
   /* 일정 · 히어로 · 날짜 */
   var H=HERO_DATA,heroImg=$('#hero-img'),curDay=1;

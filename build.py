@@ -515,111 +515,168 @@ SET='''
 
 
 # ───────────── 맛집 ─────────────
-# 날짜 → 끼니 → (이름, 일본어, 종류, 미슐랭, 지도검색어, 전화, 시간·휴무, 주메뉴, 팁, 휴무표시)
+# 메뉴 사진 라이브러리 (Wikimedia Commons 파일명)
+DISH={
+ 'jingisukan':['Tsukisappu genghis khan club genghis khan.JPG','Jingisukan at Asahi Beer Community Hall.jpg','Matsuo Jingisukan.jpg'],
+ 'miso_ramen':['Miso Ramen.JPG','151010 Sapporo ramen at Susukino Sapporo Hokkaido Japan01s.jpg'],
+ 'shio_ramen':['Japanese Salt flavor Sapporo Ramen.JPG'],
+ 'shoyu_ramen':['Shoyu Ramen.jpg','Baikohken Ramen.jpg','Soy ramen.jpg'],
+ 'ramen_street':['Ganso Ramen Street by zezebono in Sapporo, Hokkaido.jpg'],
+ 'soup_curry':['A soup curry dish in Sapporo - Flickr - odako1.jpg','スープカレー Soup Curry.jpg'],
+ 'nigiri':['Omakase.jpg','Hokkaido hotatekai nigiri.jpg','Nigiri Sushi (26478725732).jpg','Nigiri Sushi (26505096851).jpg','Nigiri Sushi (26571110455).jpg','Nigiri Sushi (26478732232).jpg','Nigiri Sushi (25966163204).jpg','Sushi Set (50857770).jpeg'],
+ 'uni':['Uni gunkan-maki.jpg','Sushi uni.jpg'],
+ 'ikura':['Ikura don.jpg','Ikura don by yoppy.jpg'],
+ 'crab':['Kani gunkan maki.jpg','09 Kani-miso (crab roe) sushi - Tsukiji Market (162068713).jpg'],
+ 'kaisendon':['Kaisendon.jpg','Kaisendon 001.jpg','Kaisendon - sashimi fish bowl - July 2014.jpg'],
+ 'chirashi':['Chirashizushi by The Wong Family Pictures in Hokkaido.jpg'],
+ 'kaiten':['Kaiten-zushi 005.jpg','ConveyorBeltSushi.jpg'],
+ 'hanamaru':['Sushi Nemuro Hanamaru Tokei Dai (184517515).jpeg'],
+ 'parfait':['Strawberry Parfait, Senbikiya (6639279479).jpg','Parfait samples by pinguino in Osaka, Japan.jpg','Parfait.jpg'],
+ 'cream_puff':['Choux à la crème (19387655069).jpg','Cream puff Spivack.jpg'],
+ 'baumkuchen':['Baumkuchen.jpg'],
+ 'omurice':['Rice omlet Hokkyokusei.JPG','Rice Omlette, Renga-Tei, Ginza (6639265687).jpg'],
+ 'butter_sand':['Marusei butter sand of Rokkatei (1).jpg','Marusei butter sand of Rokkatei (2).jpg','Marusei-butter.JPG'],
+ 'cheese_tart':['PABLO mini Akihabara shop - The Cheese Tart (2017-06-30 12.07.15 by othree).jpg'],
+ 'soft_serve':['Soft Ice cream.jpg'],
+ 'ice_cream':['Ice-cream.jpg'],
+ 'cheesecake':['Hokkaido cheesecake.jpg','Japanese no-bake cheesecake.jpg','Soufflé-style cheesecake 001.jpg'],
+ 'letao':['220721 LeTAO Otaru Hokkaido Japan02s3.jpg','Patisserie Letao.jpg'],
+ 'ebi_fry':['Fried-shrimp.jpg'],
+ 'katsu':['Fillet cutlet teishoku at Nishimura Shokudo in Kochi 01.jpg'],
+ 'gratin':['Gratin dauphinois.jpg','Potatoes au gratin by sa.jpg'],
+ 'beef_stew':['Beef stew (15707525894).jpg'],
+ 'potage':['Pot-au-feu - Josselin 3.jpg'],
+ 'hamburg':['Hamburg-Steak.jpg','Stewed hamburger steak 2014.jpg'],
+ 'hayashi':['Hayashi rice.jpg'],
+ 'bread':['Freshly baked bread loaves.jpg','Baked goods.jpg'],
+ 'french':['Haute Cuisine.jpg','Menu gastronomique - Plat (1).jpg','Cuisine Trois étoiles.jpg'],
+ 'karaage':['Tori no Karaage - Japanese style Fried chicken.jpg','Chicken karaage 003.jpg'],
+ 'zaru_soba':['Japanese Zaru Soba.JPG'],
+ 'yakisoba':['Yakisoba - 01.jpg','Yakisoba.jpg'],
+ 'imagawayaki':['Imagawayaki 001.jpg'],
+ 'zenzai':['Shiruko(Zenzai)6.jpg'],
+ 'cake':['Fraisier hk jp.jpg'],
+ 'beer':['Otaru Beer Brewery 02.jpg'],
+ 'kaiseki':['Jisaku Kaiseki Ryori 01.jpg','Kaiseki - Kyoto.jpg'],
+ 'onigiri':['Japanese rice balls (onigiri).jpg','Salmon onigiri by yomi955.jpg'],
+ 'kamaboko':['Banshu deep-fried Kamaboko.JPG','Kamaboko 001.jpg'],
+ 'milk':['Milk-bottle&cap,japan.JPG'],
+ 'chocolate':['Royce chocolate.jpg',"Royce'-chocolate-packaging.JPG"],
+ 'corn':['Grilled Corn (Unsplash).jpg'],
+ 'nijo':['Nijo fish Market 2014.jpg'],
+ 'beer_garden':['Sapporo beer teien01.jpg'],
+ 'tea':['Takanashi\'s milk.jpg'],
+}
+def dish(key,i=0):
+    lst=DISH[key]; return cf(lst[i%len(lst)])
+
+# 구글 지도 (2026-10-28 조회): 이름 → (평점, 리뷰수, place_id)
+G={
+ '다루마 본점':(4.0,3249,'ChIJbQQV34UpC18RgzQI7TQon1g'),'삿포로 비어엔':(4.2,8641,'ChIJ__9PCWwpC18RpHEvsAli2gg'),'스시젠 스스키노점':(4.2,5,'ChIJwSCedwApC18RNCc6Hz3kLRo'),'타쿠즈시':(4.0,212,'ChIJy0Zn_oIpC18RxLGU568zi0A'),'스시킨':(4.3,165,'ChIJO2L3WoQpC18RVFrCz-LGNkI'),'아리마':(4.3,215,'ChIJaQ7d7YQpC18RGaROi9_Jg-I'),'하치쿄 본점':(4.2,1828,'ChIJv57FeoQpC18RdEvZOMd7tkQ'),'후지야 누들':(4.1,587,'ChIJX8W5PYQpC18R3rVU78F9dDs'),'신게츠':(4.1,1467,'ChIJEeGUJoQpC18ROjXHTdFaoBQ'),'멘야 사이미':(4.2,4555,'ChIJ8QvxwkgqC18RzLwtQHUynbc'),
+ '수아게+ 본점':(4.3,6042,'ChIJv0HGVIQpC18Rc2m8zsIZwJE'),'라멘 요코초':(4.1,2913,'ChIJSyzMXY8pC18R-ecCwIykpC8'),'네무로 하나마루 스텔라플레이스':(4.1,4018,'ChIJo4R12HQpC18RMlI-QkjBrEc'),'GARAKU 본점':(4.3,5413,'ChIJQ21rhoMpC18RmzhfndITzug'),'키타카로 삿포로 본관':(4.2,2568,'ChIJq6qePZwpC18RtS5FF_v5uMA'),'롯카테이 삿포로 본점':(4.3,4365,'ChIJN5rQlZ8pC18RHrY67ROV2mo'),'키노토야 오도리공원점':(4.2,1338,'ChIJkzLD35wpC18RTxpPxh8yDgU'),'유키지루시 파를러 본점':(4.1,2195,'ChIJ_ya0-J0pC18RBdiF2CeGBLs'),'파르페테리아 PaL':(4.4,1746,'ChIJ02KmG4QpC18RGdiqVSNFRWY'),'사토':(4.2,1949,'ChIJq6puB4MpC18RGEPvXxXy1Xg'),
+ '이니셜':(3.7,418,'ChIJpelx6YQpC18RV52Q2kwqdlk'),'니조시장 오이소':(4.1,1778,'ChIJI7OWOKkpC18RsNDCudC7fqI'),'준페이':(4.3,4070,'ChIJrQEV1cTFDF8RsCT_OzBZN-g'),'블랑 루주':(4.3,399,'ChIJvcnF9dXFDF8RLJ5FvVElDIg'),'오키라쿠테이':(4.3,155,'ChIJl9O8LNzFDF8R0_CjidIaeac'),'페름 라 테르':(4.1,978,'ChIJbd0EPdPFDF8RPFyKM87RxDQ'),'비에이 선카':(3.9,1315,'ChIJ__97IdnFDF8RpJA43yFM_ms'),'시로가네 비르케 (道の駅)':(3.6,3846,'ChIJ121Coa7MDF8Rl63lXaknSKg'),'아사히카와 라멘무라':(3.8,4260,'ChIJEVAbd5TmDF8R2kU-1UCfJV8'),'다루마 5.5점':(4.0,1769,'ChIJVTianOApC18RJPnmoPDMkwM'),
+ '삼각시장 타키나미 식당':(4.2,3137,'ChIJj79C3KzhCl8RyrFy0-Xccxc'),'아지도코로 타케다':(4.1,2406,'ChIJ4VTM3azhCl8RM5ZhLXZvxsY'),'쿠키젠':(4.4,466,'ChIJq6oeh1HgCl8RmhDGKbEEVbY'),'이세즈시':(4.2,985,'ChIJWSYLgq3hCl8R_zAkzC8XrkA'),'마사즈시 젠안':(3.8,944,'ChIJE3yZmk3gCl8RFxH9jT4OSIQ'),'우오마사':(4.1,1693,'ChIJXckNlVLgCl8Ry123qNbPDes'),'나루토 본점':(4.1,6878,'ChIJq6padq3hCl8RdAJymA13dXs'),'케이엔':(4.0,1306,'ChIJbwg7D1PgCl8R_4iijlybylc'),'르타오 본점 카페':(4.3,3936,'ChIJA__BjVrgCl8R_mYZYGfWn3I'),'키타카로 오타루 본관':(4.3,1867,'ChIJb54BmlrgCl8RSSKykITg9MM'),
+ '롯카테이 오타루운하점':(4.3,1768,'ChIJb54BmlrgCl8RBAlguOE736A'),'아마토 본점':(4.2,1002,'ChIJ_8qpoVPgCl8RdmmzFl-l6d8'),'쿠와타야 팡쥬':(4.0,187,'ChIJW4I-jE3gCl8RXARxhponx7Y'),'오타루 창고 No.1':(4.1,3891,'ChIJk-FOGk3gCl8RQ9Yv9HZnul4'),'홋카이도 라멘도조':(3.9,1730,'ChIJPbQYaGogdV8RaUxIu6A35jM'),'함타로':(3.9,1246,'ChIJXbSlZmogdV8R8PFXT1J8BYM'),'라비':(3.5,1269,'ChIJ3QbbWWogdV8RW0owURDPDSk'),'마츠오 징기스칸':(3.8,795,'ChIJcWIyYkAgdV8REge9mV-lxNg'),'르타오':(4.3,445,'ChIJAbARimogdV8RPJYzaBYCMLs'),'키노토야 · 로이즈':(4.3,1072,'ChIJcWIyYkAgdV8RUTJxFOOaGGI'),
+ '데즈카수산 · 사케노마루가메':(4.0,63,'ChIJU_o4V2ogdV8RudWtDekMr90'),'밀크스탠드':(4.5,195,'ChIJVxQ9z3ghdV8RYUh34vRP3Ns'),'기타노하나 하야시':(4.5,348,'ChIJ_fDxY6UgdV8RdAXBYAofDZg'),'스시 미야카와':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'참고 · 홋카이도 3★':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'스스키노 프렌치 1★':(4.6,114,'ChIJiULtcIQpC18Rb7FjRDdL7Xk'),'비블레 · 아스페르주':(4.3,716,'ChIJbZYV9mnEDF8R9ZvyQbDNr6w'),'호텔 조식 · 편의점':(3.9,5425,'ChIJrdWqsIUpC18Ret8lNRJkB3U'),
+}
+
+# 날짜 → 끼니 → (이름, 일본어, 종류, 미슐랭, 지도검색어, 전화, 시간·휴무, [(메뉴, 사진키[:번호])...], 팁, 휴무표시)
 FOOD=[
  ('삿포로','12/3 목 · 15시 호텔 도착 → 늦은 점심 → 디저트 → 늦은 저녁 → 시메파르페 · 전부 호텔(南4西5) 도보권',[
   ('🍜 늦은 점심 · 15시 전후',[
-   ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','','11:30–21:30 전후 (확인) · 무휴','파리파리 치킨 카레 1,500엔 전후 · 라벤더 포크 꼬치 · 밥에 치즈 토핑','호텔 옆 블록 · 15시에도 열려 있음 · 체크인 전 바로',''),
-   ('라멘 요코초','元祖さっぽろラーメン横丁','미소라멘 17곳 골목','','元祖さっぽろラーメン横丁','','대부분 11:00–03:00 · 가게마다 다름','白樺山荘 미소라멘(삶은 달걀 무료) · 華龍 특제 미소 · 美春 콘버터 미소 (각 1천엔 전후)','南5西3 · 호텔 도보 5분 · 일정에 있는 그곳 · 줄 짧은 집으로',''),
-   ('네무로 하나마루 스텔라플레이스','回転寿司 根室花まる JRタワーステラプレイス店','회전초밥','','根室花まる JRタワーステラプレイス店','','11:00–22:00 · 무휴 · 접시 143엔~','홋카이도 네타 · 연어알 군함 · 꽁치·고등어 생 초밥 · 게 된장국','삿포로역 JR타워 6F · 차 10분(지하주차) · 번호표 대기 · 15시엔 한산',''),
-   ('GARAKU 본점','スープカレーGARAKU 札幌本店','수프카레','','スープカレーGARAKU 札幌本店','','11:30–15:30 (LO 15:00) / 17:00–21:00','야와라카 치킨 레그 1,480엔 · 가미후라노 포크 샤브 1,590 · 야채 15품목 1,390 · 매운맛 1~40단계','南3東2 B1 · 도보 12분 · LO 15:00이라 14:30까지 도착해야 · 웨이팅 유명',''),
+   ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','+81 11-233-2911','11:30–21:00 · 무휴',[('파리파리 치킨 수프카레 1,500엔','soup_curry'),('라벤더 포크 꼬치 카레','soup_curry:1')],'호텔 옆 블록 · 15시에도 열려 있음 · 체크인 전 바로 · 번호표 대기 있을 수 있음',''),
+   ('라멘 요코초','元祖さっぽろラーメン横丁','미소라멘 17곳 골목','','元祖さっぽろラーメン横丁','','가게마다 다름 · 대부분 11:00–03:00',[('골목 분위기','ramen_street'),('白樺山荘 미소라멘 1천엔','miso_ramen'),('華龍 콘버터 미소','miso_ramen:1')],'南5西3 · 호텔 도보 5분 · 줄 짧은 집으로 · 현금만 받는 집 있음',''),
+   ('네무로 하나마루 스텔라플레이스','回転寿司 根室花まる JRタワーステラプレイス店','회전초밥','','根室花まる JRタワーステラプレイス店','+81 11-209-5330','11:00–22:00 · 수 휴무 → 목 OK · 접시 143엔~',[('홋카이도 네타 회전초밥','hanamaru'),('우니 군함','uni'),('이쿠라','ikura'),('게 군함','crab')],'삿포로역 JR타워 6F · 차 10분(지하주차) · 번호표 대기 길지만 LINE으로 알림 · 15시엔 비교적 한산',''),
+   ('GARAKU 본점','スープカレーGARAKU 札幌本店','수프카레','','スープカレーGARAKU 札幌本店','+81 11-252-9843','11:30–15:00 / 17:00–20:30',[('야와라카 치킨 레그 1,480엔','soup_curry:1'),('야채 15품목 1,390엔','soup_curry')],'南3東2 B1 · 도보 12분 · LO 15:00이라 14:30 도착 · 웨이팅 유명 · 영어 OK',''),
   ]),
   ('🍰 디저트 · 카페 · 16~18시',[
-   ('키타카로 삿포로 본관','北菓楼 札幌本館','과자점 · 카페','','北菓楼 札幌本館','','숍 10:00–18:00 · 카페 ~17:00 LO · 무휴','슈크림(夢不思議) 1개 200엔대 · 바움쿠헨 · 본관 한정 오므라이스·케이크 세트','北1西5 옛 도서관 건물 · 도보 15분 · 오도리 가는 길',''),
-   ('롯카테이 삿포로 본점','六花亭 札幌本店','과자점 · 카페','','六花亭 札幌本店','','10:00–17:30 · 무휴','마루세이 버터샌드 · 본점 한정 사쿠사쿠파이(슈) 200엔대 · 2층 카페','北4西6 · 삿포로역 앞 · 선물용 과자',''),
-   ('키노토야 오도리공원점','きのとや 大通公園店','치즈타르트 · 소프트','','きのとや 大通公園店','','10:00–19:00 전후','갓 구운 치즈타르트 1개 250엔대 · 홋카이도 우유 소프트','오도리공원 지하 · 일루미네이션 보기 전',''),
-   ('유키지루시 파를러 본점','雪印パーラー 本店','파르페 · 아이스크림','','雪印パーラー 本店 札幌','','10:00–19:00 전후','스노우 로열 아이스크림(바닐라) · 대왕 파르페 · 소프트 300엔대','北2西3 · 1961년부터 · 레트로 파르페',''),
+   ('키타카로 삿포로 본관','北菓楼 札幌本館','과자점 · 카페','','北菓楼 札幌本館','+81 800-500-0318','10:00–18:00 (카페 LO 16:00 · 15:20 접수 마감) · 무휴',[('슈크림(夢不思議) 200엔대','cream_puff'),('바움쿠헨','baumkuchen'),('본관 한정 오므라이스','omurice'),('케이크 세트','cake')],'北1西5 옛 도서관(안도 타다오 리노베) · 도보 15분 · 카페는 줄 김',''),
+   ('롯카테이 삿포로 본점','六花亭 札幌本店','과자점 · 카페','','六花亭 札幌本店','+81 120-126-666','10:00–17:30 · 수 휴무 → 목 OK',[('마루세이 버터샌드','butter_sand'),('마루세이 아이스샌드','butter_sand:1'),('본점 한정 사쿠사쿠파이','cream_puff:1')],'北4西6 · 삿포로역 앞 · 2층 카페 번호표 · 선물용 과자 면세',''),
+   ('키노토야 오도리공원점','きのとや 大通公園店','치즈타르트 · 소프트','','きのとや 大通公園店','+81 11-233-6161','10:00–20:00',[('갓 구운 치즈타르트 297엔','cheese_tart'),('홋카이도 우유 소프트','soft_serve'),('베리 파르페','parfait')],'오도리 지하(北洋大通センター 1F) · 일루미네이션 보기 전 · 자리 금방 참',''),
+   ('유키지루시 파를러 본점','雪印パーラー 本店','파르페 · 아이스크림','','雪印パーラー 本店 札幌','+81 11-251-7530','10:00–19:00',[('스노우 로열 아이스크림','ice_cream'),('대왕 파르페','parfait:2'),('멜론 아이스','soft_serve')],'北2西3 · 1961년부터 · 레트로 · 포장 아이스만 사도 됨',''),
   ]),
   ('🍖 늦은 저녁 · 20시~',[
-   ('다루마 본점','成吉思汗だるま 本店','징기스칸','','成吉思汗だるま 本店 札幌 南5条西4','011-552-6013','17:00–23:00 · 연중무휴','성길사한(양고기) 1,280엔 · 상육·히레 1,680엔(2시간 내 품절) · 공기밥 220 · 김치 385','예약 불가 · 2인 5~6천엔 · 줄 길면 1분 거리 5.5점(05:00까지)·4.4점·6.4점 · 옷에 냄새 밸 각오',''),
-   ('스시젠 스스키노점','すし善 すすきの店','초밥','★★','すし善 すすきの店 札幌','','~자정 · 일 휴무 → 목 OK','오마카세 니기리 1~1.5만엔 · 홋카이도 우니·보탄새우·게','도보권 미슐랭 2★ · 늦은 시간도 가능 · 예약 권장',''),
-   ('타쿠즈시','田久鮓','초밥','★','田久鮓 札幌 すすきの','','17:30–22:00 · 부정기','오마카세 1.5~2만엔','스스키노 G Dining 6F · 타베로그 온라인 예약 가능',''),
-   ('스시킨','薄野 鮨金','초밥','★','薄野 鮨金 札幌','','18:00 / 20:30 2부제 · 수 휴무','오마카세 2~3만엔','스스키노 · 전화 예약 · 20:30 회차가 늦은 저녁에 맞음',''),
-   ('아리마','鮨処 有馬','초밥','★','鮨処 有馬 札幌 狸小路','','18:00 / 20:30 2부제 · 일·공휴일 휴무','오마카세 1.5~2만엔','다누키코지 · 전화 예약',''),
-   ('하치쿄 본점','海味はちきょう 本店','해산물 이자카야','','海味はちきょう 本店 札幌','','17:00~ · 예약 필수 (확인)','츳코메시(이쿠라 덮밥, "오이사!" 구호) 2천엔대 · 홋케 구이 · 게 · 2인 1만엔 전후','스스키노 · 퍼포먼스로 유명 · 예약 안 하면 못 들어감',''),
-   ('후지야 누들','ふじ屋 NOODLE','라멘 (빕구르망)','빕','ふじ屋 NOODLE 新ラーメン横丁 札幌','','18:00–24:00 (금토 02:30) · 일·월 휴무 → 목 OK','시오 아부라 블랙 · 니보시 라멘 1천엔대','신 라멘요코초 · 도보 3분 · 징기스칸 후 라멘 시메',''),
-   ('신게츠','ラーメン 信月','라멘 (빕구르망)','빕','ラーメン信月 札幌 南5条西3','','20:00–05:00 · 일 휴무','생강 시오라멘(しょうがラーメン) 1천엔 전후','南5西3 · 도보 2분 · 새벽까지 · 술 마신 뒤 시메',''),
-   ('스스키노 프렌치 1★','Aki Nagao · Tateoka Takeshi · Méli Mélo','프렌치','★','Aki Nagao 札幌','','Aki Nagao 일 휴무 · Tateoka 월 휴무 · Méli Mélo 월 휴무','디너 코스 1~2만엔대','전부 도보권 · 온라인 예약(Aki Nagao·Tateoka) · 기념일 느낌이면 여기',''),
-   ('참고 · 홋카이도 3★','すし 宮川 · Molière · 鮨 一幸(2★)','초밥 · 프렌치','★★★','すし 宮川 札幌','','미야카와 수 휴무 · 모리에르 수 휴무','오마카세 2~4만엔','円山 · 차 10분 · 미야카와 7석이라 예약 거의 불가 · 참고만',''),
+   ('다루마 본점','成吉思汗だるま 本店','징기스칸','','成吉思汗だるま 本店 札幌 南5条西4','+81 11-552-6013','17:00–05:00 · 연중무휴',[('성길사한(양고기) 1,280엔','jingisukan'),('상육·히레 1,680엔','jingisukan:1'),('공기밥 220 · 김치 385','jingisukan:2')],'예약 불가 · 2인 5~6천엔 · 17시 줄 시작, 1시간 대기 흔함 → 1분 거리 5.5점·4.4점·6.4점 · 상육·히레 2시간 내 품절 · 냄새 밸 각오',''),
+   ('스시젠 스스키노점','すし善 すすきの店','초밥','★★','すし善 すすきの店 札幌','','~자정 · 일 휴무 → 목 OK',[('오마카세 니기리 1.3만엔~','nigiri:4'),('우니','uni:1'),('보탄새우·게','crab')],'도보권 미슐랭 2★ · 코스 13,000엔부터 · 예약 권장',''),
+   ('타쿠즈시','田久鮓','초밥','★','田久鮓 札幌 すすきの','+81 11-211-1206','17:30–22:00 · 부정기',[('오마카세 1.5~2만엔','nigiri:5'),('연어 사시미','chirashi')],'南3西3 G DINING 6F · 타베로그 선결제 예약 · 셰프 1명 운영',''),
+   ('스시킨','薄野 鮨金','초밥','★','薄野 鮨金 札幌','+81 11-251-9521','18:00–22:00 · 수 휴무 → 목 OK',[('오마카세 2~3만엔','nigiri:7'),('참치','nigiri:3'),('우니','uni')],'南4西4 · 전화 예약 · 니기리 중심 · 영어 가능',''),
+   ('아리마','鮨処 有馬','초밥','★','鮨処 有馬 札幌 狸小路','+81 11-215-0998','18:00–23:00 · 일 휴무 → 목 OK',[('오마카세 약 2만엔 · 2.5시간','nigiri:2'),('계절 사시미','chirashi')],'南3西4 · 전화 예약 · 폰 사용 자제 분위기',''),
+   ('하치쿄 본점','海味はちきょう 本店','해산물 이자카야','','海味はちきょう 本店 札幌','+81 11-222-8940','18:00–23:00 · 예약 권장',[('츳코메시(이쿠라 덮밥 "오이사!") 小 2인 나눠도 충분','ikura'),('홋케 구이 · 가리비','kaisendon:2'),('홋카이도 가라아게','karaage')],'南3西3 · 퍼포먼스 유명 · 6시 오픈 직후 가면 예약 없이도 가능성 · 2인 1만엔 전후',''),
+   ('후지야 누들','ふじ屋 NOODLE','라멘 (빕구르망)','빕','ふじ屋 NOODLE 新ラーメン横丁 札幌','+81 11-552-0248','18:00–24:00 (금토 02:30) · 일·월 휴무 → 목 OK',[('미소라멘 900엔','miso_ramen:1'),('시오 아부라 블랙','shio_ramen'),('교자 450엔','karaage:1')],'신 라멘요코초(패밀리마트 옆 지하통로) · 도보 3분 · 식권기 영어 OK · 21시 이후 줄',''),
+   ('신게츠','ラーメン 信月','라멘 (빕구르망)','빕','ラーメン信月 札幌 南5条西3','+81 11-533-4844','18:00–04:00 · 일 휴무 → 목 OK',[('생강 시오라멘','shio_ramen'),('미소라멘','miso_ramen'),('볶음밥(필수)','shoyu_ramen:2')],'南5西3 · 도보 2분 · 새벽까지 · 술 마신 뒤 시메 · 좁아서 대기',''),
+   ('스스키노 프렌치 1★','Aki Nagao · Tateoka Takeshi · Méli Mélo','프렌치','★','aki nagao 札幌','+81 11-206-1789','Aki Nagao 수~토 18:00 (일·월·화 휴무) → 목 OK',[('홋카이도 식재료 코스 2만엔대','french'),('와인 페어링','french:1')],'南3西3 G DINING 1F · 온라인 예약 필수 · 기념일용 · 구글 4.6',''),
+   ('참고 · 홋카이도 3★','すし 宮川 · Molière · 鮨 一幸(2★)','초밥 · 프렌치','★★★','すし 宮川 札幌','+81 11-613-2221','미야카와 수 휴무 · 모리에르 화·수 휴무',[('미야카와 오마카세 2~3만엔','nigiri:6'),('모리에르 코스','french:2'),('잇코 오마카세 3~4만엔','nigiri')],'円山 · 차 10분 · 미야카와 구글 4.7(7석·예약 매우 어려움) · 모리에르 4.7 · 참고용',''),
   ]),
   ('🍨 시메파르페 · 22시~',[
-   ('파르페테리아 PaL','夜パフェ専門店 Parfaiteria PaL','시메파르페','','Parfaiteria PaL 札幌 南4条西2','011-200-0559','18:00–24:00 (금토 02:00)','이치고 크라운 2,380엔 · 계절 파르페 · 드링크 세트 +300 · 위스키 1,000','南4西2 6F · 도보 5분 · 20시 이후 줄 → 22시 넘으면 다시 짧아짐 · 주문 후 20분',''),
-   ('사토','パフェ、珈琲、酒、佐藤','시메파르페 (원조)','','パフェ、珈琲、酒、佐藤 札幌','','저녁~심야 · 부정기 휴무','계절 파르페 1,500~2,000엔 · 커피·사케 페어링','南1西2 · 시메파르페 유행의 시작 · 줄 김',''),
-   ('이니셜','INITIAL 札幌','시메파르페','','INITIAL 札幌 狸小路','','~24:00 · 월·화 휴무 → 목 OK','아트 같은 비주얼 파르페 1,500~2,000엔','다누키코지 · 줄 끊이지 않음',''),
+   ('파르페테리아 PaL','夜パフェ専門店 Parfaiteria PaL','시메파르페','','Parfaiteria PaL 札幌 南4条西2','+81 11-200-0559','18:00–24:00 (금토 02:00)',[('이치고 크라운 2,380엔','parfait'),('계절 파르페(피치·베리)','parfait:1'),('위스키·드링크 세트 +300','tea')],'南4西2 6F · 도보 5분 · 20시 이후 줄 → 22시 넘으면 다시 짧아짐 · 주문 후 20분 · 구글 4.4',''),
+   ('사토','パフェ、珈琲、酒、佐藤','시메파르페 (원조)','','パフェ、珈琲、酒、佐藤 札幌','+81 11-233-3007','13:00–24:00 (금토 01:00)',[('계절 파르페 1,500~2,000엔','parfait:1'),('말차 딸기 파르페','parfait'),('커피·사케 페어링','tea')],'南1西2 · 시메파르페 유행의 시작 · 9시 전엔 줄 없음',''),
+   ('이니셜','INITIAL 札幌','시메파르페','','INITIAL 札幌 狸小路','+81 11-211-0490','17:00–23:30 · 월·화 휴무 → 목 OK',[('과일 파르페 1,500~2,000엔','parfait:2'),('초코바나나 파르페','parfait')],'南3西5 2F · 비주얼 좋음 · 가격 높은 편 · 구글 3.7',''),
   ]),
  ]),
  ('비에이','12/4 금 · 08:00 출발 전 아침 → 비에이 점심 → 카페 → 21시 삿포로 복귀 후 늦은 저녁',[
   ('🍳 아침 · 07시 (출발 전)',[
-   ('니조시장 오이소','二条市場 海鮮処 魚屋の台所 / 大磯','아침 카이센동','','二条市場 大磯 札幌','','07:30–15:00 전후 · 가게마다 다름','3색 카이센동(우니·이쿠라·게) 3~4천엔 · 게 된장국','南3東1 · 호텔 도보 10분 · 7시대면 대기 없음 · 8시 출발이면 7시 도착',''),
-   ('호텔 조식 · 편의점','東急REI 朝食 / セブンイレブン','간단 아침','','札幌東急REIホテル','','조식 포함 여부 예약 확인','호텔 뷔페 · 세븐일레븐 오니기리·샌드위치·홋카이도 우유','빨리 출발하려면 편의점이 제일 빠름',''),
+   ('니조시장 오이소','二条市場 大磯 本店','아침 카이센동','','二条市場 大磯 札幌','+81 11-219-5252','07:30–15:30 · 수 휴무 → 금 OK',[('우니·게·이쿠라 3색동 6,400엔','kaisendon'),('우니동','uni:1'),('카이센동 (가성비)','kaisendon:1'),('게 그라탕','crab:1')],'南3東2 · 호텔 도보 10분 · 9:30 이후면 30분 대기 · 7시대 우니가 제일 신선 · 번호표 먼저',''),
+   ('호텔 조식 · 편의점','東急REI 朝食 / セブンイレブン','간단 아침','','札幌東急REIホテル','+81 11-531-0109','조식 포함 여부 예약 확인',[('호텔 뷔페 (리뷰 평 좋음)','bread'),('세븐일레븐 오니기리','onigiri'),('홋카이도 우유','milk')],'빨리 출발하려면 편의점이 제일 빠름',''),
   ]),
   ('🍱 비에이 점심 · 12시',[
-   ('준페이','洋食とcafé じゅんぺい','양식','','洋食とcafe じゅんぺい 美瑛','','11:00–15:00 (재료 소진 시 마감) · 월 휴무 → 금 OK','에비동(에비후라이 덮밥) 1,500엔 전후 · 에비후라이 정식 · 카츠 정식','本町4丁目 · 역 근처 · 주차 10대 · 11시 오픈 직후 or 14시 · 웨이팅 유명',''),
-   ('블랑 루주','Blanc Rouge','프렌치 양식','','ブランルージュ 美瑛','','11:00–16:30 · 목 휴무 → 금 OK','포테이토 도피노아(감자 그라탕) 700엔 · 비프스튜 세트 1,700엔','大村村山 · 역에서 차 5분 · 언덕 풍경 보며',''),
-   ('오키라쿠테이','カフェレストランおきらく亭','양식 카페','','おきらく亭 美瑛','','11:00–14:00 · 수 휴무 → 금 OK','포타주(포토푀) 1,600엔 · 비프스튜 함박 2,300 · 하야시라이스 1,700','栄町1-6-1 · 역 도보 3분 · 따뜻한 국물',''),
-   ('페름 라 테르','Ferme La Terre Biei','코스 런치 · 베이커리','','フェルム ラ・テール 美瑛','','런치 11:00–14:30 (예약 권장) · 부정기','시레토코 치킨 + 계절 채소 코스 3,300엔 · 치즈케이크 · 빵','大村村山 · 차 8분 · 숍 10:00–16:00(겨울)',''),
-   ('비블레 · 아스페르주','bi.blé · ASPERGES','프렌치','★','レストラン bi.ble 美瑛','','11월~4월초 동계 휴업','비에이 미슐랭 프렌치 2곳','12/4 ✗ (겨울엔 둘 다 쉼)','x'),
+   ('준페이','洋食とcafé じゅんぺい','양식','','洋食とcafe じゅんぺい 美瑛','+81 166-92-1028','11:00–15:00 (재료 소진 시 마감) · 무휴',[('에비동(에비후라이 덮밥)','ebi_fry'),('에비 카레 세트','soup_curry'),('카츠 정식','katsu'),('치킨 롤','karaage')],'本町4-4-10 · 주차 10대 · 11시 오픈 전 or 13시 이후 · 단체 관광객 많음 · 구글 4.3',''),
+   ('블랑 루주','Blanc Rouge','프렌치 양식','','ブランルージュ 美瑛','+81 166-92-5820','11:00–16:00 · 목 휴무 → 금 OK',[('포테이토 도피노아(감자 그라탕) 700엔','gratin'),('비프스튜 세트 1,700엔','beef_stew')],'大村村山 · 역에서 차 5분 · 숲속 · 신발 벗고 입장 · 구글 4.3',''),
+   ('오키라쿠테이','カフェレストランおきらく亭','양식 카페','','おきらく亭 美瑛','+81 166-92-3741','11:30–16:00 · 수·목 휴무 → 금 OK',[('포타주(포토푀) 1,600엔','potage'),('버섯 함박 2,300엔','hamburg'),('하야시라이스 1,700엔','hayashi')],'栄町1-6-1 · 역 도보 3분 · 겨울에 열려 있는 귀한 집 · 구글 4.3',''),
+   ('페름 라 테르','Ferme La Terre Biei','코스 런치 · 베이커리','','フェルム ラ・テール 美瑛','+81 166-74-4417','10:00–17:00 · 런치 예약 권장',[('홋카이도 런치 세트 3~5천엔','french:1'),('갓 구운 빵·카라멜 푸딩','bread'),('치즈케이크','cheesecake')],'大村村山 · 차 8분 · 언덕 위 전망 · 베이커리 명물 · 구글 4.1',''),
+   ('비블레 · 아스페르주','bi.blé · ASPERGES','프렌치','★','レストラン bi.ble 美瑛','+81 166-92-8100','구글 기준 겨울 영업 중 (bi.blé 화 휴무 · ASPERGES 수 휴무) → 금 OK · 전화 확인',[('bi.blé 런치 코스 3,800엔~','french'),('ASPERGES 런치 코스 · 20종 채소 샐러드','french:2'),('빵·우동(파란 국물)','bread:1')],'bi.blé 北瑛 옛 초등학교 · ASPERGES 美瑛選果 옆 · 둘 다 미슐랭 1★ · 예약 필수 · 구글 4.3',''),
   ]),
   ('☕ 카페 · 간식 · 오후',[
-   ('비에이 선카','美瑛選果','농산물 셀렉트숍 · 카페','','美瑛選果','','09:00–17:00 전후 (겨울 단축 확인)','콘 소프트 · 비에이 밀 빵 · 아스파라·콘 기념품','大町2 · 시내 · 호쿠렌 주유소 근처',''),
-   ('시로가네 비르케 (道の駅)','道の駅 びえい「白金ビルケ」','휴게소 · 카페','','道の駅 びえい 白金ビルケ','','09:00–17:00 전후 (겨울 확인)','青い池 소프트 · 비에이 버거 · 커피','청의 호수 주차장 바로 옆 · 조명 보기 전 몸 녹이기',''),
+   ('비에이 선카','美瑛選果','농산물 셀렉트숍 · 카페','','美瑛選果','+81 120-109-347','10:00–17:00',[('콘 소프트·우유','soft_serve'),('비에이 밀 빵','bread'),('옥수수·감자 간식','corn'),('가라아게(평 좋음)','karaage:1')],'大町2 · 시내 · ASPERGES 바로 옆 · 오후엔 품절 많음',''),
+   ('시로가네 비르케 (道の駅)','道の駅 びえい「白金ビルケ」','휴게소 · 카페','','道の駅 びえい 白金ビルケ','+81 166-94-3355','09:00–17:00',[('BTB 버거(비에이 밀 번)','hamburg:1'),('青い池 소프트 500엔','soft_serve'),('커피·기념품','tea')],'청의 호수 주차장 바로 옆 · 조명 보기 전 몸 녹이기 · 노스페이스 매장',''),
   ]),
   ('🍜 늦은 저녁 · 21시 삿포로 복귀 후',[
-   ('신게츠','ラーメン 信月','라멘 (빕구르망)','빕','ラーメン信月 札幌 南5条西3','','20:00–05:00 · 일 휴무','생강 시오라멘 1천엔 전후','도보 2분 · 늦게 와도 됨',''),
-   ('후지야 누들','ふじ屋 NOODLE','라멘 (빕구르망)','빕','ふじ屋 NOODLE 新ラーメン横丁 札幌','','18:00–24:00 (금 02:30)','시오 아부라 블랙 1천엔대','신 라멘요코초 · 도보 3분',''),
-   ('다루마 5.5점','成吉思汗だるま 5.5店','징기스칸','','成吉思汗だるま 5.5店 札幌','011-551-5529','17:00–05:00 · 무휴','양고기 1,280엔 · 상육 1,680','대기석·사물함 있음 · 늦은 밤엔 줄 짧음 · 12/3 못 갔으면 여기',''),
-   ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','','~21:30 전후 (확인)','파리파리 치킨 카레 1,500엔 전후','호텔 옆 · 21시 도착이면 아슬아슬',''),
+   ('신게츠','ラーメン 信月','라멘 (빕구르망)','빕','ラーメン信月 札幌 南5条西3','+81 11-533-4844','18:00–04:00 · 일 휴무',[('생강 시오라멘','shio_ramen'),('볶음밥','shoyu_ramen:2')],'도보 2분 · 늦게 와도 됨',''),
+   ('후지야 누들','ふじ屋 NOODLE','라멘 (빕구르망)','빕','ふじ屋 NOODLE 新ラーメン横丁 札幌','+81 11-552-0248','18:00–02:30 (금)',[('미소라멘 900엔','miso_ramen:1'),('니보시 라멘','shoyu_ramen')],'신 라멘요코초 · 도보 3분',''),
+   ('다루마 5.5점','成吉思汗だるま 5.5店','징기스칸','','成吉思汗だるま 5.5店 札幌','+81 11-551-5529','17:00–05:00 · 무휴',[('양고기 1,280엔','jingisukan:1'),('상육 1,680엔','jingisukan')],'南5西5 · 대기석·사물함 있음 · 늦은 밤엔 줄 짧음 · 12/3 못 갔으면 여기',''),
+   ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','+81 11-233-2911','~21:00 (금)',[('파리파리 치킨 카레','soup_curry')],'호텔 옆 · 21시 도착이면 못 들어감 · 20:30 전 도착해야',''),
   ]),
  ]),
  ('오타루','12/5 토 · 10시 도착 → 시장 브런치 → 점심 스시 → 디저트 → 료칸 가이세키(저녁) → 운하 야경',[
   ('🍳 브런치 · 10시',[
-   ('삼각시장 타키나미 식당','三角市場 滝波食堂','카이센동','','滝波食堂 三角市場 小樽','','08:00–17:00','와가마마동(우니·이쿠라·게 골라 담기) 3,000~4,500엔 · 게 된장국 추가','역 옆 삼각시장 · 10시 도착이면 대기 짧음 · 점심은 번호표 지옥',''),
-   ('아지도코로 타케다','味処 たけだ','카이센동','','味処たけだ 三角市場 小樽','','07:00–16:00 전후','타케다동 3천엔대 · 게 다리 구이','삼각시장 안 · 타키나미 줄 길면 여기',''),
+   ('삼각시장 타키나미 식당','三角市場 滝波食堂','카이센동','','滝波食堂 三角市場 小樽','+81 134-23-1426','07:00–17:30 · 현금만',[('와가마마동(우니·이쿠라·게 골라 담기) 3,000~4,500엔','kaisendon'),('치라시동','chirashi'),('시마홋케 구이','kaisendon:2'),('가리비·새우','nigiri:1')],'역 옆 삼각시장 · 10시 도착이면 대기 짧음(11시 20~30분) · 카운터에서 먼저 주문 · 구글 4.2',''),
+   ('아지도코로 타케다','味処 たけだ','카이센동 · 게','','味処たけだ 三角市場 小樽','+81 134-22-9652','07:00–16:00',[('타케다동 3천엔대','kaisendon:1'),('킹크랩 찜(小 1만엔·2인)','crab'),('청어 구이','kaisendon:2')],'삼각시장 안 · 타키나미 줄 길면 여기 · 게 사서 바로 쪄줌 · 구글 4.1',''),
   ]),
   ('🍣 점심 · 12~14시',[
-   ('쿠키젠','握 群来膳','초밥','★★','握 群来膳 小樽','','11:30–14:30 / 17:30–21:00 · 화·셋째 수 휴무 → 토 OK','오마카세 니기리 5,000엔~ (런치 6~8천)','東雲町2-4 · 역 도보 10분 · 예약 가능 · 오타루 유일 2★',''),
-   ('이세즈시','伊勢鮨','초밥','★','伊勢鮨 小樽','0134-23-1425','11:30–15:00 / 17:00–21:00 · 수·첫째둘째 화 휴무 → 토 OK','오마카세 16관 6,800엔 · 醍(12관+국) 4,500엔 · 홋카이 니기리 12관','稲穂3-15-3 · 주차 8대 · 전화 예약만(2개월 전부터) · 역 안 駅中店은 서서 6관 1,500엔·예약 불필요',''),
-   ('마사즈시 젠안','おたる政寿司 ぜん庵','초밥','','おたる政寿司 ぜん庵','','11:00–14:30 / 17:00–20:30 · 목 휴무 → 토 OK','타쿠미 세트 6,820엔 · 런치 니기리 3천엔대','色内1-2-1 · 운하 근처 · 예약 가능 · 일정에 넣어둔 곳',''),
-   ('우오마사','魚真','초밥 · 구이','','魚真 小樽','','12:00–14:00 / 16:00–20:30 · 일 휴무 → 토 OK','우오마사 니기리 3,800엔 · 생선구이 950','稲穂2-5-11 · 역 도보 5분 · 예약 가능 · 현지인 인기',''),
-   ('나루토 본점','若鶏時代なると 本店','닭 반마리 튀김','','若鶏時代なると 本店','','11:00–21:00 · 부정기','와카도리 한신아게(반마리) 980엔 · 자루소바 세트','稲穂3-16-13 · 오타루 소울푸드 · 스시 말고 가볍게',''),
-   ('케이엔','桂苑','앙카케 야키소바','','中華食堂 桂苑 小樽','','영업시간 확인','앙카케 야키소바 1천엔 전후','오타루 명물 · 역 근처 중화식당',''),
+   ('쿠키젠','握 群来膳','초밥','★★','握 群来膳 小樽','+81 134-27-2888','11:30–14:30 / 18:00–20:30 · 월·화 휴무 → 토 OK',[('런치 오마카세 12관 7,700엔','nigiri'),('우니·이쿠라','uni'),('오리지널 사케','tea')],'色内1-10-7 · 역 도보 10분 · 온라인 예약(예약금) · 오타루 유일 2★ · 구글 4.4 · 진행 빠른 편',''),
+   ('이세즈시','伊勢鮨','초밥','★','伊勢鮨 小樽','+81 134-23-1425','11:30–15:00 / 17:00–21:00 · 수 휴무 → 토 OK',[('오마카세 16관 6,800엔','nigiri:1'),('醍(12관+국) 4,500엔','nigiri:3'),('홋카이 니기리 12관','uni:1'),('디너 오마카세 9,775엔(JPNEAZY)','nigiri:2')],'稲穂3-15-3 · 주차 8대 · 전화 예약(2개월 전부터) 또는 JPNEAZY · 간장 없이 그대로 · 역 안 駅中店은 서서 6관 1,500엔·예약 불필요 · 구글 4.2',''),
+   ('마사즈시 젠안','おたる政寿司 ぜん庵','초밥','','おたる政寿司 ぜん庵','+81 134-64-7030','11:00–14:30 / 17:00–20:30 · 목 휴무 → 토 OK',[('타쿠미 세트 6,820엔','nigiri:4'),('런치 니기리 3천엔대','nigiri:5'),('연어 초밥 덮밥·덴푸라','kaisendon:1')],'色内1-2-1 · 운하 전망 창가석 온라인 예약 · 일정에 넣어둔 곳 · 구글 3.8 (가격 대비 평 갈림)',''),
+   ('우오마사','魚真','초밥 · 구이','','魚真 小樽','+81 134-22-0456','12:00–14:00 / 16:00–20:15 · 일 휴무 → 토 OK',[('우오마사 니기리 3,800엔','nigiri:6'),('사시미 모둠','chirashi'),('덴푸라·연어이쿠라동','kaisendon')],'稲穂2-5-11 · 역 도보 5분 · 영어 메뉴 1장 · 현지인 인기 · 구글 4.1',''),
+   ('나루토 본점','若鶏時代なると 本店','닭 반마리 튀김','','若鶏時代なると 本店','+81 134-32-3280','11:00–21:00',[('와카도리 한신아게(반마리) 1,190엔','karaage'),('잔기 정식 900엔','karaage:1'),('새우 덴푸라','ebi_fry'),('자루소바 세트','zaru_soba')],'稲穂3-16-13 · 카운터 선주문 · 2층은 다다미 · 짠 편 · 구글 4.1 (6,878)',''),
+   ('케이엔','中華食堂 桂苑','앙카케 야키소바','','中華食堂 桂苑 小樽','+81 134-23-8155','11:00–19:00 · 목 휴무 → 토 OK',[('앙카케 야키소바 870엔','yakisoba'),('볶음밥·교자','yakisoba:1'),('미소·시오 라멘','miso_ramen')],'稲穂2-16-14 · 1964년부터 · 영어·중국어 메뉴 · 구글 4.0',''),
   ]),
   ('🍰 디저트 · 사카이마치 · 15~17시',[
-   ('르타오 본점 카페','ルタオ 本店','치즈케이크','','ルタオ 本店 小樽','','09:00–18:00','더블 프로마쥬 케이크 세트 1,000엔 전후 · 본점 한정 생치즈케이크(조기 품절)','메르헨 교차로 · 3층 전망대',''),
-   ('키타카로 오타루 본관','北菓楼 小樽本館','슈크림 · 소프트','','北菓楼 小樽本館','','09:00–18:00 전후','슈크림 200엔대 · 소프트 · 바움쿠헨','사카이마치 · 르타오 옆',''),
-   ('롯카테이 오타루운하점','六花亭 小樽運河店','과자 · 카페','','六花亭 小樽運河店','','09:00–18:00 전후','마루세이 아이스샌드 · 버터샌드','사카이마치 · 앉아서 먹을 수 있음',''),
-   ('아마토 본점','あまとう 本店','전통 양과자 카페','','あまとう 本店 小樽','','10:00–19:00 전후 · 목 휴무 (확인)','마롱코론 · 크림젠자이 · 파르페','都通り 상점가 · 1929년부터 · 레트로',''),
-   ('쿠와타야 팡쥬','桑田屋 ぱんじゅう','오타루 전통 간식','','桑田屋 小樽','','10:00–18:00 전후','팡쥬(한입 풀빵) 1개 100엔대 · 팥·크림·초코','역 앞 本店 · 걸으면서',''),
+   ('르타오 본점 카페','ルタオ 本店','치즈케이크','','ルタオ 本店 小樽','+81 120-314-521','09:00–18:00',[('더블 프로마쥬 케이크 세트 1,200엔','letao'),('치즈 타르트·치즈 브리오슈','cheese_tart'),('우유 소프트 500엔','soft_serve'),('본점 건물·3층 전망','letao:1')],'메르헨 교차로 · 번호표 40팀이어도 15분 · 구글 4.3',''),
+   ('키타카로 오타루 본관','北菓楼 小樽本館','슈크림 · 바움쿠헨','','北菓楼 小樽本館','+81 134-31-3464','10:00–18:00',[('주먹만 한 슈크림 324엔','cream_puff'),('베리 슈','cream_puff:1'),('바움쿠헨(妖精の森)','baumkuchen')],'사카이마치 7-22 · 르타오 옆 · 오후엔 품절 · 구글 4.3',''),
+   ('롯카테이 오타루운하점','六花亭 小樽運河店','과자 · 카페','','六花亭 小樽運河店','+81 120-126-666','10:00–18:00',[('마루세이 아이스샌드(럼레이즌) 300엔','butter_sand:1'),('마루세이 버터샌드','butter_sand'),('와인 포도 쿠키·2층 카페 커피 150엔','cake')],'사카이마치 · 키타카로 바로 옆 · 2층 카페 조용 · 구글 4.3',''),
+   ('아마토 본점','あまとう 本店','레트로 양과자','','あまとう 本店 小樽','+81 134-22-3942','10:00–18:30 · 수·목 휴무 → 토 OK',[('마롱코론(견과 쿠키)','cake'),('치즈케이크(바스크+뉴욕 느낌)','cheesecake:1'),('크림젠자이·파르페(2층)','zenzai')],'稲穂2-16-18 · 1929년부터 · 2층은 음료 필수 · 구글 4.2',''),
+   ('쿠와타야 팡쥬','桑田屋 ぱんじゅう','오타루 전통 간식','','桑田屋 小樽 本店','+81 134-34-3840','10:00–17:00 · 화 휴무 → 토 OK',[('팡쥬(종 모양 풀빵) 120엔 · 팥·커스터드·카망베르','imagawayaki'),('말차 팡쥬','imagawayaki')],'色内1-1-12 옛 은행 건물 · 운하 근처 · 걸으면서 · 구글 4.0',''),
   ]),
   ('🍺 밤 · 운하 야경 후',[
-   ('오타루 창고 No.1','小樽倉庫No.1','오타루 맥주 비어홀','','小樽倉庫No.1 小樽ビール','','영업시간 확인','오타루 필스너·둥켈·바이스 · 소시지','운하 바로 옆 · 료칸까지 15분 운전이라 운전자는 ✗ (예은이만)',''),
-   ('료칸 가이세키','OTARU RETREAT 夕食','석식 (예약됨)','','OTARU RETREAT by Onko Chishin','','18:00 또는 19:00 · 체크인 때 정함','가이세키 코스 (숙박 포함)','밖에서 저녁 안 먹어도 됨',''),
+   ('오타루 창고 No.1','小樽倉庫No.1 小樽ビール','오타루 맥주 비어홀','','小樽倉庫No.1 小樽ビール','+81 134-21-2323','11:00–22:00',[('오타루 필스너·둥켈·바이스 · 훈제맥주','beer'),('소시지 모둠·프레첼·슈니첼','hamburg'),('2층 무료 양조장 견학','beer')],'港町5-4 운하 창고 · 20:00 야경 때 · 료칸까지 15분 운전이라 운전자는 ✗ · 구글 4.1',''),
+   ('료칸 가이세키','OTARU RETREAT 夕食','석식 (예약됨)','','OTARU RETREAT by Onko Chishin','','18:00 또는 19:00 · 체크인 때 정함',[('가이세키 코스(숙박 포함)','kaiseki'),('조식 8:00','kaiseki:1')],'밖에서 저녁 안 먹어도 됨 · 점심을 가볍게',''),
   ]),
  ]),
  ('공항','12/6 일 · 료칸 조식 → 11:05 반납 → 국내선 3F 점심 → 2F 디저트·간식 → 14:05 출발',[
   ('🍜 점심 · 11:30~12:30',[
-   ('홋카이도 라멘도조','北海道ラーメン道場','라멘 10곳','','北海道ラーメン道場 新千歳空港','','09:00~ (けやき) · LO 20:30','えびそば一幻 새우미소(줄 김) · けやき 미소(반숙란) · 白樺山荘 미소 · 각 1천엔대','국내선 3F · 국제선에서 연결통로 도보 10분',''),
-   ('함타로','回転寿司 函太郎 新千歳空港店','회전초밥','','函太郎 新千歳空港','','11:00~','홋카이도 네타 접시 200~700엔 · 이쿠라·보탄새우','국내선 3F · 마지막 초밥',''),
-   ('라비','スープカレー lavi','수프카레','','スープカレー lavi 新千歳空港','','11:00~','치킨 야채 카레 1,400엔 전후','국내선 3F',''),
-   ('마츠오 징기스칸','松尾ジンギスカン 新千歳空港店','양념 징기스칸','','松尾ジンギスカン 新千歳空港','','11:00~','양념 양고기 정식 2천엔 전후','삿포로에서 못 먹었으면 여기',''),
-   ('기타노하나 하야시','北の華 はやし','초밥','★★','北の華 はやし 千歳','','일 휴무','오마카세 1.5~2만엔','12/6 일 ✗ (치토세 시내 2★)','x'),
+   ('홋카이도 라멘도조','北海道ラーメン道場','라멘 10곳','','北海道ラーメン道場 新千歳空港','+81 123-23-0111','09:00–21:00',[('えびそば一幻 새우미소 (줄 김)','miso_ramen:1'),('けやき 버터콘 미소','miso_ramen'),('白樺山荘 미소','shoyu_ramen:1'),('교자','karaage:1')],'국내선 3F · 국제선에서 연결통로 도보 10분 · 구글 3.9',''),
+   ('함타로','回転寿司 函太郎 新千歳空港店','회전초밥','','函太郎 新千歳空港','+81 123-25-3310','11:00–20:30',[('홋카이도 네타 접시','kaiten'),('오토로·청어','nigiri:3'),('게 샐러드·튀김','crab')],'국내선 3F · 태블릿 주문 · 20분 대기 흔함 · 구글 3.9',''),
+   ('라비','スープカレー lavi','수프카레','','スープカレー lavi 新千歳空港','+81 123-21-8618','10:30–20:30',[('치킨+함박 수프카레','soup_curry'),('새우 베이스 카레','soup_curry:1')],'국내선 3F · 양 적은 편 → 大 추천 · 구글 3.5',''),
+   ('마츠오 징기스칸','松尾ジンギスカン 新千歳空港店','양념 징기스칸','','松尾ジンギスカン 新千歳空港','+81 123-46-5829','10:00–21:00',[('양념 양고기 정식 (밥·미소국 무료)','jingisukan:2'),('양갈비·소시지','jingisukan')],'3F 구루메월드 · 삿포로에서 못 먹었으면 · 짠 편 · 구글 3.8',''),
+   ('기타노하나 하야시','鮨処 北の華','초밥','★★','鮨処北の華 千歳','+81 123-23-5126','17:30–22:00 · 일 휴무',[('오마카세 3단계 가격','nigiri'),('우니·이쿠라','uni')],'12/6 일 ✗ · 치토세 시내 · 구글 4.5 · 사진 촬영 금지 분위기','x'),
   ]),
   ('🍰 디저트 · 간식 · 2F',[
-   ('르타오','ルタオ 新千歳空港店','치즈케이크 · 파르페','','ルタオ 新千歳空港','','08:00~','무스 프로마쥬 파르페 · 더블 프로마쥬(선물)','2F · 오타루에서 못 샀으면',''),
-   ('키노토야 · 로이즈','きのとや · ロイズ チョコレートワールド','치즈타르트 · 초콜릿','','ロイズ チョコレートワールド 新千歳空港','','09:00~','갓 구운 치즈타르트 · 로이즈 생초콜릿·포테이토칩 초콜릿(선물)','2F·3F 연결통로',''),
-   ('데즈카수산 · 사케노마루가메','出塚水産 · 鮭乃丸亀','튀김 어묵 · 연어 오니기리','','出塚水産 新千歳空港','','09:00~ · 오니기리 오후 품절','갓 튀긴 가마보코 1개 300엔대 · 연어·이쿠라 오니기리','2F · 기내 간식으로 사가기',''),
-   ('밀크스탠드','ミルクスタンド 北海道興農社','우유','','ミルクスタンド 新千歳空港','','09:00~','목장별 우유 비교 · 소프트','2F · 마지막 홋카이도 우유',''),
+   ('르타오','ルタオ 新千歳空港店','치즈케이크 · 파르페','','ルタオ 新千歳空港','+81 123-46-2250','08:00–20:00',[('무스 프로마쥬 파르페','parfait'),('더블 프로마쥬 홀케이크(선물·냉동)','letao'),('멜론 파르페(기간한정)','cheesecake')],'2F · 홀케이크만 판매 · 구글 4.3',''),
+   ('키노토야 · 로이즈','きのとや · ロイズ チョコレートワールド','치즈타르트 · 초콜릿','','ロイズ チョコレートワールド 新千歳空港','+81 570-030-612','08:30–19:00',[('로이즈 생초콜릿(보냉백 무료)','chocolate'),('초콜릿 베이커리','chocolate:1'),('키노토야 치즈타르트','cheese_tart')],'3F 연결통로 · 공장 견학 창 · 구글 4.3',''),
+   ('데즈카수산 · 사케노마루가메','出塚水産 · 鮭乃丸亀','튀김 어묵 · 연어 오니기리','','出塚水産 新千歳空港','+81 123-45-8533','09:00–19:00',[('갓 튀긴 가마보코(치즈·가리비)','kamaboko'),('연어·이쿠라 오니기리','onigiri:1'),('모둠 어묵 팩','kamaboko:1')],'2F · 오니기리는 오후 품절 · 기내 간식용',''),
+   ('밀크스탠드','ミルクスタンド 北海道興農社','우유','','ミルクスタンド 新千歳空港','+81 123-25-8600','08:00–20:00',[('목장 우유 비교 세트 600엔','milk'),('소프트·요거트','soft_serve')],'2F · 마지막 홋카이도 우유 · 구글 4.5',''),
   ]),
  ]),
 ]
-
-PH={'수아게+ 본점': 'A soup curry dish in Sapporo - Flickr - odako1.jpg', '라멘 요코초': 'Ganso Ramen Street by zezebono in Sapporo, Hokkaido.jpg', '네무로 하나마루 스텔라플레이스': 'Sushi Nemuro Hanamaru Tokei Dai (184517515).jpeg', 'GARAKU 본점': 'スープカレー Soup Curry.jpg', '키타카로 삿포로 본관': 'Choux à la crème (19387655069).jpg', '롯카테이 삿포로 본점': 'SAKURAKO - RokkaTei Sapporo flagship store. (20603602119).jpg', '키노토야 오도리공원점': 'Hokkaido Milk Creamy Tart.jpg', '유키지루시 파를러 본점': 'Ice-cream.jpg', '다루마 본점': 'Tsukisappu genghis khan club genghis khan.JPG', '스시젠 스스키노점': 'Nigiri Sushi (26571110455).jpg', '타쿠즈시': 'Nigiri Sushi (26478732232).jpg', '스시킨': 'Sushi Set (50857770).jpeg', '아리마': 'Chirashizushi by The Wong Family Pictures in Hokkaido.jpg', '하치쿄 본점': 'Ikura don.jpg', '후지야 누들': '151010 Sapporo ramen at Susukino Sapporo Hokkaido Japan01s.jpg', '신게츠': 'Japanese Salt flavor Sapporo Ramen.JPG', '스스키노 프렌치 1★': 'Menu gastronomique - Plat (1).jpg', '참고 · 홋카이도 3★': 'Cuisine Trois étoiles.jpg', '파르페테리아 PaL': 'Strawberry Parfait, Senbikiya (6639279479).jpg', '사토': 'Parfait samples by pinguino in Osaka, Japan.jpg', '이니셜': 'Parfait.jpg', '니조시장 오이소': 'Nijo fish Market 2014.jpg', '호텔 조식 · 편의점': 'Japanese rice balls (onigiri).jpg', '준페이': 'Fried-shrimp.jpg', '블랑 루주': 'Gratin dauphinois.jpg', '오키라쿠테이': 'Pot-au-feu - Josselin 3.jpg', '페름 라 테르': 'Hokkaido cheesecake.jpg', '비블레 · 아스페르주': 'Haute Cuisine.jpg', '비에이 선카': 'Soft Ice cream.jpg', '시로가네 비르케 (道の駅)': '@POND', '다루마 5.5점': 'Jingisukan at Asahi Beer Community Hall.jpg', '삼각시장 타키나미 식당': 'Kaisendon.jpg', '아지도코로 타케다': 'Kaisendon 001.jpg', '쿠키젠': 'Omakase.jpg', '이세즈시': 'Hokkaido hotatekai nigiri.jpg', '마사즈시 젠안': 'Nigiri Sushi (26478725732).jpg', '우오마사': 'Nigiri Sushi (26505096851).jpg', '나루토 본점': 'Tori no Karaage - Japanese style Fried chicken.jpg', '케이엔': 'Yakisoba - 01.jpg', '르타오 본점 카페': '220721 LeTAO Otaru Hokkaido Japan02s3.jpg', '키타카로 오타루 본관': 'Cream puff Spivack.jpg', '롯카테이 오타루운하점': 'Marusei butter sand of Rokkatei (1).jpg', '아마토 본점': 'Fraisier hk jp.jpg', '쿠와타야 팡쥬': '', '오타루 창고 No.1': '@CANAL', '료칸 가이세키': '@RYOKAN', '홋카이도 라멘도조': 'Sapporo ramen Kyowakoku1.jpg', '함타로': 'Kaiten-zushi 005.jpg', '라비': 'A soup curry dish in Sapporo - Flickr - odako1.jpg', '마츠오 징기스칸': 'Matsuo Jingisukan.jpg', '기타노하나 하야시': 'Nigiri Sushi (25966163204).jpg', '르타오': 'Hokkaido cheesecake.jpg', '키노토야 · 로이즈': 'Royce chocolate.jpg', '데즈카수산 · 사케노마루가메': 'Banshu deep-fried Kamaboko.JPG', '밀크스탠드': 'Milk-bottle&cap,japan.JPG', '삿포로 비어엔': 'Sapporo beer teien01.jpg', '멘야 사이미': 'Miso Ramen.JPG', '아사히카와 라멘무라': 'Baikohken Ramen.jpg', '스시 미야카와': 'Nigiri Sushi (25966163204).jpg', '스시 잇코': 'Omakase.jpg', '모리에르': 'Cuisine Trois étoiles.jpg', '하치쿄': 'Ikura don.jpg'}
-
-def food_photo(name):
-    v=PH.get(name,'')
-    if not v: return None
-    if v.startswith('@'): return PL[v[1:]][3]
-    return cf(v)
 
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
@@ -628,16 +685,22 @@ def food_html():
         out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}><p class="hint">{esc(sub)}</p>')
         for slot,items in slots:
             out.append(f'<h3 class="sec">{esc(slot)}</h3><div class="fgrid">')
-            for n,ja,cat,mi,q,tel,ht,menu,tip,x in items:
-                f=food_photo(n); idx=len(data)
-                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':mapurl(q),'tel':tel,'ht':ht,'menu':menu,'tip':tip,'x':bool(x),'f':f})
+            for n,ja,cat,mi,q,tel,ht,menus,tip,x in items:
+                g=G.get(n); idx=len(data)
+                photos=[]
+                for label,key in menus:
+                    k,_,ix=key.partition(':'); photos.append({'l':label,'f':dish(k,int(ix) if ix else 0)})
+                link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
+                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'g':[g[0],g[1]] if g else None})
                 badge=('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
                 xx='<span class="mi x">휴무</span>' if x else ''
+                f=photos[0]['f'] if photos else None
                 img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
-                out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div></div><div class="fcn">{esc(n)}</div><div class="fcm">{esc(cat)}</div></button>')
+                gl=f'<div class="fcg">★ {g[0]:.1f} <small>({g[1]:,})</small></div>' if g else ''
+                out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn2">{len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
             out.append('</div>')
         out.append('</div>')
-    out.append('<p class="hint">카드를 누르면 메뉴·시간·팁 · 영업시간·휴무는 2025~26 자료 기준, 가기 전 구글 지도에서 당일 확인 · ★ 미슐랭 홋카이도(2017 특별판) · 빕 = 빕구르망 · 사진은 대표 메뉴 참고용(Wikimedia Commons)</p>')
+    out.append('<p class="hint">★ 숫자 = 구글 지도 평점(리뷰 수) 2026-10-28 기준 · 카드를 누르면 메뉴별 사진·시간·팁 · 미슐랭 ★ = 홋카이도 가이드(2017 특별판) · 빕 = 빕구르망 · 사진은 메뉴 참고용(Wikimedia Commons)</p>')
     return ''.join(out), json.dumps(data,ensure_ascii=False)
 
 # ───────────── 아이콘 ─────────────
@@ -703,6 +766,14 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .fci img{width:100%;height:100%;object-fit:cover;display:block}
 .fcb{position:absolute;left:6px;top:6px;display:flex;gap:4px}
 .fcn{font-size:14px;font-weight:700;padding:8px 10px 0;line-height:1.3}
+.fcg{font-size:12.5px;color:var(--lamp);font-weight:700;padding:2px 10px 0}
+.fcg small{color:var(--mut);font-weight:400}
+.fcn2{position:absolute;right:6px;bottom:6px;font-size:10.5px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:1px 7px}
+.sh-strip{display:flex;gap:8px;overflow-x:auto;padding:10px 18px 0;scroll-snap-type:x mandatory;scrollbar-width:none}
+.sh-strip::-webkit-scrollbar{display:none}
+.sh-strip > div{flex:0 0 150px;scroll-snap-align:start}
+.sh-strip img{width:150px;height:105px;object-fit:cover;border-radius:10px;display:block;background:var(--night2)}
+.sh-strip span{display:block;font-size:11.5px;color:var(--mut);margin-top:4px;line-height:1.3}
 .fcm{font-size:11.5px;color:var(--mut);padding:1px 10px 9px}
 .mi.x{background:var(--warn);color:#fff}
 .sheet{position:fixed;inset:0;z-index:55}
@@ -1074,13 +1145,14 @@ JS = r'''
   var sheet=$('#sheet'),shI=$('#sh-img'),shB=$('#sh-b');
   function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e}
   function openFood(i){var d=FOOD_DATA[i];if(!d)return;shI.innerHTML='';shB.innerHTML='';
-    if(d.f){var im=document.createElement('img');im.alt='';im.src=wurl(d.f,960);im.onerror=function(){im.hidden=true};shI.appendChild(im)}
+    var first=d.ph&&d.ph[0];if(first){var im=document.createElement('img');im.alt='';im.src=wurl(first.f,960);im.onerror=function(){im.hidden=true};shI.appendChild(im)}
     var x=el('button','x','✕');x.setAttribute('aria-label','닫기');x.addEventListener('click',closeFood);shI.appendChild(x);
     var h=el('h4',null,d.n);if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
-    shB.appendChild(el('div','fj',d.ja+' · '+d.cat));
-    var kv=el('div','kv2');[['🕐',d.ht],['🍽',d.menu],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
-    var ta=el('div','ta');var a=el('a','map','지도 열기');a.href=d.q;a.target='_blank';a.rel='noopener';ta.appendChild(a);if(d.tel){var tb=el('button','tel',d.tel);tb.addEventListener('click',function(){cp(d.tel,'전화번호')});ta.appendChild(tb)}shB.appendChild(ta);
-    if(d.f){var cr=el('div','cr');cr.textContent='사진은 메뉴 참고용 · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(d.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);shB.appendChild(cr)}
+    var fj=el('div','fj',d.ja+' · '+d.cat+(d.g?' · 구글 ★'+d.g[0].toFixed(1)+' ('+d.g[1].toLocaleString()+')':''));shB.appendChild(fj);
+    if(d.ph&&d.ph.length){var st=el('div','sh-strip');d.ph.forEach(function(p){var w=el('div');var pi=document.createElement('img');pi.alt='';pi.loading='lazy';pi.src=wurl(p.f,500);pi.onerror=function(){pi.hidden=true};pi.addEventListener('click',function(){var big=shI.querySelector('img');if(big){big.src=wurl(p.f,960);big.hidden=false}});w.appendChild(pi);w.appendChild(el('span',null,p.l));st.appendChild(w)});shB.appendChild(st)}
+    var kv=el('div','kv2');[['🕐',d.ht],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
+    var ta=el('div','ta');var a=el('a','map','구글 지도 열기');a.href=d.q;a.target='_blank';a.rel='noopener';ta.appendChild(a);if(d.tel){var tb=el('button','tel',d.tel);tb.addEventListener('click',function(){cp(d.tel,'전화번호')});ta.appendChild(tb)}shB.appendChild(ta);
+    if(first){var cr=el('div','cr');cr.textContent='사진은 메뉴 참고용 · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);shB.appendChild(cr)}
     sheet.hidden=false;document.body.style.overflow='hidden';buzz(6)}
   function closeFood(){sheet.hidden=true;document.body.style.overflow=''}
   $('#sh-bg').addEventListener('click',closeFood);

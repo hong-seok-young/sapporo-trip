@@ -154,7 +154,11 @@ TL={
 def day_cards():
     out=[]
     for d in DAYS:
-        out.append(f'<ol class="tl" data-day="{d["n"]}"{"" if d["n"]==1 else " hidden"}>{TL[d["n"]]}</ol>')
+        body=TL[d["n"]]; i=[0]
+        def num(m):
+            i[0]+=1; return m.group(0).replace('<li',f'<li style="--i:{i[0]}"',1)
+        body=re.sub(r'<li(?=[ >])',num,body)
+        out.append(f'<ol class="tl" data-day="{d["n"]}"{"" if d["n"]==1 else " hidden"}>{body}</ol>')
     return ''.join(out)
 
 def day_btns():
@@ -486,6 +490,8 @@ SET='''
 </div>
 <h3 class="sec">한 번에 넣기</h3>
 <div class="form"><textarea id="s-code" rows="3" placeholder="SG1.… 코드 붙여넣기" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="s-apply" class="pri">적용</button></div></div>
+<h3 class="sec">오프라인</h3>
+<div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
 <p class="hint">입력한 값은 이 폰 브라우저(localStorage)에만 저장되고 파일·깃허브에는 올라가지 않음 · 체크리스트도 동일</p>
 <p class="hint">장소 사진 · Wikimedia Commons (각 사진 팝업에 원본 링크) · 버전 '''+VER+'''</p>
 '''
@@ -522,6 +528,8 @@ b{font-weight:700}
 .brand{font-family:var(--d);font-size:22px;letter-spacing:.02em;line-height:1}
 .brand small{font-family:var(--f);font-size:12px;opacity:.7;margin-left:8px;letter-spacing:0}
 .dday{font-family:var(--d);font-size:20px;color:var(--lamp);line-height:1}
+.off{font-size:11px;font-weight:700;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:3px 9px;margin-left:8px}
+.hd-in .dday+.off{margin-left:8px}
 .seg{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto;scrollbar-width:none}
 .seg::-webkit-scrollbar{display:none}
 .seg:empty{display:none}
@@ -726,7 +734,37 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .lb .st{color:#ccc;font-size:13px}
 .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--snow);padding:8px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60;max-width:90vw;text-align:center}
 .toast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+
+/* 모션 */
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
+.hero img.on{animation:kb 26s ease-in-out infinite alternate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sub:not([hidden]){animation:up .28s ease-out}
+.tl li{animation:up .4s ease-out both;animation-delay:calc(var(--i,0)*45ms)}
+.hero-t.re{animation:up .5s ease-out}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(233,150,42,.6)}100%{box-shadow:0 0 0 12px rgba(233,150,42,0)}}
+.tl li.next::after{animation:pulse 1.6s ease-out infinite}
+@keyframes fly{0%{transform:translateX(-26px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(26px);opacity:0}}
+.leg .pl svg{animation:fly 3s ease-in-out infinite}
+@keyframes grow{from{transform:scaleX(0)}}
+.bars i::after{transform-origin:left;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+.bn button svg{transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
+.bn button[aria-selected="true"] svg{transform:translateY(-2px) scale(1.12)}
+.tile .ti,.days button,.tk,.sum > div{transition:transform .15s ease-out}
+.tile .ti:active,.days button:active{transform:scale(.95)}
+@keyframes pop{50%{transform:scale(1.35)}}
+.checks input:checked{animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+.toast{transition:opacity .2s,transform .25s cubic-bezier(.3,1.4,.5,1);transform:translate(-50%,10px)}
+.toast.on{transform:translate(-50%,0)}
+@keyframes zoom{from{transform:scale(.9);opacity:0}}
+.lb.on figure{animation:zoom .22s ease-out}
+@keyframes glow{0%,100%{opacity:1}50%{opacity:.55}}
+.sv.empty{animation:glow 2.4s ease-in-out infinite}
+@keyframes ring{from{stroke-dashoffset:97.4}}
+.ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero canvas{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
 '''
 
@@ -749,9 +787,10 @@ JS = r'''
     VIEWS.forEach(function(v){$('#v-'+v).hidden=v!==id});
     var ss=$$('#v-'+id+' .sub');seg.innerHTML='';
     if(ss.length>1){var want=subs[id]||ss[0].dataset.sub;ss.forEach(function(s){var b=document.createElement('button');b.textContent=s.dataset.label;b.dataset.sub=s.dataset.sub;b.setAttribute('aria-selected',s.dataset.sub===want?'true':'false');b.addEventListener('click',function(){showSub(id,s.dataset.sub)});seg.appendChild(b)});showSub(id,want,true)}
-    window.scrollTo(0,0)}
+    window.scrollTo(0,0);if(typeof snowSet==='function')snowSet()}
   function showSub(id,sub,quiet){subs[id]=sub;ls.set('sg-subs',JSON.stringify(subs));
     $$('#v-'+id+' .sub').forEach(function(s){s.hidden=s.dataset.sub!==sub});
+    $$('#v-'+id+' .sub:not([hidden]) .ring .fg').forEach(function(r){r.classList.remove('go');void r.getBoundingClientRect();r.classList.add('go')});
     $$('#seg button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.sub===sub?'true':'false')});
     if(!quiet)window.scrollTo(0,0)}
   $$('.bn button').forEach(function(b){b.addEventListener('click',function(){showView(b.dataset.v)})});
@@ -764,13 +803,15 @@ JS = r'''
     $('#hero-dw').textContent=d.d+' '+d.w+'요일';$('#hero-h').textContent=d.title;$('#hero-p').textContent=d.sub;
     heroImg.classList.remove('on');heroImg.onload=function(){heroImg.classList.add('on')};heroImg.src=d.img;
     $('#hero-ph').dataset.f=d.f;$('#hero-ph').dataset.cap=d.title;
+    var ht=$('.hero-t');ht.classList.remove('re');void ht.offsetWidth;ht.classList.add('re');
     markNext()}
   $$('.days button').forEach(function(b){b.addEventListener('click',function(){setDay(+b.dataset.d)})});
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
   function markNext(){$$('.tl li.next').forEach(function(l){l.classList.remove('next')});if(tripDay!==curDay)return;
     var hm=now.getHours()*60+now.getMinutes(),li=$$('.tl[data-day="'+curDay+'"] li[data-t]').filter(function(l){var p=l.dataset.t.split(':');return (+p[0])*60+(+p[1])>=hm})[0];if(li)li.classList.add('next')}
   var start=new Date(2026,11,3),diff=Math.round((start-new Date(y,m-1,dd))/864e5),dl=$('#dday');
-  dl.textContent=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));
+  var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
+  if(diff>0&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   setDay(tripDay||1);
 
   /* 체크리스트 */
@@ -820,10 +861,33 @@ JS = r'''
   $$('.sv').forEach(function(el){if(!el.classList.contains('copyable'))el.addEventListener('click',function(){if(el.classList.contains('empty')){showView('more');showSub('more','set')}})});
   fill();
 
+
+  /* 눈 */
+  var cv=$('#snow'),cx=cv.getContext&&cv.getContext('2d'),fl=[],raf=0,snowOn=false,rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function snowSize(){var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width));cv.height=Math.max(1,Math.round(r.height));fl=[];for(var i=0;i<70;i++)fl.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.6+.6,s:Math.random()*.5+.25,w:Math.random()*.5+.15,p:Math.random()*6.28,a:Math.random()*.5+.4})}
+  function snowTick(){if(!snowOn)return;cx.clearRect(0,0,cv.width,cv.height);for(var i=0;i<fl.length;i++){var f=fl[i];f.y+=f.s;f.p+=.012;f.x+=Math.sin(f.p)*f.w;if(f.y>cv.height+3){f.y=-3;f.x=Math.random()*cv.width}cx.globalAlpha=f.a;cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle='#fff';cx.fill()}raf=requestAnimationFrame(snowTick)}
+  function snowSet(){var want=!rm&&cx&&!document.hidden&&cur==='day'&&heroVis;if(want&&!snowOn){snowOn=true;if(!fl.length)snowSize();snowTick()}else if(!want&&snowOn){snowOn=false;cancelAnimationFrame(raf)}}
+  var heroVis=true;if('IntersectionObserver' in window){new IntersectionObserver(function(es){heroVis=es[0].isIntersecting;snowSet()}).observe(cv)}
+  document.addEventListener('visibilitychange',snowSet);window.addEventListener('resize',function(){if(cx){snowSize()}});
+  var _showView=showView;
   /* 시작 뷰 */
-  showView(VIEWS.indexOf(cur)>=0?cur:'day');
+  showView(VIEWS.indexOf(cur)>=0?cur:'day');snowSet();
   if(!cnt())setTimeout(function(){if(!cnt())flash('더보기 › 설정에서 내 정보 입력 → 예약번호·비밀번호 표시',3200)},800);
 
+
+  /* 오프라인 */
+  var offb=$('#off');function offSet(){offb.hidden=navigator.onLine!==false}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
+  function imgList(){var u=[];H.forEach(function(d){u.push(d.img)});$$('.ti img,.tk-img img,.days button').forEach(function(el){var src=el.tagName==='IMG'?el.getAttribute('src'):(el.style.getPropertyValue('--im')||'').replace(/^url\(|\)$/g,'');if(src&&u.indexOf(src)<0)u.push(src)});$$('[data-f]').forEach(function(b){if(b.dataset.f){var w=wurl(b.dataset.f,960);if(u.indexOf(w)<0)u.push(w)}});return u}
+  var warming=false,ost=$('#off-st');
+  function warm(force){if(warming||!window.caches||!window.isSecureContext)return;if(navigator.onLine===false){ost.textContent='오프라인 · 인터넷 연결되면 사진 저장';return}warming=true;
+    caches.open('sg-img').then(function(c){var list=imgList(),done=0,miss=[];
+      return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
+        ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
+        var i=0;function next(){if(i>=miss.length){warming=false;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(done===list.length?' · 오프라인에서도 전부 보임':' · 일부 실패 (다시 받기 가능)');return}
+          var u=miss[i++];fetch(u,{mode:'cors'}).then(function(r){if(r.ok){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
+        next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
+  $('#off-b').addEventListener('click',function(){warm(true)});
+  if('requestIdleCallback' in window)requestIdleCallback(function(){warm()},{timeout:4000});else setTimeout(warm,2500);
   /* PWA */
   var dp=null,inst=$('#inst'),standalone=(navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches),ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   if(ios&&!standalone){$('#inst-t').textContent='Safari 하단 공유 버튼 → "홈 화면에 추가"';$('#inst-b').hidden=true;inst.hidden=false}
@@ -839,7 +903,7 @@ def view(id, subs):
     return f'<section class="view" id="v-{id}" hidden>{inner}</section>'
 
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
-<div class="hero"><img id="hero-img" alt=""><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
+<div class="hero"><img id="hero-img" alt=""><canvas id="snow" aria-hidden="true"></canvas><button class="ph" id="hero-ph" data-f="" data-cap="">사진 크게</button><div class="hero-t"><div class="dw" id="hero-dw"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
 <div class="days">{day_btns()}</div>
 {day_cards()}
 </section>'''
@@ -864,7 +928,7 @@ PAGE=f'''<!doctype html>
 <style>{CSS}</style>
 </head>
 <body>
-<header class="hd"><div class="hd-in"><div class="brand">삿포로 <small>12.03 – 12.06 · 2인</small></div><div class="dday" id="dday"></div></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hd-in"><div class="brand">삿포로 <small>12.03 – 12.06 · 2인</small></div><div class="dday" id="dday"></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 {DAYVIEW}
 {view('book',[('flight','항공',FLIGHT),('stay','숙소',STAY),('car','렌터카',CAR),('icn','인천 주차',ICN)])}

@@ -421,6 +421,7 @@ JP=f'''
   <div class="jp"><b>予約しています。ホンです</b><i>요야쿠 시테이마스. 혼데스</i><span>예약한 홍입니다</span><button data-cp="予約しています。ホンです">복사</button></div>
   <div class="jp"><b>チェックインお願いします</b><i>첵쿠인 오네가이시마스</i><span>체크인 부탁해요</span><button data-cp="チェックインお願いします">복사</button></div>
   <div class="jp"><b>領収書をください</b><i>료-슈-쇼오 쿠다사이</i><span>영수증 주세요</span><button data-cp="領収書をください">복사</button></div>
+  <div class="jp"><b>私より友達のほうがお金持ってます</b><i>와타시요리 토모다치노 호-가 오카네 못테마스</i><span>저보다 제 친구가 더 돈 많습니다 🐻🪢</span><button data-cp="私より友達のほうがお金持ってます">복사</button></div>
 </div>
 <h3 class="sec">🪧 표지</h3>
 <div class="signs">

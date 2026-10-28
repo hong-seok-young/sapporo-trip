@@ -385,8 +385,8 @@ PACK=f'''
 </ul>
 <h3 class="sec">차</h3>
 <ul class="checks" data-l="pack">
-{chk('p6','주파집 CWC08 Qi2.2 25W 쿨링 거치대 <b>구매 완료</b> · 챙기기','송풍구 클립 + 연장 거치대 · 시거잭 C포트 → 거치대 C to C 케이블 (45W 이상 PD)')}
-{chk('p7','UGREEN 130W 시거잭 충전기 + 100W 케이블 <b>구매 완료</b> · 챙기기','C2(100W) → 거치대 · C1(30W) → 동승자 폰 25W · A포트는 비우기(같이 쓰면 C1이 5V로 떨어짐)')}
+{chk('p6','차량용 거치대 챙기기')}
+{chk('p7','차량용 충전기 · 케이블 챙기기')}
 </ul>
 <h3 class="sec">방한</h3>
 <ul class="checks" data-l="pack">

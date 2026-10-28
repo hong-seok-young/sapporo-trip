@@ -866,7 +866,7 @@ JS = r'''
   function clock(){var t=new Date(),c=$('#clock'),w=tz(),pl=(tripDay&&w==='일본')?H[tripDay-1].place:(w==='한국'?'서울':'');c.innerHTML='';var a=document.createElement('span');a.textContent=w+(pl?' · '+pl:'');var b=document.createElement('b');b.textContent=hhmm(t);c.appendChild(a);c.appendChild(b)}
   clock();setInterval(clock,20000);
   function markNext(){var list=$('.tl[data-day="'+curDay+'"]');if(!list)return;$$('.tl li.next,.tl li.done').forEach(function(l){l.classList.remove('next');l.classList.remove('done')});$$('.tl li.now').forEach(function(l){l.remove()});
-    var t=new Date(),hm=t.getHours()*60+t.getMinutes(),live=tripDay===curDay,lis=$$('li',list),last=-1,ins=null;
+    var t=new Date(),hm=t.getHours()*60+t.getMinutes(),live=tripDay===curDay,lis=$$('li',list),last=-1,ins=null;if(!live)return;
     for(var i=0;i<lis.length;i++){var l=lis[i],m=last;if(l.dataset.t){var p=l.dataset.t.split(':');m=(+p[0])*60+(+p[1])}
       if(m>hm){ins=l;break}last=m;if(live)l.classList.add('done')}
     if(live&&ins)ins.classList.add('next');
@@ -881,7 +881,7 @@ JS = r'''
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
   if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8)}catch(e){}}
-  function ribbon(){var r=$('#ribbon');if(diff>0){r.innerHTML='';var a=document.createElement('span');a.textContent='✈️ 출발까지 '+diff+'일';var b=document.createElement('small');b.textContent='12.03(목) 10:05 인천 출발 · 시간을 누르면 ✓';r.appendChild(a);r.appendChild(b)}
+  function ribbon(){var r=$('#ribbon');if(diff>0){r.innerHTML='';var a=document.createElement('span');a.textContent='✈️ 출발까지 '+diff+'일';var b=document.createElement('small');b.textContent='12.03(목) 10:05 인천 출발 · 당일엔 지금 위치 표시';r.appendChild(a);r.appendChild(b)}
     else if(tripDay){r.innerHTML='';var a2=document.createElement('span');a2.textContent='🧣 여행 '+tripDay+'일째 · '+H[tripDay-1].place;var b2=document.createElement('small');b2.textContent='시간을 누르면 ✓ 완료';r.appendChild(a2);r.appendChild(b2)}
     else{r.textContent='🎞️ 다녀온 여행 · 2026.12.03–12.06'}}
   ribbon();

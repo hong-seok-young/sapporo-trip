@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""삿포로 가이드 PWA 빌드: index.html / manifest / sw.js 생성"""
+"""삿포로 여행 PWA 빌드: index.html / manifest / sw.js 생성"""
 import html, urllib.parse, json, time, os, re
 
 OUT = os.path.dirname(os.path.abspath(__file__))
@@ -854,7 +854,7 @@ PAGE=f'''<!doctype html>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="삿포로">
-<title>삿포로 가이드</title>
+<title>삿포로 여행</title>
 <link rel="manifest" href="./app.webmanifest">
 <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -882,7 +882,7 @@ PAGE=f'''<!doctype html>
 </html>
 '''
 
-MANIFEST={"name":"삿포로 가이드","short_name":"삿포로","description":"2026.12.03–12.06 삿포로 · 비에이 · 오타루 렌터카 여행","id":"sapporo-trip-app-2","start_url":"./?src=app","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0f1c2e","theme_color":"#0f1c2e","lang":"ko",
+MANIFEST={"name":"삿포로 여행","short_name":"삿포로","description":"2026.12.03–12.06 삿포로 · 비에이 · 오타루 렌터카 여행","id":"sapporo-trip-app-2","start_url":"./?src=app","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0f1c2e","theme_color":"#0f1c2e","lang":"ko",
  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png"},{"src":"./icon-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 
 SW = r'''const V='sg-'+'%VER%';const IMG='sg-img',FONT='sg-font';

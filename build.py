@@ -572,13 +572,13 @@ def dish(key,i=0):
 
 # 구글 지도 (2026-10-28 조회): 이름 → (평점, 리뷰수, place_id)
 G={
- '다루마 본점':(4.0,3249,'ChIJbQQV34UpC18RgzQI7TQon1g'),'삿포로 비어엔':(4.2,8641,'ChIJ__9PCWwpC18RpHEvsAli2gg'),'스시젠 스스키노점':(4.2,5,'ChIJwSCedwApC18RNCc6Hz3kLRo'),'타쿠즈시':(4.0,212,'ChIJy0Zn_oIpC18RxLGU568zi0A'),'스시킨':(4.3,165,'ChIJO2L3WoQpC18RVFrCz-LGNkI'),'아리마':(4.3,215,'ChIJaQ7d7YQpC18RGaROi9_Jg-I'),'하치쿄 본점':(4.2,1828,'ChIJv57FeoQpC18RdEvZOMd7tkQ'),'후지야 누들':(4.1,587,'ChIJX8W5PYQpC18R3rVU78F9dDs'),'신게츠':(4.1,1467,'ChIJEeGUJoQpC18ROjXHTdFaoBQ'),'멘야 사이미':(4.2,4555,'ChIJ8QvxwkgqC18RzLwtQHUynbc'),
+ '다루마 본점':(4.0,3249,'ChIJbQQV34UpC18RgzQI7TQon1g'),'스시젠 스스키노점':(4.2,5,'ChIJwSCedwApC18RNCc6Hz3kLRo'),'타쿠즈시':(4.0,212,'ChIJy0Zn_oIpC18RxLGU568zi0A'),'스시킨':(4.3,165,'ChIJO2L3WoQpC18RVFrCz-LGNkI'),'아리마':(4.3,215,'ChIJaQ7d7YQpC18RGaROi9_Jg-I'),'하치쿄 본점':(4.2,1828,'ChIJv57FeoQpC18RdEvZOMd7tkQ'),'후지야 누들':(4.1,587,'ChIJX8W5PYQpC18R3rVU78F9dDs'),'신게츠':(4.1,1467,'ChIJEeGUJoQpC18ROjXHTdFaoBQ'),'멘야 사이미':(4.2,4555,'ChIJ8QvxwkgqC18RzLwtQHUynbc'),
  '수아게+ 본점':(4.3,6042,'ChIJv0HGVIQpC18Rc2m8zsIZwJE'),'라멘 요코초':(4.1,2913,'ChIJSyzMXY8pC18R-ecCwIykpC8'),'네무로 하나마루 스텔라플레이스':(4.1,4018,'ChIJo4R12HQpC18RMlI-QkjBrEc'),'GARAKU 본점':(4.3,5413,'ChIJQ21rhoMpC18RmzhfndITzug'),'키타카로 삿포로 본관':(4.2,2568,'ChIJq6qePZwpC18RtS5FF_v5uMA'),'롯카테이 삿포로 본점':(4.3,4365,'ChIJN5rQlZ8pC18RHrY67ROV2mo'),'키노토야 오도리공원점':(4.2,1338,'ChIJkzLD35wpC18RTxpPxh8yDgU'),'유키지루시 파를러 본점':(4.1,2195,'ChIJ_ya0-J0pC18RBdiF2CeGBLs'),'파르페테리아 PaL':(4.4,1746,'ChIJ02KmG4QpC18RGdiqVSNFRWY'),'사토':(4.2,1949,'ChIJq6puB4MpC18RGEPvXxXy1Xg'),
- '이니셜':(3.7,418,'ChIJpelx6YQpC18RV52Q2kwqdlk'),'니조시장 오이소':(4.1,1778,'ChIJI7OWOKkpC18RsNDCudC7fqI'),'준페이':(4.3,4070,'ChIJrQEV1cTFDF8RsCT_OzBZN-g'),'블랑 루주':(4.3,399,'ChIJvcnF9dXFDF8RLJ5FvVElDIg'),'오키라쿠테이':(4.3,155,'ChIJl9O8LNzFDF8R0_CjidIaeac'),'페름 라 테르':(4.1,978,'ChIJbd0EPdPFDF8RPFyKM87RxDQ'),'비에이 선카':(3.9,1315,'ChIJ__97IdnFDF8RpJA43yFM_ms'),'시로가네 비르케 (道の駅)':(3.6,3846,'ChIJ121Coa7MDF8Rl63lXaknSKg'),'아사히카와 라멘무라':(3.8,4260,'ChIJEVAbd5TmDF8R2kU-1UCfJV8'),'다루마 5.5점':(4.0,1769,'ChIJVTianOApC18RJPnmoPDMkwM'),
+ '이니셜':(3.7,418,'ChIJpelx6YQpC18RV52Q2kwqdlk'),'니조시장 오이소':(4.1,1778,'ChIJI7OWOKkpC18RsNDCudC7fqI'),'준페이':(4.3,4070,'ChIJrQEV1cTFDF8RsCT_OzBZN-g'),'블랑 루주':(4.3,399,'ChIJvcnF9dXFDF8RLJ5FvVElDIg'),'오키라쿠테이':(4.3,155,'ChIJl9O8LNzFDF8R0_CjidIaeac'),'페름 라 테르':(4.1,978,'ChIJbd0EPdPFDF8RPFyKM87RxDQ'),'비에이 선카':(3.9,1315,'ChIJ__97IdnFDF8RpJA43yFM_ms'),'시로가네 비르케 (道の駅)':(3.6,3846,'ChIJ121Coa7MDF8Rl63lXaknSKg'),'아사히카와 라멘무라':(3.8,4260,'ChIJEVAbd5TmDF8R2kU-1UCfJV8'),
  '삼각시장 타키나미 식당':(4.2,3137,'ChIJj79C3KzhCl8RyrFy0-Xccxc'),'아지도코로 타케다':(4.1,2406,'ChIJ4VTM3azhCl8RM5ZhLXZvxsY'),'쿠키젠':(4.4,466,'ChIJq6oeh1HgCl8RmhDGKbEEVbY'),'이세즈시':(4.2,985,'ChIJWSYLgq3hCl8R_zAkzC8XrkA'),'마사즈시 젠안':(3.8,944,'ChIJE3yZmk3gCl8RFxH9jT4OSIQ'),'우오마사':(4.1,1693,'ChIJXckNlVLgCl8Ry123qNbPDes'),'나루토 본점':(4.1,6878,'ChIJq6padq3hCl8RdAJymA13dXs'),'케이엔':(4.0,1306,'ChIJbwg7D1PgCl8R_4iijlybylc'),'르타오 본점 카페':(4.3,3936,'ChIJA__BjVrgCl8R_mYZYGfWn3I'),'키타카로 오타루 본관':(4.3,1867,'ChIJb54BmlrgCl8RSSKykITg9MM'),
  '롯카테이 오타루운하점':(4.3,1768,'ChIJb54BmlrgCl8RBAlguOE736A'),'아마토 본점':(4.2,1002,'ChIJ_8qpoVPgCl8RdmmzFl-l6d8'),'쿠와타야 팡쥬':(4.0,187,'ChIJW4I-jE3gCl8RXARxhponx7Y'),'오타루 창고 No.1':(4.1,3891,'ChIJk-FOGk3gCl8RQ9Yv9HZnul4'),'홋카이도 라멘도조':(3.9,1730,'ChIJPbQYaGogdV8RaUxIu6A35jM'),'함타로':(3.9,1246,'ChIJXbSlZmogdV8R8PFXT1J8BYM'),'라비':(3.5,1269,'ChIJ3QbbWWogdV8RW0owURDPDSk'),'마츠오 징기스칸':(3.8,795,'ChIJcWIyYkAgdV8REge9mV-lxNg'),'르타오':(4.3,445,'ChIJAbARimogdV8RPJYzaBYCMLs'),'키노토야 · 로이즈':(4.3,1072,'ChIJcWIyYkAgdV8RUTJxFOOaGGI'),
  '데즈카수산 · 사케노마루가메':(4.0,63,'ChIJU_o4V2ogdV8RudWtDekMr90'),'밀크스탠드':(4.5,195,'ChIJVxQ9z3ghdV8RYUh34vRP3Ns'),'기타노하나 하야시':(4.5,348,'ChIJ_fDxY6UgdV8RdAXBYAofDZg'),'스시 미야카와':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'참고 · 홋카이도 3★':(4.7,272,'ChIJq6o2ZuopC18R-IYrrMOFUWI'),'스스키노 프렌치 1★':(4.6,114,'ChIJiULtcIQpC18Rb7FjRDdL7Xk'),'비블레 · 아스페르주':(4.3,716,'ChIJbZYV9mnEDF8R9ZvyQbDNr6w'),'호텔 조식 · 편의점':(3.9,5425,'ChIJrdWqsIUpC18Ret8lNRJkB3U'),
- '시베츠 징기스칸':(4.8,1254,'ChIJW9uHLwApC18Rk6WYmfNykjU'),'아르코':(4.6,577,'ChIJHUPnR4UpC18RXtmAbt1p2WQ'),'시로쿠마 본점':(4.1,705,'ChIJxaD-i4YpC18RkcPDS3Ir6Jk'),'히게노우시 본점':(4.1,930,'ChIJZ6HX7oQpC18RtN4bBmEt2Lg'),'마츠오 삿포로역앞점':(4.1,1317,'ChIJx49AJZ4pC18Rb3GBj1k8cpk'),'요시츠네':(4.1,411,'ChIJixUM9wopC18Rlj0US97frrc'),
+ '시베츠 징기스칸':(4.8,1254,'ChIJW9uHLwApC18Rk6WYmfNykjU'),
 }
 
 # 날짜 → 끼니 → (이름, 일본어, 종류, 미슐랭, 지도검색어, 전화, 시간·휴무, [(메뉴, 사진키[:번호])...], 팁, 휴무표시)
@@ -596,13 +596,9 @@ FOOD=[
    ('키노토야 오도리공원점','きのとや 大通公園店','치즈타르트 · 소프트','','きのとや 大通公園店','+81 11-233-6161','10:00–20:00',[('갓 구운 치즈타르트 297엔','cheese_tart'),('홋카이도 우유 소프트','soft_serve'),('베리 파르페','parfait')],'오도리 지하(北洋大通センター 1F) · 일루미네이션 보기 전 · 자리 금방 참',''),
    ('유키지루시 파를러 본점','雪印パーラー 本店','파르페 · 아이스크림','','雪印パーラー 本店 札幌','+81 11-251-7530','10:00–19:00',[('스노우 로열 아이스크림','ice_cream'),('대왕 파르페','parfait:2'),('멜론 아이스','soft_serve')],'北2西3 · 1961년부터 · 레트로 · 포장 아이스만 사도 됨',''),
   ]),
-  ('🐑 양고기 · 징기스칸 (구글 평점순)',[
-   ('시베츠 징기스칸','士別バーベキュー','징기스칸 · 홋카이도 서포크 양','','士別バーベキュー 札幌 すすきの','+81 11-522-8429','17:00–23:30 · 무휴',[('시베츠 서포크 램 세트(국산+호주산 비교)','jingisukan'),('램 다리살·숄더','jingisukan:1'),('카레라이스·마늘소금','jingisukan:2')],'南5西5 모모야빌 9F · 호텔 바로 옆 · 구글 4.8(1,254) 삿포로 양고기 1위 · 냄새 안 밸 정도로 환기 좋음 · 직원 영어 OK · 예약 권장 · 가격대 높음',''),
-   ('아르코','ジンギスカン アルコ','징기스칸 (골목 노포)','','ジンギスカン アルコ 札幌 南3条西7','+81 11-221-7923','17:00–21:00 · 월 휴무 → 목 OK',[('징기스칸 1접시 1천엔 전후','jingisukan:1'),('램 라비올리','hamburg'),('채소·디핑소스','jingisukan')],'南3西7 골목 · 6석 · 부부 운영 · 구글 4.6(577) · 예약 거의 필수 · 도보 12분 · 연기 심함',''),
-   ('다루마 본점','成吉思汗だるま 本店','징기스칸','','成吉思汗だるま 本店 札幌 南5条西4','+81 11-552-6013','17:00–05:00 · 연중무휴 · 원조',[('성길사한(양고기) 1,280엔','jingisukan'),('상육·히레 1,680엔','jingisukan:1'),('공기밥 220 · 김치 385','jingisukan:2')],'예약 불가 · 2인 5~6천엔 · 17시 줄 시작, 1시간 대기 흔함 → 1분 거리 5.5점·4.4점·6.4점 · 상육·히레 2시간 내 품절 · 냄새 밸 각오',''),
-   ('삿포로 비어엔','サッポロビール園','징기스칸 · 생맥주','','サッポロビール園 ジンギスカン','+81 570-098-346','11:30–21:00 · 무휴',[('징기스칸 무한리필 + 맥주 무한 (2시간)','jingisukan:2'),('빨간 벽돌 홀 분위기','beer_garden'),('버터 감자','gratin')],'차 10분 · 당일 접수도 가능(15분 내 도착) · 구글 4.2(8,641) · 운전자는 맥주 ✗',''),
-   ('시로쿠마 본점','札幌成吉思汗 しろくま 本店','징기스칸 (전부 양고기)','','札幌成吉思汗 しろくま 本店','+81 50-5485-5001','18:00–01:30 (목·금) · 무휴',[('생 양고기 각 부위','jingisukan'),('양 소시지','jingisukan:2')],'南6西3 · 카운터 바 · 구글 4.1(705) · 예약 어려움 · 늦게까지',''),
-   ('히게노우시 본점','北海道ラムジンギスカン ひげのうし 本店','징기스칸 (부위별)','','ひげのうし 本店 札幌','+81 11-281-2980','17:00–23:30 · 무휴',[('램 슬라이스·스테이크·립','jingisukan:1'),('호르몬(양 내장)','jingisukan')],'南3西5 · 넓고 환기 좋음 · 구글 4.1(930) · 전화 예약 쉬움 · 도보 8분',''),
+  ('🐑 징기스칸(양고기) 저녁 · 19시',[
+   ('시베츠 징기스칸','士別バーベキュー','징기스칸 · 홋카이도 서포크 양 · 구글 평점 1위','','士別バーベキュー 札幌 すすきの','+81 11-522-8429','17:00–23:30 · 무휴',[('서포크 램 세트(국산+호주산 비교)','jingisukan'),('양념 램·카레라이스','jingisukan:2')],'南5西5 모모야빌 9F · 호텔 바로 옆 · 환기 좋아 냄새 덜 뱀 · 영어 OK · 예약 권장 · 2인 1만엔 전후',''),
+   ('다루마 본점','成吉思汗だるま 本店','징기스칸 · 1954년 원조','','成吉思汗だるま 本店 札幌 南5条西4','+81 11-552-6013','17:00–05:00 · 연중무휴',[('성길사한(양고기) 1,280엔','jingisukan:1'),('상육·히레 1,680엔 (2시간 내 품절)','jingisukan')],'예약 불가 · 2인 5~6천엔 · 17시 줄 시작, 1시간 대기 흔함 → 1분 거리 5.5점·4.4점·6.4점(같은 집, 늦은 밤엔 줄 짧음) · 냄새 밸 각오',''),
   ]),
   ('🍖 늦은 저녁 · 20시~',[
    ('스시젠 스스키노점','すし善 すすきの店','초밥','★★','すし善 すすきの店 札幌','','~자정 · 일 휴무 → 목 OK',[('오마카세 니기리 1.3만엔~','nigiri:4'),('우니','uni:1'),('보탄새우·게','crab')],'도보권 미슐랭 2★ · 코스 13,000엔부터 · 예약 권장',''),
@@ -621,7 +617,7 @@ FOOD=[
    ('이니셜','INITIAL 札幌','시메파르페','','INITIAL 札幌 狸小路','+81 11-211-0490','17:00–23:30 · 월·화 휴무 → 목 OK',[('과일 파르페 1,500~2,000엔','parfait:2'),('초코바나나 파르페','parfait')],'南3西5 2F · 비주얼 좋음 · 가격 높은 편 · 구글 3.7',''),
   ]),
  ]),
- ('비에이','12/4 금 · 08:00 출발 전 아침 → 비에이 점심 → 카페 → 21시 삿포로 복귀 후 늦은 저녁',[
+ ('비에이','12/4 금 · 08:00 출발 전 아침 → 비에이 점심 → 카페 → 21시 삿포로 복귀 후 저녁은 삿포로 탭 「늦은 저녁」(신게츠 04시 · 후지야 금 02:30 · 다루마 05시까지 · 수아게는 21시 마감 ✗)',[
   ('🍳 아침 · 07시 (출발 전)',[
    ('니조시장 오이소','二条市場 大磯 本店','아침 카이센동','','二条市場 大磯 札幌','+81 11-219-5252','07:30–15:30 · 수 휴무 → 금 OK',[('우니·게·이쿠라 3색동 6,400엔','kaisendon'),('우니동','uni:1'),('카이센동 (가성비)','kaisendon:1'),('게 그라탕','crab:1')],'南3東2 · 호텔 도보 10분 · 9:30 이후면 30분 대기 · 7시대 우니가 제일 신선 · 번호표 먼저',''),
    ('호텔 조식 · 편의점','東急REI 朝食 / セブンイレブン','간단 아침','','札幌東急REIホテル','+81 11-531-0109','조식 포함 여부 예약 확인',[('호텔 뷔페 (리뷰 평 좋음)','bread'),('세븐일레븐 오니기리','onigiri'),('홋카이도 우유','milk')],'빨리 출발하려면 편의점이 제일 빠름',''),
@@ -636,12 +632,6 @@ FOOD=[
   ('☕ 카페 · 간식 · 오후',[
    ('비에이 선카','美瑛選果','농산물 셀렉트숍 · 카페','','美瑛選果','+81 120-109-347','10:00–17:00',[('콘 소프트·우유','soft_serve'),('비에이 밀 빵','bread'),('옥수수·감자 간식','corn'),('가라아게(평 좋음)','karaage:1')],'大町2 · 시내 · ASPERGES 바로 옆 · 오후엔 품절 많음',''),
    ('시로가네 비르케 (道の駅)','道の駅 びえい「白金ビルケ」','휴게소 · 카페','','道の駅 びえい 白金ビルケ','+81 166-94-3355','09:00–17:00',[('BTB 버거(비에이 밀 번)','hamburg:1'),('青い池 소프트 500엔','soft_serve'),('커피·기념품','tea')],'청의 호수 주차장 바로 옆 · 조명 보기 전 몸 녹이기 · 노스페이스 매장',''),
-  ]),
-  ('🍜 늦은 저녁 · 21시 삿포로 복귀 후',[
-   ('신게츠','ラーメン 信月','라멘 (빕구르망)','빕','ラーメン信月 札幌 南5条西3','+81 11-533-4844','18:00–04:00 · 일 휴무',[('생강 시오라멘','shio_ramen'),('볶음밥','shoyu_ramen:2')],'도보 2분 · 늦게 와도 됨',''),
-   ('후지야 누들','ふじ屋 NOODLE','라멘 (빕구르망)','빕','ふじ屋 NOODLE 新ラーメン横丁 札幌','+81 11-552-0248','18:00–02:30 (금)',[('미소라멘 900엔','miso_ramen:1'),('니보시 라멘','shoyu_ramen')],'신 라멘요코초 · 도보 3분',''),
-   ('다루마 5.5점','成吉思汗だるま 5.5店','징기스칸','','成吉思汗だるま 5.5店 札幌','+81 11-551-5529','17:00–05:00 · 무휴',[('양고기 1,280엔','jingisukan:1'),('상육 1,680엔','jingisukan')],'南5西5 · 대기석·사물함 있음 · 늦은 밤엔 줄 짧음 · 12/3 못 갔으면 여기',''),
-   ('수아게+ 본점','Suage+ 本店','수프카레','','Suage+ 本店 札幌 南4条西5','+81 11-233-2911','~21:00 (금)',[('파리파리 치킨 카레','soup_curry')],'호텔 옆 · 21시 도착이면 못 들어감 · 20:30 전 도착해야',''),
   ]),
  ]),
  ('오타루','12/5 토 · 10시 도착 → 시장 브런치 → 점심 스시 → 디저트 → 료칸 가이세키(저녁) → 운하 야경',[
@@ -686,6 +676,7 @@ FOOD=[
  ]),
 ]
 
+LOCAL={'수아게+ 본점','라멘 요코초','다루마 본점','롯카테이 삿포로 본점','하치쿄 본점','파르페테리아 PaL','니조시장 오이소','준페이','삼각시장 타키나미 식당','나루토 본점','르타오 본점 카페','홋카이도 라멘도조','키노토야 · 로이즈'}
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
     data=[]
@@ -699,8 +690,8 @@ def food_html():
                 for label,key in menus:
                     k,_,ix=key.partition(':'); photos.append({'l':label,'f':dish(k,int(ix) if ix else 0)})
                 link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
-                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'g':[g[0],g[1]] if g else None})
-                badge=('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
+                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'loc':n in LOCAL,'g':[g[0],g[1]] if g else None})
+                badge=('<span class="mi loc">지역맛집</span>' if n in LOCAL else '')+('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
                 xx='<span class="mi x">휴무</span>' if x else ''
                 f=photos[0]['f'] if photos else None
                 img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
@@ -708,7 +699,7 @@ def food_html():
                 out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn2">{len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
             out.append('</div>')
         out.append('</div>')
-    out.append('<p class="hint">★ 숫자 = 구글 지도 평점(리뷰 수) 2026-10-28 기준 · 카드를 누르면 메뉴별 사진·시간·팁 · 미슐랭 ★ = 홋카이도 가이드(2017 특별판) · 빕 = 빕구르망 · 사진은 메뉴 참고용(Wikimedia Commons)</p>')
+    out.append('<p class="hint">지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · ★ 숫자 = 구글 지도 평점(리뷰 수) 2026-10-28 기준 · 카드를 누르면 메뉴별 사진·시간·팁 · 미슐랭 ★ = 홋카이도 가이드(2017 특별판) · 빕 = 빕구르망 · 사진은 메뉴 참고용(Wikimedia Commons)</p>')
     return ''.join(out), json.dumps(data,ensure_ascii=False)
 
 # ───────────── 아이콘 ─────────────
@@ -808,7 +799,8 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .fh .fj{flex-basis:100%;font-size:12px;color:var(--mut)}
 .mi{font-size:11px;font-weight:700;color:#b5121b;background:#fde8e9;border-radius:999px;padding:1px 7px}
 .mi.bib{color:#8a4b00;background:#ffefd6}
-@media (prefers-color-scheme:dark){.mi{background:#4a1a1e;color:#ff9aa0}.mi.bib{background:#3f2a0f;color:#ffc77a}}
+.mi.loc{color:#0b5d3b;background:#dcf3e6}
+@media (prefers-color-scheme:dark){.mi{background:#4a1a1e;color:#ff9aa0}.mi.bib{background:#3f2a0f;color:#ffc77a}.mi.loc{background:#123828;color:#7fe0ad}}
 .tg.x{background:var(--warn)}
 .fm{font-size:13px;margin-top:3px}
 .fm em{font-style:normal;color:var(--ice);font-weight:700}
@@ -1156,7 +1148,7 @@ JS = r'''
   function openFood(i){var d=FOOD_DATA[i];if(!d)return;shI.innerHTML='';shB.innerHTML='';
     var first=d.ph&&d.ph[0];if(first){var im=document.createElement('img');im.alt='';im.src=wurl(first.f,960);im.onerror=function(){im.hidden=true};shI.appendChild(im)}
     var x=el('button','x','✕');x.setAttribute('aria-label','닫기');x.addEventListener('click',closeFood);shI.appendChild(x);
-    var h=el('h4',null,d.n);if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
+    var h=el('h4',null,d.n);if(d.loc){h.appendChild(el('span','mi loc','지역맛집'))}if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
     var fj=el('div','fj',d.ja+' · '+d.cat+(d.g?' · 구글 ★'+d.g[0].toFixed(1)+' ('+d.g[1].toLocaleString()+')':''));shB.appendChild(fj);
     if(d.ph&&d.ph.length){var st=el('div','sh-strip');d.ph.forEach(function(p){var w=el('div');var pi=document.createElement('img');pi.alt='';pi.loading='lazy';pi.src=wurl(p.f,500);pi.onerror=function(){pi.hidden=true};pi.addEventListener('click',function(){var big=shI.querySelector('img');if(big){big.src=wurl(p.f,960);big.hidden=false}});w.appendChild(pi);w.appendChild(el('span',null,p.l));st.appendChild(w)});shB.appendChild(st)}
     var kv=el('div','kv2');[['🕐',d.ht],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);

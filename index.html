@@ -382,9 +382,6 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .sv.empty{animation:glow 2.4s ease-in-out infinite}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
-@media (prefers-reduced-motion:reduce){:root:not(.motion-on) *{animation:none!important;transition:none!important}:root:not(.motion-on) .hero #snow{display:none}}
-:root.motion-off *{animation:none!important;transition:none!important}:root.motion-off .hero #snow{display:none}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
 </style>
 </head>
@@ -674,14 +671,12 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 <label><span>이름</span><input id="s-name" data-s="name" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="홍길동"></label><label><span>영문 이름</span><input id="s-nameEn" data-s="nameEn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="HONG GILDONG"></label><label><span>숙소 예약자명</span><input id="s-stayName" data-s="stayName" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gil dong"></label><label><span>전화</span><input id="s-phone" data-s="phone" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="010-0000-0000"></label><label><span>이메일</span><input id="s-email" data-s="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="me@example.com"></label><label><span>항공 예약번호</span><input id="s-pnr" data-s="pnr" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="6자리"></label><label><span>P5 예약번호</span><input id="s-p5no" data-s="p5no" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>차량번호</span><input id="s-p5car" data-s="p5car" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="12가3456"></label><label><span>P5 비밀번호</span><input id="s-p5pw" data-s="p5pw" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>타임즈 예약번호</span><input id="s-carno" data-s="carno" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>타임즈 패스워드</span><input id="s-carpw" data-s="carpw" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label><span>카드 뒷 4자리</span><input id="s-card4" data-s="card4" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="0000"></label>
 <div class="btns"><button id="s-save" class="pri">저장</button><button id="s-clear">전체 지우기</button></div>
 </div></details>
-<h3 class="sec">✨ 움직임 효과 <small>눈 · 전환 애니메이션</small></h3>
-<div class="form"><div class="btns" id="motion"><button data-m="auto">자동</button><button data-m="on">켜기</button><button data-m="off">끄기</button></div><div class="st">자동 = 폰 접근성의 "애니메이션 제거" 설정을 따름</div></div>
 <h3 class="sec">🌙 다크 모드</h3>
 <div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
 <div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
 <p class="hint">입력한 값·체크·도장은 이 폰 브라우저에만 저장되고 파일·깃허브에는 올라가지 않음</p>
-<p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 20261029-0850</p>
+<p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 20261029-0852</p>
 </div></section>
 </main>
 <nav class="bn" aria-label="메뉴">
@@ -735,7 +730,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
     markNext();reveal();navPush()}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
   function reveal(){var lis=$$('.tl:not([hidden]) li:not(.now)');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
-    if(!io||rm){lis.forEach(function(l){l.classList.add('in')});return}
+    if(!io){lis.forEach(function(l){l.classList.add('in')});return}
     void document.body.offsetWidth;var vis=0;lis.forEach(function(l){var r=l.getBoundingClientRect();if(r.top<innerHeight)l.style.transitionDelay=(vis++*70)+'ms';io.observe(l)})}
   $$('.days button').forEach(function(b){b.addEventListener('click',function(){setDay(+b.dataset.d)})});
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
@@ -757,7 +752,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
   setInterval(function(){markNext()},60000);
   var start=new Date(2026,11,3),diff=Math.round((start-new Date(y,m-1,dd))/864e5),dl=$('#dday');
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
-  if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
+  if(diff>0){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8)}catch(e){}}
   var stamps={};try{stamps=JSON.parse(ls.get('sg-stamps')||'{}')||{}}catch(e){}
   $$('.tl li').forEach(function(l,i){l.dataset.sid=l.closest('.tl').dataset.day+'-'+i;if(stamps[l.dataset.sid])l.classList.add('stamped');
@@ -841,13 +836,10 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 
 
   /* 눈 */
-  var snow=$('#snow'),rm=false;
+  var snow=$('#snow');
   (function(){if(!snow)return;var h='';for(var i=0;i<26;i++){var w=(Math.random()*2.2+1.4).toFixed(1),d=(Math.random()*9+9).toFixed(1),dl=(-Math.random()*18).toFixed(1),o=(Math.random()*.45+.35).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}snow.innerHTML=h})();
   function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
   function snowSet(){}
-  function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
-  $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
-  motion(ls.get('sg-motion')||'auto');
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
   theme(ls.get('sg-theme'));

@@ -493,8 +493,6 @@ SET='''
 '''+''.join(f'<label><span>{l}</span><input id="s-{k}" data-s="{k}" autocomplete="off" autocapitalize="off" spellcheck="false"{" placeholder=\""+ph+"\"" if ph else ""}></label>' for k,l,ph in FIELDS)+'''
 <div class="btns"><button id="s-save" class="pri">저장</button><button id="s-clear">전체 지우기</button></div>
 </div></details>
-<h3 class="sec">✨ 움직임 효과 <small>눈 · 전환 애니메이션</small></h3>
-<div class="form"><div class="btns" id="motion"><button data-m="auto">자동</button><button data-m="on">켜기</button><button data-m="off">끄기</button></div><div class="st">자동 = 폰 접근성의 "애니메이션 제거" 설정을 따름</div></div>
 <h3 class="sec">🌙 다크 모드</h3>
 <div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
@@ -1184,9 +1182,6 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .sv.empty{animation:glow 2.4s ease-in-out infinite}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
-@media (prefers-reduced-motion:reduce){:root:not(.motion-on) *{animation:none!important;transition:none!important}:root:not(.motion-on) .hero #snow{display:none}}
-:root.motion-off *{animation:none!important;transition:none!important}:root.motion-off .hero #snow{display:none}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
 '''
 
@@ -1235,7 +1230,7 @@ JS = r'''
     markNext();reveal();navPush()}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'}):null;
   function reveal(){var lis=$$('.tl:not([hidden]) li:not(.now)');lis.forEach(function(l){if(io)io.unobserve(l);l.classList.remove('in');l.style.transitionDelay=''});
-    if(!io||rm){lis.forEach(function(l){l.classList.add('in')});return}
+    if(!io){lis.forEach(function(l){l.classList.add('in')});return}
     void document.body.offsetWidth;var vis=0;lis.forEach(function(l){var r=l.getBoundingClientRect();if(r.top<innerHeight)l.style.transitionDelay=(vis++*70)+'ms';io.observe(l)})}
   $$('.days button').forEach(function(b){b.addEventListener('click',function(){setDay(+b.dataset.d)})});
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
@@ -1257,7 +1252,7 @@ JS = r'''
   setInterval(function(){markNext()},60000);
   var start=new Date(2026,11,3),diff=Math.round((start-new Date(y,m-1,dd))/864e5),dl=$('#dday');
   var dtxt=diff>0?'D-'+diff:(tripDay?'DAY '+tripDay:(diff===0?'D-DAY':'다녀옴'));dl.textContent=dtxt;
-  if(diff>0&&!(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&ls.get('sg-motion')!=='on')&&ls.get('sg-motion')!=='off'){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
+  if(diff>0){var t0=null;(function cnt(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);dl.textContent='D-'+Math.round(diff*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(cnt)})(performance.now())}
   function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8)}catch(e){}}
   var stamps={};try{stamps=JSON.parse(ls.get('sg-stamps')||'{}')||{}}catch(e){}
   $$('.tl li').forEach(function(l,i){l.dataset.sid=l.closest('.tl').dataset.day+'-'+i;if(stamps[l.dataset.sid])l.classList.add('stamped');
@@ -1341,13 +1336,10 @@ JS = r'''
 
 
   /* 눈 */
-  var snow=$('#snow'),rm=false;
+  var snow=$('#snow');
   (function(){if(!snow)return;var h='';for(var i=0;i<26;i++){var w=(Math.random()*2.2+1.4).toFixed(1),d=(Math.random()*9+9).toFixed(1),dl=(-Math.random()*18).toFixed(1),o=(Math.random()*.45+.35).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}snow.innerHTML=h})();
   function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
   function snowSet(){}
-  function motion(m){m=m||'auto';document.documentElement.classList.toggle('motion-on',m==='on');document.documentElement.classList.toggle('motion-off',m==='off');rm=m==='off'||(m==='auto'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);$$('#motion button').forEach(function(b){b.classList.toggle('pri',b.dataset.m===m)});ls.set('sg-motion',m);if(typeof snowSet==='function')snowSet()}
-  $$('#motion button').forEach(function(b){b.addEventListener('click',function(){motion(b.dataset.m);flash(b.textContent==='자동'?'자동':'움직임 효과 '+b.textContent)})});
-  motion(ls.get('sg-motion')||'auto');
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
   theme(ls.get('sg-theme'));

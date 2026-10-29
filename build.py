@@ -697,34 +697,20 @@ FOOD=[
    ('시로쿠마 본점','札幌成吉思汗 しろくま 本店','징기스칸 · 생 양고기 부위별 (다루마와 동률 1위)','','札幌成吉思汗 しろくま 本店','+81 50-5485-5001','18:00–01:30 · 무휴',[('생 양고기 각 부위','jingisukan'),('양 소시지','jingisukan:2')],'南6西3 · 도보 6분 · 카운터 바 · 전화 예약 가능 · 2인 1.2~1.6만엔 · 다루마 줄 길면 여기','',(3.68,1447,'A0101/A010103/1000800')),
   ]),
   ('🦀 털게 · 게 내장 (타베로그 순)',[
-   ('활게의 하나사키','活カニの花咲','활타라바 전문 · 눈앞에서 해체 (타베로그 삿포로 게 1위)','','活カニの花咲 札幌 南5条西2','+81 11-532-3393','17:00–22:30 · 부정기 휴무',[('시즌 코스 39,600엔 (활타라바 생·반숙·완숙·구이 비교)','kingcrab'),('세타나 전복 코스 49,500엔 · 하마나카 우니 코스 50,600엔','uni:1'),('멜론 + 코냑 마무리','kegani:2')],'南5西2 美松村岡빌 5F · 도보 7분 · 예약제(2인~) · 개인실(호리고타츠) · 키타후쿠·카니젠누에 게 손질을 가르친 집 · 전날 취소 50%·당일 100% · 1인 4~6만엔','',(3.65,149,'A0101/A010104/1000192')),
-   ('카니젠누 기타노하나레','かにじぇんぬ 北のはなれ','활게 가이세키 · 개인실 (털게 코스 있음)','','かにじぇんぬ 北のはなれ 札幌 南4条西2','+81 11-522-9977','12:00–14:00 / 17:00–23:00 · 무휴',[('활털게 코스 (아키젠누) 3.5만엔 · 1인 반 마리','kegani'),('활타라바 코스 5만엔~ · 타라바+홋카이도 와규 5.5만엔~','kingcrab:1'),('개인실에서 눈앞 조리','kegani:2')],'南4西2 호시빌 8F · 도보 3분 · 12석(개인실 2) · TableCheck 온라인 예약(당일은 전화) · 2시간 제한 · 서비스료 10% · 1인 5~6만엔','',(3.64,97,'A0101/A010102/1078670')),
    ('카니테이','かに亭','활게 전문 · 털게 통째 삶기 (타베로그 삿포로 게 요리 1위권)','','かに亭 札幌 南5条西6','+81 11-512-6065','17:00–22:30 · 무휴 · 게 소진 시 조기 마감',[('활털게 통째 삶기 (姿盛り)','kegani'),('3종 게 코스 1.6만엔 (사시미·구이·찜·버터구이·게죽)','kegani:2'),('게 사시미','kingcrab')],'南5西6 多田빌 2F · 호텔 도보 2분 · 코스는 2인~ · 온라인 예약, 겨울은 한 달 전 · 카드 결제만 · 2인 3만엔 전후 · 양 많으니 배고프게','',(3.60,217,'A0101/A010103/1000248')),
    ('니시이 형제 스스키노 본점','西井兄弟 すすきの本店','홋카이도 창작 요리 · 게 내장 육수 게샤브','','西井兄弟 すすきの本店 札幌','+81 11-600-0508','17:00–23:00 · 일 휴무 → 목 OK',[('게 내장 육수 게샤브 (西井の蟹しゃぶ)','kegani:1'),('오마카세 코스 (털게·사시미·토카치 와규·장어 솥밥)','kegani:2'),('장어 솥밥 (주문 후 조리)','kaiseki')],'南5西3 뉴스스키노빌 3F · 도보 4분 · 영어 OK · 온라인 예약 · 향수 ✗ · 흡연 가능 · 캐리어 보관 ✗ · 자릿세 800엔','',(3.59,186,'A0101/A010103/1077775')),
    ('쿠사치','居酒屋 くさち','이자카야 · 게 내장 코라야키 (가성비)','','居酒屋 くさち 札幌 狸小路','+81 11-232-0204','17:00–22:30 · 일·공휴일 휴무 → 목 OK',[('게 내장 코라야키 (かにみそ甲羅焼き)','kanimiso'),('카니다루마 (게딱지에 게살 가득 · 리필 가능)','kegani:2'),('사시미 모둠 · 보탄에비','chirashi')],'南3西4 빌 7F · 狸小路 2분 · 도보 5분 · 카운터 30석 · 현지인 단골집 · 현금만 · 흡연 가능 · 호텔 프런트 통해 예약 성공담 많음','',(3.58,227,'A0101/A010103/1009014')),
    ('스기노','すぎ乃','가이세키 이자카야 · 게 내장 코라야키 스페셜 · 우니동','','すぎ乃 札幌 北1条西2','+81 11-221-7999','17:00–21:30 (10~5월) · 런치 11:30–13:00 · 무휴',[('게 내장 듬뿍 코라야키 스페셜','kanimiso'),('우니동 (흰우니·붉은우니 · 예약 필수)','uni:1'),('시레토코 킨키 구이','hokke')],'北1西2 오크삿포로빌 B1F · 大通 2분 · 도보 12분 · 3일 전 온라인 예약(당일은 전화) · 취소 수수료 있음 · 저녁 8천~1만엔 · 런치 5천엔대','',(3.56,161,'A0101/A010102/1047228')),
    ('효세츠노몬','氷雪の門','1964년 게 요리 원조 · 활털게 1마리 코스','','氷雪の門 札幌 南5条西2','+81 11-521-3046','11:00–15:00 / 16:30–22:30 · 무휴',[('활털게 통째 1마리 코스 (털게 미소까지)','kegani'),('게 샤브 코스 9,130엔','kegani:2'),('런치 게 정식 2~3천엔','kaisendon:1')],'南5西2 · 豊水すすきの 1분 · 도보 7분 · 개인실 위주라 예약 권장 · 여행객이 가장 많이 가는 게 전문점 · 자릿세 176엔 · 제휴 주차 2시간 무료','',(3.51,295,'A0101/A010103/1000328')),
   ]),
-  ('🍣 초밥 오마카세 (타베로그 순)',[
-   ('스시 미야카와','すし宮川','초밥 · 타베로그 삿포로 전체 1위','★★★','すし 宮川 札幌','+81 11-613-2221','18:00~ · 수 휴무 → 목 OK',[('오마카세 3~4만엔','nigiri:6'),('우니','uni'),('계절 사시미','chirashi')],'円山 北1西28 · 차 10분 · 7석 · 매월 1일 다음 달 예약 오픈 → 거의 불가 · 미슐랭 3★(2017)','',(4.48,266,'A0101/A010105/1073214')),
-   ('스시사이 와키치','鮨菜 和喜智','초밥 오마카세 (삿포로 2위 · 타베로그 어워드)','','鮨菜 和喜智 札幌 南2条西25','+81 11-640-3768','목 12:00–14:00 / 18:00–20:00 / 20:30–22:30 · 월 휴무 → 목 OK',[('오마카세 36,000엔 (안주 7 + 니기리 10)','nigiri:3'),('토로타쿠','nigiri:2'),('숯불에 살짝 구운 네타','nigiri:5')],'円山 南2西25 · 차 10분 · 카운터 8석 · 타베로그 예약 2개월 전·공식 사이트 3개월 전 오픈 · 15분 지각 시 요리 못 받음 · 서비스료 10% · 영어 메모로 설명','',(4.23,664,'A0101/A010105/1000645')),
-   ('스시 소헤이','鮨 草平','초밥 오마카세 (円山 · OMAKASE 예약)','','鮨 草平 札幌 南2条西28','+81 11-215-7757','목 18:00 / 20:30 2부제 · 수 휴무 → 목 OK',[('오마카세 33,000엔 (안주 7 + 니기리)','nigiri:7'),('전복 간 밥 · 복어 시라코 · 청어 니기리','nigiri:1'),('안주는 사진 촬영 금지','sake')],'円山 南2西28 エビス빌 1F · 차 10분 · 카운터 9석 · OMAKASE 사이트 예약(자리 금방 참) · 3일 전 취소 100% · 카드만 · 영어 OK · 운전자는 술 ✗','',(4.14,180,'A0101/A010105/1071934')),
-   ('스시 쇼타','鮨 しょう太','초밥 오마카세 (大通)','','鮨 しょう太 札幌 北1条西3','+81 90-6802-8306','목 18:00–22:30 · 일·공휴일 휴무 → 목 OK',[('오마카세 3~4만엔 · 2시간 (참치 4종·장어)','nigiri:4'),('안키모 모나카 + 전용 사케','nigiri'),('얼음 조각 위 사시미','chirashi')],'北1西3 敷島프라자 별관 B1F · 大通 2분 · 도보 12분 · 8석 · OMAKASE 사이트 예약 · 싱가포르 근무 경력 셰프, 영어 OK · 카드 OK','',(4.09,205,'A0101/A010102/1073448')),
+  ('🍣 초밥 오마카세 (인당 2만엔 이하 · 타베로그 순)',[
    ('스시도코로 아리마','鮨処 有馬','초밥 오마카세 (가성비 1위)','★','鮨処 有馬 札幌 狸小路','+81 11-215-0998','18:00–23:00 · 일 휴무 → 목 OK',[('오마카세 1.5~2만엔 · 2.5시간','nigiri:2'),('계절 사시미','chirashi'),('우니','uni:1')],'南3西4 · 도보 5분 · 매월 1일 다음 달 전화 예약 오픈 · 폰 사용 자제 분위기 · 미슐랭 1★(2017)','',(4.08,679,'A0101/A010102/1000457')),
    ('스시노쿠라','鮨ノ蔵','초밥 오마카세 (4석 · 창작 안주 9품)','','鮨ノ蔵 札幌 南2条西4','+81 80-3296-0202','18:00–22:30 (20:30 2부) · 일·공휴일 휴무 → 목 OK',[('오마카세 18,700~22,000엔 (안주 9 + 니기리 9)','nigiri:1'),('시라코 · 복어 등 창작 안주','kaiseki:1'),('숨은 문 지하 카운터','nigiri:7')],'南2西4 乙井빌 B1F (입구 찾기 어려움) · 狸小路 2분 · 도보 7분 · 4석 · 1인 운영이라 전화 안 됨 → TERIYAKI 예약 · 15분 지각 = 취소 · 현금 준비','',(4.05,278,'A0101/A010103/1045430')),
-   ('스스키노 스시킨','すゝき野 鮨金','초밥 오마카세 (니기리 중심 · 타베로그 100名店)','★','薄野 鮨金 札幌','+81 11-251-9521','18:00 / 20:30 2부제 · 수 휴무 → 목 OK',[('오마카세 3~4만엔 (니기리·사시미 중심)','nigiri:5'),('참치 · 이와시 · 특선 우니','nigiri:3'),('바카라 잔 사케','sake')],'南4西4 松岡빌 1F · 호텔 도보 3분 · 8석 · 온라인 예약 · 카드만 · 서비스료 5% · 영어 OK · 미슐랭 1★(2017)','',(3.88,337,'A0101/A010103/1002644')),
-   ('스시 히데타카','寿し ひでたか','초밥 오마카세 (홋카이도 네타)','','寿し ひでたか 札幌 南7条西4','+81 11-200-0677','18:00–23:00 · 화·일 휴무 → 목 OK',[('오마카세 3~4만엔','nigiri:7'),('홋카이도 제철 네타','uni'),('계절 사시미','chirashi')],'南7西4 延寿빌 1F · 도보 9분 · 카운터 8석 · 공식 사이트·AutoReserve 예약(한국에서 예약 성공담) · 카드 OK','',(3.88,231,'A0101/A010103/1038603')),
    ('스시도코로 요시나','鮨処よしな','초밥 · 아라카르트 가능','','鮨処よしな 札幌 すすきの','+81 11-222-8050','18:00–23:00 · 일 휴무 → 목 OK',[('니기리 골라 먹기 1~1.5만엔','nigiri'),('대뱃살·전갱이','nigiri:3'),('삶은 문어 + 사케','sake')],'南4西5 F45빌 1F · 호텔 바로 옆 · 오마카세 강요 없음 · 주인장 수다 많아 여유 있게 · 전화 예약','',(3.71,109,'A0101/A010103/1038659')),
   ]),
-  ('🍽️ 프렌치 · 이탈리안 · 가이세키 · 덴푸라 · 야키토리 (타베로그 순)',[
-   ('파르코 피에라','パルコ フィエラ','이탈리안 · 자가제 샤퀴테리 (타베로그 삿포로 전체 2위)','','パルコ フィエラ 札幌 手稲 稲穂','','목 18:00–21:00 · 월·화 휴무 → 목 OK',[('홋카이도 식재료 테이스팅 코스 3~4만엔','italian'),('자가제 생햄·살라미 · 눈앞에서 만드는 생파스타','italian:1'),('내추럴 와인 페어링','italian:2')],'手稲区 稲穂1条4 · JR 稲穂역 1분 · 차 25분 · 카운터 9석 · OMAKASE 사이트 예약 · 14일 전 취소 50%·7일 전 100% · 30분 지각 = 취소 · 주차 없음 → 근처 코인파킹 · 운전자는 술 ✗','',(4.42,259,'A0101/A010203/1064202')),
-   ('AKI NAGAO','AKI NAGAO','프렌치 (홋카이도 식재료)','★','AKI NAGAO 札幌','+81 11-206-1789','18:00~ · 일·월·화 휴무 → 목 OK',[('홋카이도 식재료 코스 3~5만엔','french'),('와인 페어링','french:1')],'南3西3 G DINING 1F · 도보 5분 · 공식 사이트 온라인 예약 · 기념일용 · 변경·취소 2일 전까지 · 미슐랭 1★(2017)','',(4.35,257,'A0101/A010103/1028665')),
-   ('모리에르','レストラン・モリエール','프렌치 · 삿포로 최고(最古) 프렌치 · 미슐랭 3★','★★★','レストラン モリエール 札幌 宮ヶ丘','+81 11-631-3155','11:30–14:00 / 17:30–20:00 · 화·수 휴무 → 목 OK',[('테루아 코스 (런치 7품 · 디너 10품+) 2~4만엔','french:2'),('시라코 · 홋카이도 사슴 · 옥수수 수프','french:1'),('홋카이도 와인 페어링','french')],'宮ヶ丘2 (円山 공원 옆) · 차 10분 · 온라인 예약, 몇 달 대기 흔함 → 호텔 통해 전화 예약 성공담 · 남성 재킷 권장 · 미슐랭 3★(2017) · 구글 4.7(722)','',(4.28,590,'A0101/A010105/1000022')),
-   ('시모야미테 나에이즈루','霜止出苗','이노베이티브 (일·프렌치) · 타베로그 어워드 브론즈','','霜止出苗 札幌 南9条西4','+81 90-9434-1700','12:00 / 14:00 / 18:00 세션 · 무휴',[('오마카세 코스 33,000엔 (런치·디너 동일)','french:1'),('홋카이도 식재료 창작 요리','kaiseki'),('와인 페어링','french')],'南9西4 カモカモ빌 1F · 中島公園 5분 · 호텔에서 도보 15분/택시 5분 · 6석 · 온라인 예약 · 카드 OK · 구글은 3.5로 호불호(짜다·셰프 무뚝뚝) but 타베로그 4.25','',(4.25,253,'A0101/A010104/1061277')),
-   ('스야마','壽山','일식 가이세키 · 숯불 (카운터 + 개인실)','','壽山 札幌 大通西17','+81 11-688-8024','18:00~ · 화·수 휴무 → 목 OK',[('코스 33,000엔 (제철 홋카이도 식재료)','kaiseki'),('숯불 킨키 구이','hokke'),('참마 구이 · 사시미','kaiseki:1')],'大通西17 グラシアス大通 1F · 지하철 西18丁目 1분 · 차 7분 · 카운터 8석 + 개인실(4~6인) · 온라인 즉시 예약 · 서비스료 10% · 영어 거의 안 통하지만 친절','',(4.13,142,'A0101/A010104/1060884')),
+  ('🍽️ 덴푸라 · 야키토리 오마카세 (인당 2만엔 이하)',[
    ('덴푸라 아라키','天ぷら あら木','덴푸라 오마카세','★★','天ぷらあら木 札幌','+81 11-552-5550','18:00–22:30 · 일 휴무 → 목 OK',[('덴푸라 오마카세 20종 1.5~2만엔','tempura'),('새우 덴푸라','tempura:1'),('고구마 덴푸라 + 아이스','tempura:2')],'南7西4 · 도보 8분 · 카운터 9석 · 전화 예약 · 영어 OK · 미슐랭 2★(2017)','',(4.10,362,'A0101/A010103/1048079')),
    ('야키토리 히게보즈','焼鳥 ひげぼうず','야키토리 오마카세 (코사카 지도리 · 타베로그 어워드)','','焼鳥 ひげぼうず 札幌 南5条西6','','18:30 / 19:30 2부제 · 수·일 휴무 → 목 OK',[('오마카세 코스 12,100~13,200엔 (12~13품)','yakitori'),('코사카 지도리 (홋카이도 유일)','yakitori:1'),('간 · 미소 내장 · 네기마 · 마무리 소바','yakitori:2')],'南5西6 多田빌 1F (카니테이 아래층) · 호텔 도보 2분 · U자 카운터 10석 · 인스타 DM 예약(2개월 전 오픈) · 1인 불가 · 3일 내 취소 100% · 카드만 · 향수 ✗','',(4.10,152,'A0101/A010103/1070763')),
-   ('미에다','みえ田','일식 갓포 · 복어 (카운터 8석)','','みえ田 札幌 南5条西3','+81 11-532-2828','18:00–23:00 · 일·공휴일 휴무 → 목 OK',[('오마카세 코스 3~5만엔 (제철 홋카이도 해산물)','kaiseki'),('복어 요리','chirashi'),('작품 같은 플레이팅','kaiseki:1')],'南5西3 第23桂和빌 4F · 스스키노역 1분 · 도보 4분 · 온라인 예약 · 당일 취소 100% · 서비스료 10% · 현지 단골 많음','',(4.10,132,'A0101/A010103/1007034')),
   ]),
   ('🍶 해산물 이자카야 (타베로그 순)',[
    ('교사이','魚菜','해산물 이자카야 (타베로그 百名店 2025)','','魚菜 札幌 狸小路','+81 11-210-8588','17:30–21:30 · 일·월 휴무 → 목 OK',[('오늘의 사시미','chirashi'),('청어·마츠마에즈케·고마이 (홋카이도 안주)','hokke'),('사케 테이스팅 세트','sake')],'南3西5 · 도보 5분 · 카운터 + 코타츠 3석 · 당일 16시부터 전화 예약 · 현금만 · 2인 1.5만엔 전후','',(3.69,399,'A0101/A010103/1000426')),
@@ -819,8 +805,125 @@ FOOD=[
 NONFOOD={'letao','brewery','ramen_street','nijo','beer_garden'}  # 장소·외관 사진 키: 카드 대표사진으로 쓰지 않음
 # 실제 식당 사진: 타베로그 「料理」 탭 사진 (식당 공식·리뷰) · tbph.json = {타베로그ID: [url…]} · 둘만 보는 비상업 용도
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'tbph.json'),encoding='utf-8') as _f: TBPH=json.load(_f)
-DRIVE={'나카야 과자점 (砂川)':'가는 길 · 砂川IC 5분','기타카로 砂川 SA점':'가는 길 · 砂川SA 직결','야키토리 다쓰미 (美唄)':'귀로 · 美唄IC 5분','마쓰오 징기스칸 滝川 본점':'귀로 · 滝川IC 5분','카마에이 공장직매점':'小樽IC 5분 · 주차 30대','카키자키 상점 해선공방 (余市)':'오타루→차 25분','멘야 사이미':'공항→호텔 길 · 札幌IC 10분','아사히카와 라멘 아오바 본점':'가는 길 · 차 30분','스시 미야카와':'차 10분','스시사이 와키치':'차 10분','스시 소헤이':'차 10분','모리에르':'차 10분','스야마':'차 7분','파르코 피에라':'차 25분','시모야미테 나에이즈루':'차 5분','KANON PANCAKES':'차 10분','후왓토 마루야마 키친':'차 10분','마루야마 우유판매점':'차 10분','푸푸리에':'차 10분','정식 메시야':'차 10분','기타노 구루메테이':'차 10분','비블레':'차 10분','팜 레스토랑 치요다':'차 10분','비에이 방목낙농장':'차 15분','라멘야 텐킨 4조점':'귀로 · 차 30분','하치야 5조 창업점':'귀로 · 차 30분','아오츠카 식당':'차 10분'}
+DRIVE={'나카야 과자점 (砂川)':'가는 길 · 砂川IC 5분','기타카로 砂川 SA점':'가는 길 · 砂川SA 직결','야키토리 다쓰미 (美唄)':'귀로 · 美唄IC 5분','마쓰오 징기스칸 滝川 본점':'귀로 · 滝川IC 5분','카마에이 공장직매점':'小樽IC 5분 · 주차 30대','카키자키 상점 해선공방 (余市)':'오타루→차 25분','멘야 사이미':'공항→호텔 길 · 札幌IC 10분','아사히카와 라멘 아오바 본점':'가는 길 · 차 30분','KANON PANCAKES':'차 10분','후왓토 마루야마 키친':'차 10분','마루야마 우유판매점':'차 10분','푸푸리에':'차 10분','정식 메시야':'차 10분','기타노 구루메테이':'차 10분','비블레':'차 10분','팜 레스토랑 치요다':'차 10분','비에이 방목낙농장':'차 15분','라멘야 텐킨 4조점':'귀로 · 차 30분','하치야 5조 창업점':'귀로 · 차 30분','아오츠카 식당':'차 10분'}
 LOCAL={'나카야 과자점 (砂川)','야키토리 다쓰미 (美唄)','마쓰오 징기스칸 滝川 본점','카마에이 공장직매점','카키자키 상점 해선공방 (余市)','수아게+ 본점','다루마 본점','롯카테이 삿포로 본점','하치쿄 본점','파르페테리아 PaL','니조시장 오이소','준페이','타키나미 식당','나루토 본점','르타오 본점 카페','오타루 마사즈시 본점','에비소바 이치겐 공항점','로이즈 공항점','효세츠노몬'}
+# ───────────── 쇼핑 ─────────────
+def shop_card(name, badges, what, info, q, pid=None, tel=None):
+    b=''.join(f'<span class="mi {c}">{esc(t)}</span>' for c,t in badges)
+    link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+pid if pid else '')) if q else ''
+    t=f'<button class="tel" data-c="{esc(tel)}">{esc(tel)}</button>' if tel else ''
+    a=f'<a class="map" href="{esc(link)}" target="_blank" rel="noopener">지도</a>' if link else ''
+    return (f'<div class="shi"><div class="shn">{esc(name)} {b}</div><div class="shw">{what}</div>'
+            f'<div class="shm">{info}</div><div class="ta">{a}{t}</div></div>')
+
+SHOP_CATS=['🧾 리스트','👕 브랜드','💊 드럭·돈키','🎁 기념품','✈️ 공항','💴 면세']
+def shop_html():
+    C=[]
+    # 0 리스트
+    C.append('''
+<p class="hint">쇼핑 시간은 사실상 <b>12/3 체크인 후 15:30~18:30 (시내)</b> + <b>12/5 오타루</b> + <b>12/6 공항 11~12시</b> 뿐 · 시내 매장은 거의 10~20시라 12/4·12/5 아침엔 못 감 · 체크는 이 폰에만 저장</p>
+<h3 class="sec">🧾 사야 할 것 <small id="shop-n"></small></h3>
+<ul class="checks" data-l="shop" id="shop-list">
+'''+''.join([
+ chk('s1','패딩 1벌 (NANGA · TATRAS · 데상트 미즈사와 · 몽벨)','12/3 오후 · 삿포로 팩토리 or 다이마루 · 면세 환급 10%'),
+ chk('s2','PORTER 가방 (POTR 파르코 1F)'),
+ chk('s3','BAPE (오도리 매장 · 번호표)'),
+ chk('s4','드럭스토어 약·선크림 (돈키 or 사츠도라)','리스트는 「드럭·돈키」'),
+ chk('s5','로이즈 생초콜릿 + 포테이토칩 초콜릿','공항 3F 초콜릿 월드 · 보냉백 무료'),
+ chk('s6','롯카테이 마루세이 버터샌드','본점(맛집 탭) or 공항 2F'),
+ chk('s7','시로이코이비토 (ISHIYA 오도리 본점 한정맛)'),
+ chk('s8','기타카로 바움쿠헨 · 개척 오카키','삿포로 본관 or 공항 2F'),
+ chk('s9','르타오 더블 프로마주 (냉동 · 공항에서 마지막에)'),
+ chk('s10','자가포쿨 · 포테토팜 (공항 2F Calbee+)','품절 잦음 · 보이면 바로'),
+ chk('s11','삿포로 클래식 맥주 6캔 (공항 면세점) · 닛카 증류소 한정 위스키(余市 가면)'),
+ chk('s12','오타루: 기타이치 유리 · 오르골 · 카마에이 어묵'),
+ chk('s13','비에이: 美瑛選果 우유·잼·콘'),
+])+'''
+</ul>
+<div class="form"><label><span>추가</span><input id="shop-new" autocomplete="off" placeholder="예: 부모님 선물"></label><div class="btns"><button id="shop-add" class="pri">넣기</button></div><div class="st">직접 넣은 건 ✕로 지울 수 있음</div></div>''')
+    # 1 브랜드
+    C.append('<p class="hint">일본이 싼 이유 = 엔저 + 일본 브랜드 정가 자체가 낮음 + 면세(11월부터 출국 시 10% 환급) · 한국 정가를 폰으로 같이 보면서 사기 · 12/3 15:30~18:30가 유일한 시내 쇼핑 시간 → 삿포로역(다이마루·스텔라플레이스·팩토리) or 오도리(파르코·BAPE·BEAMS) 한 구역만 고르기</p><h3 class="sec">🧥 패딩 · 아웃도어 (일본이 확실히 싼 것)</h3>'+''.join([
+ shop_card('NANGA SHOP SAPPORO',[('loc','삿포로 첫 매장'),('drv','호텔 차 10분')],'일본 시가현 다운 브랜드 · <b>오로라 다운 등 다운 50종+</b> · 일본 정가가 한국 수입가의 60~70% · 삿포로 한정 스티커·테누구이','삿포로 팩토리 2条館 2F · 2026-10-09 오픈 · 10:00–20:00 · 같은 층에 데상트, B1에 노스페이스(퍼플라벨) · 팩토리 주차 2시간 무료(구매 시)','NANGA SHOP SAPPORO サッポロファクトリー','ChIJr19pU3cpC18RmPBxL9R03GY'),
+ shop_card('TATRAS 다이마루 삿포로점',[],'이탈리아 브랜드지만 일본 자본·일본이 본진 → <b>한국 백화점가의 60~70%</b> · 남성 BOESIO·AGOLONO, 여성 LAVIANA 등','다이마루 삿포로 (삿포로역 바로) · 10:00–20:00 · 면세 카운터 8F','TATRAS 大丸札幌店','ChIJqbCqR3UpC18R1mlxkuZdMNY'),
+ shop_card('데상트 (삿포로 팩토리)',[],'<b>미즈사와 다운(水沢ダウン)</b> = 일본 자사 공장 생산 · 한국 데상트와 다른 올테레인 라인 · 일본이 20~30% 저렴','삿포로 팩토리 2条館 2F (NANGA 옆) · 10:00–20:00 · 삿포로역 남쪽 휴릭스퀘어 B1F에도 매장(11–20)','デサント サッポロファクトリー','ChIJAT1f4nApC18RvfG3t-i6Arg'),
+ shop_card('몽벨 삿포로 아카렌가테라스점',[('loc','가성비')],'일본 몽벨은 한국 몽벨(라이선스 별도 회사)과 다른 물건 · <b>다운·장갑·보온내의·방한화가 반값 느낌</b> · 삿포로 최대급 2개 층','赤れんがテラス 1F (삿포로역 도보 5분) · 10:00–21:00 · 연중무휴','モンベル 札幌赤れんがテラス店'),
+ shop_card('노스페이스 퍼플라벨 (일본 한정)',[],'nanamica 협업 <b>퍼플라벨은 일본 전용</b> → 삿포로 팩토리 B1F 매장에 퍼플라벨 많다는 리뷰 · 눕시도 일본가','삿포로 팩토리 2条館 B1F · 10–20 / 스텔라플레이스 센터 3F 대형 매장(10–20)','THE NORTH FACE サッポロファクトリー店','ChIJBRe7wnApC18RsHZR1OhTKb8'),
+ shop_card('슈가쿠소 북대점 (秀岳荘)',[('drv','차 15분')],'홋카이도 아웃도어 성지 · 4층 · NANGA·몽벨·파타고니아·티톤브로스 한 번에 비교','北12西3 · 10:30–19:30 · <b>월 휴무</b>(12/3 목 OK) · 면세 가능 리뷰','秀岳荘 北大店','ChIJAQCMqg8pC18RnCew_NsYvnE'),
+])+'<h3 class="sec">🧢 스트리트 · 일본 브랜드</h3>'+''.join([
+ shop_card('BAPE STORE SAPPORO',[('loc','번호표')],'베이프스타·샤크후디 · 리뷰 "일본 BAPE 중 재고 손꼽힘" · 아침 줄 서면 <b>번호표</b> 순(선착순 아님)','大通西1-14-2 1F (TV타워 옆) · 11:00–20:00 · 호텔 도보 12분','BAPE STORE SAPPORO','ChIJf8E1TZ0pC18RdQTOe5z69Ds','+81 11-261-5339'),
+ shop_card('HUMAN MADE',[('x','삿포로 매장 없음')],'매장은 도쿄(하라주쿠 · 2026 여름 플래그십)·교토뿐 · 삿포로 셀렉샵에도 사실상 없음 → 이번엔 패스 · 온라인몰은 일본 내 배송만이라 호텔 수령은 비추','홋카이도 전체에 없음',None),
+ shop_card('COMME des GARÇONS (다이마루 5F)',[],'플레이 하트 티·가디건·셔츠 <b>일본 정가 = 한국의 60~70%</b> → 그래서 오픈런 뉴스까지 · 파르코 1F에도 있지만 다이마루점 응대 리뷰가 훨씬 나음','다이마루 삿포로 5F · 10:00–20:00 · 면세 8F','札幌大丸 Comme des Garçons','ChIJFZjESXUpC18RFheUppw0l4k'),
+ shop_card('ISSEY MIYAKE · BAO BAO (다이마루 5F)',[],'플리츠 플리즈·바오바오 가방 일본가 (예은이 선물 후보)','다이마루 삿포로 5F · 10:00–20:00','ISSEY MIYAKE 大丸札幌店','ChIJNW8QBP8pC18RQXROTI9dFag'),
+ shop_card('POTR (PORTER 요시다 가방) 파르코 1F',[('loc','리뷰 4.8')],'탱커·스모키 등 <b>일본 정가가 한국 수입가의 60~70%</b> · 면세 OK · 재고 없으면 창고 확인해 줌','삿포로 파르코 1F (오도리) · 10:00–20:00 · 호텔 도보 8분','POTR Sapporo 札幌PARCO','ChIJw0OKo4cpC18RIew6FQExMXA'),
+ shop_card('오니츠카 타이거 파르코 1F',[],'멕시코66 · <b>NIPPON MADE</b> 라인 · 일본가 + 면세 / 아식스 젤카야노14·뉴발은 ABC-MART 삿포로점(南2西3 · 11–21)','삿포로 파르코 1F · 10:00–20:00','Onitsuka Tiger 札幌PARCO','ChIJ94DNToMpC18RcVRDZPGGUus'),
+ shop_card('BEAMS SAPPORO',[],'1F 여성 · 2F 남성 · 일본 셀렉샵 자체 라인·콜라보 · 삿포로 스텔라플레이스점은 작음','南1西3 · 11:00–20:00','BEAMS SAPPORO','ChIJhZem0pwpC18RiF34QzGvmVQ'),
+ shop_card('유니클로 · GU (미츠코시 10F 한 층)',[],'일본이 10~20% 저렴 + 일본 한정 UT · <b>홋카이도 한정 UT는 도큐백화점 7F점</b>에 있다는 리뷰 · 면세 5,500엔↑','札幌三越 10F · 10:00–20:00 / 무인양품은 파르코 5~6F','UNIQLO 札幌三越店','ChIJY8CPnZ8pC18RradMW9GVqeY'),
+ shop_card('JINS 스텔라플레이스',[],'안경 <b>렌즈 포함 8,800엔~ · 검안 20분 · 2시간 완성</b> · 선글라스도','스텔라플레이스 센터 4F · 10:00–20:00 · 12/3 오후에 맞추면 당일 수령','JINS 札幌ステラプレイス','ChIJD31u8TspC18RTmhBViIqaNQ'),
+]))
+    # 2 드럭·돈키
+    C.append('<h3 class="sec">🛒 돈키 · 드럭스토어</h3>'+''.join([
+ shop_card('MEGA 돈키호테 狸小路 본점',[('loc','24시간'),('loc','면세 4F')],'과자(킷캣 지역한정)·약·화장품·캐릭터·위스키 한 번에 · <b>밤 11시 이후나 아침 9시 전이 한산</b> · 줄 길면 면세 카운터 4F','南3西4 · 24시간 · 호텔 도보 5분 · 12/3 밤 시메 파르페 후에 들러도 됨','MEGAドン・キホーテ 札幌狸小路本店','ChIJYasDYuApC18RKhUT7I_KxDY'),
+ shop_card('사츠도라 狸小路5丁目',[('loc','홋카이도 체인')],'돈키보다 통로 넓고 한산 · 약·화장품 품목 돈키와 비슷 · 홋카이도 한정 과자도 조금','南3西5 · 12:00–23:00 · 면세 카운터','サツドラ 狸小路5丁目店','ChIJo8jv54QpC18Rt9ydOMsTdNU'),
+ shop_card('삿포로 드러그스토어 (南2西5)',[],'3층 · 23시까지 · 면세 1만엔↑ 리뷰 · QR 쿠폰 5%','南2西5 · 10:00–23:00','SAPPORO DRUG STORE 南2条西5丁目','ChIJi564wYQpC18RlQSn_Xd5AuA'),
+])+'<h3 class="sec">💊 드럭스토어에서 사는 것 (한국보다 싸거나 없음)</h3><div class="shi"><div class="shw">'+' · '.join([
+ '<b>이브 퀵(EVE Quick)</b> 두통약','<b>로토 리세 / Z!</b> 안약','<b>캬베진 코와α</b> 위장약','<b>오타이산</b> 소화제','<b>파브론 골드A</b> 종합감기','<b>사론파스</b> 파스 140매','<b>무히</b> 벌레약','<b>휴족시간</b> 발 시트',
+ '<b>아네사 퍼펙트 UV</b> 선크림','<b>비오레 UV 아쿠아리치</b>','<b>하다라보 고쿠준</b> 화장수','<b>큐어 내추럴 아쿠아젤</b> 각질','<b>시세이도 퍼펙트 휩</b> 클렌징폼','<b>DHC 립크림</b>','<b>메구리즘</b> 온열 아이마스크','<b>카오 메구리즘 증기 목 시트</b>',
+ '<b>동전 파스(로이히 츠보코)</b>','<b>헤파리제</b> 숙취·간','<b>류카쿠산</b> 목캔디','<b>킨칸</b>'])+'</div><div class="shm">같은 매장 당일 합산 5,000엔↑ 면세 · 11월부터는 계산 때 세금 내고 공항에서 환급(「면세」 탭) · 약은 한국 반입 6병까지(동일 품목) 무난</div></div>'
+    +'<h3 class="sec">📷 전자 · 취미 · 잡화</h3>'+''.join([
+ shop_card('빅카메라 삿포로 (도큐백화점 5·6F)',[],'<b>G-SHOCK 일본 내수 모델</b> · 카메라·필름 · 닌텐도 게임 · 주류 코너(일본 위스키 시세 확인) · 면세','北4西2 · 10:00–20:00 · 삿포로역','ビックカメラ 札幌店','ChIJnYs-5HQpC18Rg-QypTLyDco'),
+ shop_card('핸즈 삿포로 (도큐 8F)',[],'문구 · 주방(하리오 드리퍼·그린벨 손톱깎이·노노지 귀이개) · 스미스키 · 우산 · 면세 카운터(현금 환급식)','北4西2 · 10:00–20:00 / 로프트는 모유쿠 삿포로 3F(南2西3 · 10–21)','ハンズ 札幌店','ChIJl9dZ_ZApC18R9-_NAPVdBAc'),
+ shop_card('포켓몬센터 삿포로 (다이마루 8F)',[],'삿포로 한정 핀 · AIRDO 로코(여우) 콜라보 · 가샤폰 뒤쪽 복도 · 작지만 한정품 있음','다이마루 삿포로 8F · 10:00–20:00 / 도큐 9F는 반다이 가샤폰 한 층','ポケモンセンターサッポロ','ChIJ_____3QpC18RAehYcdaByXI'),
+ shop_card('만다라케 삿포로 (노르베사 2F)',[],'중고 피규어·만화·레트로 장난감 · 110엔 떨이 코너 · 면세 · 스스키노 관람차 건물','南3西5 NORBESA 2F · 12:00–20:00 · 호텔 도보 5분','まんだらけ 札幌店','ChIJo7vfsYUpC18RRXbj5JKgDxI'),
+]))
+    # 3 기념품
+    C.append('<p class="hint">과자는 <b>공항(국내선 2F + 출국 후 면세점)</b>에 거의 다 있고 돈키보다 싸다는 리뷰 → 시내에선 「그 매장에만 있는 것」만 · 냉장·냉동(생초콜릿·더블 프로마주)은 공항에서 마지막에</p><h3 class="sec">🍫 홋카이도 과자 TOP (어디서)</h3><div class="shi"><div class="shw">'+'<br>'.join([
+ '🥇 <b>로이즈 생초콜릿</b>(오레 · 샴페인) + <b>포테이토칩 초콜릿</b> → 공항 3F 초콜릿 월드(보냉백 무료) · 다이마루 B1',
+ '🥈 <b>롯카테이 마루세이 버터샌드</b> · 유키야콘코 · 스트로베리 초코 → 본점(맛집 탭) · 공항 2F',
+ '🥉 <b>시로이코이비토</b> → ISHIYA 오도리 본점(낱개·한정맛·소프트) · 공항',
+ '<b>기타카로 바움쿠헨 「요정의 숲」</b> · 개척 오카키 · 슈크림 → 삿포로 본관 · 砂川 SA · 공항 2F',
+ '<b>르타오 더블 프로마주</b>(냉동 · 보냉 4시간) → 오타루 본점 · 공항 2F (통째만)',
+ '<b>카루비 자가포쿨</b> · 포테토팜 → 공항 2F Calbee+ (품절 잦음)',
+ '<b>유키지루시 파라 스노우 로열</b> 아이스 · <b>홋카이도 우유 카스텔라</b> · <b>스나플스 치즈오믈렛</b> → 공항 2F',
+ '<b>유바리 멜론 젤리(HORI)</b> · 하스카프 젤리 · 삿포로 오카키 Oh!야키토우키비 → 돈키·공항',
+ '<b>삿포로 클래식</b>(홋카이도 한정 맥주) 6캔 → 공항 면세점 · <b>닛카 余市 증류소 한정</b> 위스키 → 余市 가면 · <b>田中酒造 오타루 한정 사케</b>'])+'</div></div>'
+    +'<h3 class="sec">🏬 시내 매장</h3>'+''.join([
+ shop_card('ISHIYA 삿포로 오도리 본점',[('loc','여기만')],'시로이코이비토 <b>낱개 판매(오전 품절)</b> · 다른 데 없는 한정 맛 · 1층 소프트크림 · 선물 포장','大通西4 · 10:00–20:00 · 호텔 도보 10분 · 면세 5,000엔↑','ISHIYA 札幌大通本店','ChIJkerGVZwpC18RwbFmpLRvpL8'),
+ shop_card('기타카로 삿포로 본관',[('loc','건물')],'안도 타다오가 고친 옛 도서관 · 1F 매장(바움쿠헨·오카키·슈크림) · 2F 카페는 줄','北1西5 · 10:00–18:00 · 카페 LO 빠름','北菓楼 札幌本館','ChIJq6qePZwpC18RtS5FF_v5uMA'),
+ shop_card('다이마루 삿포로 B1 식품관',[],'로이즈·르타오·롯카테이·기타카로 <b>한 층에</b> · 저녁 6시 넘으면 도시락 할인 · 면세 8F','삿포로역 · 10:00–20:00','大丸札幌店','ChIJMZf131MpC18RQsBQf7NM92s'),
+])+'<h3 class="sec">🏮 오타루 · 비에이 · 余市</h3>'+''.join([
+ shop_card('기타이치 유리 3호관',[('loc','오타루')],'수제 유리잔·램프 · 메이드 인 재팬 표시 확인(유럽산 섞임) · 깨지니까 기내 반입','堺町7-26 · 09:00–18:00','北一硝子 三号館','ChIJ___DnVrgCl8RruTc290c3p8'),
+ shop_card('오타루 오르골당 본관',[('loc','오타루')],'수천 종 오르골 · 2층까지 · 같은 모양도 곡이 달라 라벨 확인','住吉町4-1 · 09:00–18:00 · 증기시계 앞','小樽オルゴール堂 本館','ChIJB2IMXFrgCl8Rx-WS9YJOmbQ'),
+ shop_card('카마에이 공장직매점',[('loc','오타루')],'어묵 냉장 선물세트(보냉 가능) · 현장 パンロール은 맛집 탭','堺町3-7 · 09:00–18:00(토 19:00)','かま栄 工場直売店','ChIJQTIcG07gCl8RMM5h8GKfzuo'),
+ shop_card('田中酒造 亀甲蔵',[('loc','오타루')],'오타루 한정 사케 · 무료 시음(예은이만) · 사케 잔','信香町2-2 · 09:05–17:55','田中酒造 亀甲蔵','ChIJK3S4ul3gCl8RqOD0wRgNyyM'),
+ shop_card('美瑛選果 본점',[('loc','비에이')],'비에이 우유·잼·옥수수·빵 · 오후엔 품절 많음(16시 리뷰) · 아스페르주 바로 옆','大町2 · 10:00–17:00 · 12/4 점심 때','美瑛選果 本店','ChIJ__97IdnFDF8RpJA43yFM_ms'),
+ shop_card('닛카 余市 증류소 숍',[('loc','余市')],'<b>증류소 한정</b> 블렌디드·싱글몰트 余市 · 견학 없이 숍·뮤지엄만도 가능(09:15–15:30)','余市町黒川町7-6 · 12/5 선택 코스','ニッカウヰスキー余市蒸溜所','ChIJW_vtVJDlCl8Rqsgyt57skUc'),
+]))
+    # 4 공항
+    C.append('<p class="hint">12/6 · 10:30 반납 → 셔틀 → <b>국제선 도착 10:50</b> → 연결통로(도보 10분)로 국내선 2F → <b>11:00~12:00 쇼핑</b> → 12:10 국제선 체크인(마감 13:05) → <b>짐 부치기 전에 면세 세관 키오스크</b> → 보안 → 출국 후 면세점 → 13:35 탑승 · 냉장·냉동은 맨 마지막에</p><h3 class="sec">🛍️ 국내선 2F 쇼핑월드 (08–20)</h3>'+''.join([
+ shop_card('롯카테이 · 기타카로 · 유키지루시 파라',[],'롯카테이(버터샌드) · 기타카로(슈크림 · 바움쿠헨) · 유키지루시(스노우 로열 소프트 420엔) 나란히','국내선 2F · 08:00–20:00','北菓楼 新千歳空港店','ChIJcWIyYkAgdV8RobZvojbhaos'),
+ shop_card('Calbee+ 공항점',[('loc','품절 주의')],'<b>자가포쿨</b> · 포테토팜 · 갓 튀긴 포테리코(줄)','국내선 2F · 08:00–20:00','カルビープラス 新千歳空港店','ChIJ2f7AS2ogdV8RTOl8hQJEPLg'),
+ shop_card('르타오 공항점',[],'더블 프로마주 통째(냉동 · 보냉 4시간) · 쁘띠 쉐이크 아이스 · 선물용 과자','국내선 2F · 08:00–20:00','ルタオ 新千歳空港店','ChIJAbARimogdV8RPJYzaBYCMLs'),
+ shop_card('로이즈 초콜릿 월드 (3F 연결통로)',[('loc','보냉백 무료')],'생초콜릿·포테이토칩 초콜릿 전 종류 · 베이커리 · 유리창 너머 공장 · 국제선 가는 길에 있음','3F 연결통로 · 08:30–19:00','ロイズ チョコレートワールド 新千歳空港','ChIJcWIyYkAgdV8RUTJxFOOaGGI'),
+])+'<h3 class="sec">🛫 국제선 출국 후 면세점</h3>'+''.join([
+ shop_card('면세점 North / South',[],'담배·주류(일본 위스키·삿포로 클래식 6캔)·화장품 + 시로이코이비토·자가포쿨·롯카테이도 · <b>돈키보다 싸다는 리뷰</b> · 여권+탑승권','보안 검색 후 · 08:00–20:00 · South는 게이트 66~69 쪽','新千歳空港 国際線 免税店','ChIJXZ3RkEEgdV8RY8oIw5Fd3Us'),
+])+'<div class="shi"><div class="shn">🇰🇷 한국 입국 면세 한도 (1인)</div><div class="shw">총 <b>US$800</b> · 술 <b>2병(합 2L · $400 이하)</b> · 담배 200개비 · 향수 100mL · 초과분은 자진신고하면 세금 30% 감면(2인 합산 $1,600)</div></div>')
+    # 5 면세
+    C.append('<h3 class="sec">💴 면세 = 2026-11-01부터 「리펀드(환급) 방식」</h3><div class="shi"><div class="shw">'+'<br>'.join([
+ '① 매장에서 <b>여권 제시</b> → <b>세금 포함 가격으로 결제</b> (예전처럼 바로 10% 빼주지 않음) → 환급받을 <b>카드</b> 등록 (현금 환급은 매장마다)',
+ '② 기준은 그대로: 같은 매장 당일 <b>5,000엔(세전)↑</b> · 소모품(과자·화장품·약) <b>봉인 포장은 없어졌지만 일본에서 뜯으면 환급 ✗</b>',
+ '③ 출국 날 공항에서 <b>짐 부치기 전에</b> 세관 키오스크에서 여권 스캔(또는 Visit Japan Web) → <b>GREEN</b>이면 끝, <b>RED</b>면 물건 전부 들고 세관 카운터 검사 → 그래서 면세품은 캐리어 맨 위에',
+ '④ 세관 확인 후 매장 기록 대조 → 등록한 카드로 소비세분 환급 (며칠~몇 주)',
+ '⑤ 영수증 단위라 <b>한 영수증 물건 중 하나라도 없으면(먹음·선물함) 그 영수증 전부 ✗</b> · 구매 90일 내 출국 · 대행 발송은 폐지(직접 들고 나가기)',
+ '⑥ 시간 여유: 체크인 전에 키오스크 → 12/6은 10:50 공항 도착이라 충분 · RED 걸리면 20~30분'])+'</div><div class="shm">출처: 관광청 면세 안내 · MATCHA(2026-11 제도) · 매장별 환급 수단은 결제 때 확인</div></div>'
+    +'<h3 class="sec">💳 결제 팁</h3><div class="shi"><div class="shw">'+'<br>'.join([
+ '카드 결제는 <b>엔화(JPY)로</b> 결제 선택 (원화 DCC 선택하면 3~8% 손해)',
+ '돈키·드럭스토어·면세점은 카드 OK · 작은 식당·시장은 현금 (비용 탭 환전액 참고)',
+ '트래블월렛/트래블로그 같은 환전 카드가 가장 쌈 · 세븐은행·우체국 ATM에서 엔화 인출 가능',
+ '구글페이·애플페이(비자/마스터)는 iD·QUICPay 미지원이라 터치는 안 되는 곳 많음 → 카드 실물 지참'])+'</div></div>')
+    chips='<div class="schips">'+''.join(f'<button data-s="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(c)}</button>' for i,c in enumerate(SHOP_CATS))+'</div>'
+    panels=''.join(f'<div class="sa" data-s="{i}"{"" if i==0 else " hidden"}>{c}</div>' for i,c in enumerate(C))
+    return chips+panels
+
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
     data=[]
@@ -862,7 +965,7 @@ def food_html():
                 out.append(f'<button class="fc{" closed" if x else ""}{" real" if rp else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn3">참고 사진</div><div class="fcn2">{len(rp) if rp else len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
             out.append('</div>')
         out.append('</div>')
-    out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 🚗 = 렌터카로 가기 좋은 곳(호텔·동선 기준 거리) · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 사진은 전부 그 식당의 실제 요리 사진(타베로그 料理 탭) · 카드를 누르면 사진 더보기·대표 메뉴·시간·팁·타베로그/구글 링크</p>')
+    out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 한 끼 인당 2만엔 이상은 제외 · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 🚗 = 렌터카로 가기 좋은 곳(호텔·동선 기준 거리) · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 사진은 전부 그 식당의 실제 요리 사진(타베로그 料理 탭) · 카드를 누르면 사진 더보기·대표 메뉴·시간·팁·타베로그/구글 링크</p>')
     # ── 자체 검사: 이름 중복 · 실제 사진 누락/중복 · 참고사진 대표 중복 · 평점 누락
     import collections as _c
     names=[d['n'] for d in data]; dupn=[n for n,c in _c.Counter(names).items() if c>1]
@@ -955,6 +1058,18 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .achips button[aria-pressed="true"]{background:var(--night);color:#fff}
 .fa{display:flex;flex-direction:column;gap:12px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.schips{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.schips button{border:0;background:none;color:var(--mut);border-radius:10px;padding:8px 0;font-size:13.5px;font-weight:700}
+.schips button[aria-pressed="true"]{background:var(--night);color:#fff}
+.sa{display:flex;flex-direction:column;gap:12px}
+.shi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px 4px;display:grid;gap:6px}
+.shi .shn{font-weight:700;font-size:15px;color:var(--ink);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.shi .shw{font-size:13.5px;line-height:1.55;color:var(--ink)}
+.shi .shm{font-size:12.5px;color:var(--mut);line-height:1.5}
+.shi .ta{padding:2px 0 6px}
+.shi:has(.ta:empty){padding-bottom:12px}
+.checks li .rm{border:0;background:none;color:var(--mut);font-size:16px;padding:0 6px;align-self:start}
+.checks label.cus{grid-template-columns:24px minmax(0,1fr) 28px}
 .fc{border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;padding:0;text-align:left;display:flex;flex-direction:column;transition:transform .15s}
 .fc:active{transform:scale(.97)}
 .fc.closed{opacity:.5}
@@ -1384,10 +1499,22 @@ JS = r'''
   function foodArea(i,quiet){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i);if(!quiet)navPush()}
   $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
   foodArea(tripDay?tripDay-1:(ls.get('sg-food')||0),true);
+  /* 쇼핑 카테고리 */
+  function shopCat(i,quiet){$$('.schips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.s==i?'true':'false')});$$('.sa').forEach(function(p){p.hidden=p.dataset.s!=i});ls.set('sg-shop',i);if(!quiet){window.scrollTo(0,0);navPush()}}
+  $$('.schips button').forEach(function(b){b.addEventListener('click',function(){shopCat(b.dataset.s);buzz(6)})});
+  shopCat(ls.get('sg-shop')||0,true);
   /* 체크리스트 */
   var saved={};try{saved=JSON.parse(ls.get('sg-checks')||'{}')||{}}catch(e){}
   function prog(){['todo','pack'].forEach(function(n){var l=$$('[data-l="'+n+'"] input'),c=0;l.forEach(function(b){if(b.checked)c++});$('#'+n+'-n').textContent=c+'/'+l.length;$('#'+n+'-ring').style.strokeDashoffset=97.4*(1-(l.length?c/l.length:0));var lab=$('#'+n+'-n').nextElementSibling;if(lab)lab.textContent=(c===l.length&&l.length)?(n==='todo'?'할 일 끝! 🎉':'짐 다 쌌다! 🎒✨'):(n==='todo'?'할 일':'짐')})}
-  $$('.checks input').forEach(function(b){if(saved[b.id])b.checked=true;b.addEventListener('change',function(){saved[b.id]=b.checked;ls.set('sg-checks',JSON.stringify(saved));prog();buzz(b.checked?10:5)})});
+  function bindChk(b){if(saved[b.id])b.checked=true;b.addEventListener('change',function(){saved[b.id]=b.checked;ls.set('sg-checks',JSON.stringify(saved));prog();shopN();buzz(b.checked?10:5)})}
+  $$('.checks input').forEach(bindChk);
+  /* 쇼핑 리스트 직접 추가 */
+  var shopX=[];try{shopX=JSON.parse(ls.get('sg-shopx')||'[]')||[]}catch(e){shopX=[]}
+  function shopN(){var n=$('#shop-n');if(!n)return;var l=$$('#shop-list input'),c=0;l.forEach(function(b){if(b.checked)c++});n.textContent=c+'/'+l.length+(c===l.length&&l.length?' 다 샀다! 🛍️':'')}
+  function shopRow(it){var li=document.createElement('li');var lab=document.createElement('label');lab.className='cus';var inp=document.createElement('input');inp.type='checkbox';inp.id=it.id;var sp=document.createElement('span');sp.textContent=it.t;var rm=document.createElement('button');rm.className='rm';rm.type='button';rm.textContent='✕';rm.setAttribute('aria-label','지우기');rm.addEventListener('click',function(e){e.preventDefault();shopX=shopX.filter(function(x){return x.id!==it.id});ls.set('sg-shopx',JSON.stringify(shopX));delete saved[it.id];ls.set('sg-checks',JSON.stringify(saved));li.remove();shopN()});lab.appendChild(inp);lab.appendChild(sp);lab.appendChild(rm);li.appendChild(lab);$('#shop-list').appendChild(li);bindChk(inp)}
+  if($('#shop-list')){shopX.forEach(shopRow);shopN();
+    $('#shop-add').addEventListener('click',function(){var v=($('#shop-new').value||'').trim();if(!v)return;var it={id:'sx'+Date.now(),t:v};shopX.push(it);ls.set('sg-shopx',JSON.stringify(shopX));shopRow(it);$('#shop-new').value='';shopN();buzz(8)});
+    $('#shop-new').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('#shop-add').click()}})}
   prog();
 
   /* 복사 버튼들 */
@@ -1488,6 +1615,7 @@ def view(id, subs):
     return f'<section class="view" id="v-{id}" hidden>{inner}</section>'
 
 FOOD_HTML,FOOD_JSON=food_html()
+SHOP_HTML=shop_html()
 DAYVIEW=f'''<section class="view" id="v-day" hidden>
 <div class="sub plan" data-sub="plan" data-label="📅 일정">
 <div class="hero" id="hero" role="button" aria-label="사진 크게"><img id="hero-img" alt=""><div id="snow" aria-hidden="true"></div><div class="hero-t"><div class="mood" id="hero-mood"></div><h1 id="hero-h"></h1><p id="hero-p"></p></div></div>
@@ -1495,6 +1623,7 @@ DAYVIEW=f'''<section class="view" id="v-day" hidden>
 {day_cards()}
 </div>
 <div class="sub" data-sub="food" data-label="🍽️ 맛집">{FOOD_HTML}</div>
+<div class="sub" data-sub="shop" data-label="🛍️ 쇼핑">{SHOP_HTML}</div>
 </section>'''
 
 PAGE=f'''<!doctype html>

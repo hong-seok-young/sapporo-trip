@@ -493,6 +493,8 @@ SET='''
 '''+''.join(f'<label><span>{l}</span><input id="s-{k}" data-s="{k}" autocomplete="off" autocapitalize="off" spellcheck="false"{" placeholder=\""+ph+"\"" if ph else ""}></label>' for k,l,ph in FIELDS)+'''
 <div class="btns"><button id="s-save" class="pri">저장</button><button id="s-clear">전체 지우기</button></div>
 </div></details>
+<h3 class="sec">📷 실제 식당 사진 <small>구글 지도 사진 · 이 폰에만 저장</small></h3>
+<div class="form"><label><span>Google API 키</span><input id="gkey" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="AIza…"></label><div class="btns"><button id="gk-save" class="pri">저장</button><button id="gk-clear">지우기</button></div><div class="st" id="gk-st">키 없음 → 메뉴 참고 사진(Wikimedia)으로 표시</div><div class="st">만들기: Google Cloud 콘솔 → API 및 서비스 → "Places API (New)" 사용 설정 → 사용자 인증 정보 → API 키 → 애플리케이션 제한 "웹사이트" + hong-seok-young.github.io/* → 붙여넣기. 식당 74곳 × 사진 몇 장이라 월 무료 한도 안.</div></div>
 <h3 class="sec">🌙 다크 모드</h3>
 <div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
@@ -791,16 +793,16 @@ def food_html():
                     used_all.add(photos[0]['f']); used_area.add(photos[0]['f'])
                 for w in photos: w.pop('k',None)
                 link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
-                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'loc':n in LOCAL,'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None})
+                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'tip':tip,'x':bool(x),'loc':n in LOCAL,'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None,'pid':g[2] if g else None})
                 badge=('<span class="mi loc">지역맛집</span>' if n in LOCAL else '')+('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
                 xx='<span class="mi x">휴무</span>' if x else ''
                 f=photos[0]['f'] if photos else None
                 img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
                 gl=('<div class="fcg">'+(f'<span class="tb">타베로그 {tb[0]:.2f}</span>' if tb else '')+(f'<small>구글 {g[0]:.1f} ({g[1]:,})</small>' if g else '')+'</div>') if (g or tb) else ''
-                out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn2">{len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
+                out.append(f'<button class="fc{" closed" if x else ""}" data-i="{idx}"{(" data-pid=\""+g[2]+"\"") if g else ""}><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn3">참고 사진</div><div class="fcn2">{len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
             out.append('</div>')
         out.append('</div>')
-    out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 카드를 누르면 메뉴별 사진·시간·팁·타베로그/구글 링크 · 사진은 메뉴 참고용(Wikimedia Commons)</p>')
+    out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 카드를 누르면 메뉴별 사진·시간·팁·타베로그/구글 링크 · 사진은 기본적으로 「참고 사진」(그 식당 사진이 아니라 같은 메뉴 예시 · Wikimedia Commons) → 더보기 › 설정에 구글 API 키를 넣으면 구글 지도의 실제 식당 사진으로 바뀜</p>')
     # ── 자체 검사: 이름 중복 · 지역 내 대표사진 중복 · 사진 인덱스 · 평점 누락
     import collections as _c
     names=[d['n'] for d in data]; dupn=[n for n,c in _c.Counter(names).items() if c>1]
@@ -909,6 +911,8 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .ta a.tbl::after{content:" ↗"}
 @media (prefers-color-scheme:dark){.ta a.tbl{color:#ff9a62;border-color:#4a2a16;background:#3a2114}}
 .fcn2{position:absolute;right:6px;bottom:6px;font-size:10.5px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:1px 7px}
+.fcn3{position:absolute;left:6px;bottom:6px;font-size:10px;background:rgba(0,0,0,.45);color:#fff;border-radius:999px;padding:1px 6px}
+.fc.real .fcn3{display:none}
 .sh-strip{display:flex;gap:8px;overflow-x:auto;padding:10px 18px 0;scroll-snap-type:x mandatory;scrollbar-width:none}
 .sh-strip::-webkit-scrollbar{display:none}
 .sh-strip > div{flex:0 0 150px;scroll-snap-align:start}
@@ -1290,24 +1294,42 @@ JS = r'''
   /* 맛집 시트 */
   var sheet=$('#sheet'),shI=$('#sh-img'),shB=$('#sh-b');
   function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e}
-  function openFood(i){var d=FOOD_DATA[i];if(!d)return;shI.innerHTML='';shB.innerHTML='';
-    var first=d.ph&&d.ph[0];if(first){var im=document.createElement('img');im.alt='';im.src=wurl(first.f,960);im.onerror=function(){im.hidden=true};shI.appendChild(im)}
+  var curFood=-1;
+  function openFood(i){var d=FOOD_DATA[i];if(!d)return;curFood=i;shI.innerHTML='';shB.innerHTML='';
+    var first=d.ph&&d.ph[0];var big=document.createElement('img');big.alt='';if(first){big.src=wurl(first.f,960)}else{big.hidden=true}big.onerror=function(){big.hidden=true};shI.appendChild(big);
     var x=el('button','x','✕');x.setAttribute('aria-label','닫기');x.addEventListener('click',closeFood);shI.appendChild(x);
     var h=el('h4',null,d.n);if(d.loc){h.appendChild(el('span','mi loc','지역맛집'))}if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
     var fj=el('div','fj',d.ja+' · '+d.cat);shB.appendChild(fj);
     if(d.tb||d.g){var sc=el('div','sc');if(d.tb){sc.appendChild(el('b','tbs','타베로그 '+d.tb[0].toFixed(2)+(d.tb[1]?' ('+d.tb[1].toLocaleString()+')':'')))}if(d.g){sc.appendChild(el('span','gs','구글 ★'+d.g[0].toFixed(1)+' ('+d.g[1].toLocaleString()+')'))}shB.appendChild(sc)}
-    if(d.ph&&d.ph.length){var st=el('div','sh-strip');d.ph.forEach(function(p){var w=el('div');var pi=document.createElement('img');pi.alt='';pi.loading='lazy';pi.src=wurl(p.f,500);pi.onerror=function(){pi.hidden=true};pi.addEventListener('click',function(){var big=shI.querySelector('img');if(big){big.src=wurl(p.f,960);big.hidden=false}});w.appendChild(pi);w.appendChild(el('span',null,p.l));st.appendChild(w)});shB.appendChild(st)}
+    var cr=el('div','cr');var st=el('div','sh-strip');shB.appendChild(st);var real=false;
+    function crFill(){cr.innerHTML='';if(real){cr.textContent='사진: Google 지도 이용자 제공 (실제 식당 사진)';return}if(!first)return;cr.textContent='⚠️ 참고 사진 (이 식당 사진 아님, 같은 메뉴 예시) · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);if(d.tb&&d.tb[2]){var ph=el('a','map','실제 사진 보기 (타베로그)');ph.href=d.tb[2]+'dtlphotolst/';ph.target='_blank';ph.rel='noopener';cr.appendChild(document.createTextNode(' · '));cr.appendChild(ph)}}
+    function strip(list){st.innerHTML='';list.forEach(function(p){var w=el('div');var pi=document.createElement('img');pi.alt='';pi.loading='lazy';pi.src=p.s;pi.onerror=function(){pi.hidden=true};pi.addEventListener('click',function(){big.src=p.b;big.hidden=false});w.appendChild(pi);w.appendChild(el('span',null,p.l));st.appendChild(w)})}
+    if(d.ph&&d.ph.length)strip(d.ph.map(function(p){return {s:wurl(p.f,500),b:wurl(p.f,960),l:p.l}}));
+    if(GK&&d.pid){gphotos(d.pid,function(n){if(!n||!n.length||curFood!==i)return;real=true;big.src=gmedia(n[0],1200);big.hidden=false;strip(n.map(function(name,k){return {s:gmedia(name,500),b:gmedia(name,1200),l:'구글 사진 '+(k+1)}}));crFill()})}
     var kv=el('div','kv2');[['🕐',d.ht],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
     var ta=el('div','ta');if(d.tb&&d.tb[2]){var tl=el('a','tbl','타베로그 열기');tl.href=d.tb[2];tl.target='_blank';tl.rel='noopener';ta.appendChild(tl)}var a=el('a','map','구글 지도 열기');a.href=d.q;a.target='_blank';a.rel='noopener';ta.appendChild(a);if(d.tel){var tb=el('button','tel',d.tel);tb.addEventListener('click',function(){cp(d.tel,'전화번호')});ta.appendChild(tb)}shB.appendChild(ta);
-    if(first){var cr=el('div','cr');cr.textContent='사진은 메뉴 참고용 · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);shB.appendChild(cr)}
+    crFill();shB.appendChild(cr);
     sheet.hidden=false;document.body.style.overflow='hidden';buzz(6);modalPush()}
   function _closeFood(){sheet.hidden=true;document.body.style.overflow=''}
   function closeFood(){if(sheet.hidden)return;if(history.state&&history.state.sg==='modal'){history.back()}else{_closeFood()}}
   $('#sh-bg').addEventListener('click',closeFood);
   $$('.fc').forEach(function(b){b.addEventListener('click',function(){openFood(+b.dataset.i)})});
+  setTimeout(function(){if(typeof realCards==='function')realCards()},800);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFood()});
   /* 맛집 지역 */
-  function foodArea(i,quiet){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i);if(!quiet)navPush()}
+  function foodArea(i,quiet){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i);if(!quiet)navPush();realCards()}
+  /* 실제 식당 사진 (Google Places API New) · 키는 이 폰에만 */
+  var GK=ls.get('sg-gkey')||'',GPH={};try{GPH=JSON.parse(ls.get('sg-gph')||'{}')||{}}catch(e){GPH={}}
+  function gmedia(name,w){return 'https://places.googleapis.com/v1/'+name+'/media?maxWidthPx='+w+'&key='+encodeURIComponent(GK)}
+  var gq=[],gbusy=0,gerr=0;
+  function gphotos(pid,cb){if(!GK||!pid){cb(null);return}var c=GPH[pid];if(c&&Date.now()-c.t<30*864e5){cb(c.n);return}gq.push([pid,cb]);gpump()}
+  function gpump(){if(gbusy>=3||!gq.length)return;var it=gq.shift();gbusy++;var pid=it[0],cb=it[1];
+    fetch('https://places.googleapis.com/v1/places/'+encodeURIComponent(pid)+'?fields=photos&languageCode=ko&key='+encodeURIComponent(GK)).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(j){var n=(j.photos||[]).slice(0,6).map(function(p){return p.name});GPH[pid]={n:n,t:Date.now()};try{ls.set('sg-gph',JSON.stringify(GPH))}catch(e){}cb(n);gkst()}).catch(function(e){gerr++;cb(null);gkst(e)}).then(function(){gbusy--;gpump()})}
+  function gkst(e){var st=$('#gk-st');if(!st)return;if(!GK){st.textContent='키 없음 → 메뉴 참고 사진(Wikimedia)으로 표시';return}var k=Object.keys(GPH).length;st.textContent=(e?'오류: '+e.message+' (키·API 사용 설정·리퍼러 제한 확인) · ':'')+'실제 사진 불러온 식당 '+k+'곳'}
+  function realCards(){if(!GK)return;$$('.fa:not([hidden]) .fc[data-pid]:not(.real):not(.tried)').forEach(function(c){c.classList.add('tried');gphotos(c.dataset.pid,function(n){if(!n||!n.length)return;var im=c.querySelector('.fci img');if(!im){im=document.createElement('img');im.alt='';c.querySelector('.fci').prepend(im)}im.hidden=false;im.src=gmedia(n[0],600);c.classList.add('real');var b=c.querySelector('.fcn2');if(b)b.textContent=n.length+'장'})})}
+  $('#gk-save')&&$('#gk-save').addEventListener('click',function(){GK=($('#gkey').value||'').trim();ls.set('sg-gkey',GK);GPH={};ls.set('sg-gph','{}');$$('.fc.tried').forEach(function(c){c.classList.remove('tried','real')});gkst();flash(GK?'실제 사진 켬':'키 비어 있음');realCards()});
+  $('#gk-clear')&&$('#gk-clear').addEventListener('click',function(){GK='';$('#gkey').value='';ls.set('sg-gkey','');GPH={};ls.set('sg-gph','{}');gkst();flash('참고 사진으로');location.reload()});
+  if($('#gkey'))$('#gkey').value=GK;gkst();
   $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
   foodArea(tripDay?tripDay-1:(ls.get('sg-food')||0),true);
   /* 체크리스트 */
@@ -1475,7 +1497,7 @@ self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;c
     if(r.mode==='navigate'||u.pathname.endsWith('/index.html')||u.pathname.endsWith('/')){
       e.respondWith(fetch(u.href,{cache:'no-cache',credentials:'same-origin'}).then(res=>{if(res.ok){const c=res.clone();caches.open(V).then(x=>{x.put('./index.html',c.clone());x.put('./',c)})}return res}).catch(()=>caches.match('./index.html')));return}
     e.respondWith(caches.match(r).then(c=>c||fetch(r).then(res=>{if(res.ok){const cc=res.clone();caches.open(V).then(x=>x.put(r,cc))}return res})));return}
-  if(u.hostname==='upload.wikimedia.org'){
+  if(u.hostname==='upload.wikimedia.org'||u.hostname.endsWith('googleusercontent.com')||(u.hostname==='places.googleapis.com'&&u.pathname.endsWith('/media'))){
     e.respondWith(caches.open(IMG).then(async c=>{const h=await c.match(r);if(h)return h;const res=await fetch(r);if(res.ok)c.put(r,res.clone());return res}).catch(()=>new Response('',{status:504})));return}
   if(u.hostname==='fonts.googleapis.com'||u.hostname==='fonts.gstatic.com'){
     e.respondWith(caches.open(FONT).then(async c=>{const h=await c.match(r);const n=fetch(r).then(res=>{if(res.ok)c.put(r,res.clone());return res}).catch(()=>h);return h||n}));return}

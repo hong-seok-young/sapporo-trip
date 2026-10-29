@@ -805,7 +805,7 @@ FOOD=[
   ]),
   ('🍺 밤 · 운하 야경 후',[
    ('오타루 창고 No.1','小樽倉庫No.1 小樽ビール','오타루 맥주 비어홀','','小樽倉庫No.1 小樽ビール','+81 134-21-2323','11:00–22:00',[('오타루 필스너 · 둥켈 · 바이스','beer'),('소시지 모둠 · 프레첼','pretzel'),('2층 무료 양조장 견학','brewery')],'港町5-4 운하 창고 · 20:00 야경 때 · 료칸까지 15분 운전이라 운전자는 ✗','',(3.58,1069,'A0106/A010601/1000286')),
-   ('료칸 가이세키','OTARU RETREAT 夕食','석식 (예약됨)','','OTARU RETREAT by Onko Chishin','','18:00 또는 19:00 · 체크인 때 정함',[('가이세키 코스(숙박 포함)','kaiseki'),('조식 8:00','kaiseki:1')],'밖에서 저녁 안 먹어도 됨 · 점심을 가볍게','',None),
+   ('료칸 가이세키','OTARU RETREAT 夕食','석식 (예약됨)','','OTARU RETREAT by Onko Chishin','','18:00 또는 19:00 · 체크인 때 정함',[('가이세키 코스(숙박 포함)','kaiseki'),('조식 8:00','kaiseki:1')],'밖에서 저녁 안 먹어도 됨 · 점심을 가볍게 · 12/1~3/31 겨울 한정 "게 가이세키" 업그레이드 플랜 있음 (털게 통째 + 킹크랩 구이)','',None),
   ]),
  ]),
  ('공항','12/6 일 · 료칸 조식 → 11:05 반납 → 국내선 3F 점심 → 2F 디저트·간식 → 14:05 출발',[
@@ -830,6 +830,9 @@ NONFOOD={'letao','brewery','ramen_street','nijo','beer_garden'}  # 장소·외�
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'tbph.json'),encoding='utf-8') as _f: TBPH=json.load(_f)
 DRIVE={'나카야 과자점 (砂川)':'가는 길 · 砂川IC 5분','기타카로 砂川 SA점':'가는 길 · 砂川SA 직결','야키토리 다쓰미 (美唄)':'귀로 · 美唄IC 5분','마쓰오 징기스칸 滝川 본점':'귀로 · 滝川IC 5분','트리톤 아사히카와 교쿠신점':'귀로 · 청의 호수→50분','시노이에':'차 5분','카마에이 공장직매점':'小樽IC 5분 · 주차 30대','카키자키 상점 해선공방 (余市)':'오타루→차 25분','멘야 사이미':'공항→호텔 길 · 札幌IC 10분','아사히카와 라멘 아오바 본점':'가는 길 · 차 30분','KANON PANCAKES':'차 10분','후왓토 마루야마 키친':'차 10분','마루야마 우유판매점':'차 10분','푸푸리에':'차 10분','정식 메시야':'차 10분','기타노 구루메테이':'차 10분','비블레':'차 10분','팜 레스토랑 치요다':'차 10분','비에이 방목낙농장':'차 15분','라멘야 텐킨 4조점':'귀로 · 차 30분','하치야 5조 창업점':'귀로 · 차 30분','아오츠카 식당':'차 10분'}
 LOCAL={'나카야 과자점 (砂川)','야키토리 다쓰미 (美唄)','마쓰오 징기스칸 滝川 본점','카마에이 공장직매점','카키자키 상점 해선공방 (余市)','수아게+ 본점','다루마 본점','롯카테이 삿포로 본점','하치쿄 본점','아지노 히쓰지가오카','시노이에','사케토 소바 마루키','돈부리 차야 니조시장점','자지','트리톤 아사히카와 교쿠신점','네무로 하나마루 코코노 스스키노점','이자카야 후루사토 삿포로 총본점','룻쿠 & 우오헤이','파르페테리아 PaL','니조시장 오이소','준페이','타키나미 식당','나루토 본점','르타오 본점 카페','오타루 마사즈시 본점','에비소바 이치겐 공항점','로이즈 공항점','효세츠노몬'}
+# 타베로그가 없는 곳의 실제 사진 (공식 사이트)
+OWNPH={'료칸 가이세키':(['https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-1-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-2-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-3-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/crab-slide-1.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/03/B0093530.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/04_bf.jpg'],'OTARU RETREAT 공식 (석식 · 겨울 게 가이세키 · 조식)')}
+
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
     data=[]
@@ -856,9 +859,9 @@ def food_html():
                         if other: photos.remove(other[0]); photos.insert(0,other[0]); break
                     used_all.add(photos[0]['f']); used_area.add(photos[0]['f'])
                 for w in photos: w.pop('k',None)
-                rp=TBPH.get(tb[2].split('/')[-1]) if tb else None   # 이 식당의 실제 사진 (타베로그)
+                rp=TBPH.get(tb[2].split('/')[-1]) if tb else OWNPH.get(n,(None,))[0]   # 이 식당의 실제 사진 (타베로그 · 없으면 공식 사진)
                 link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
-                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'rp':rp,'tip':tip,'x':bool(x),'loc':n in LOCAL,'drv':DRIVE.get(n),'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None})
+                data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'rp':rp,'tip':tip,'x':bool(x),'loc':n in LOCAL,'drv':DRIVE.get(n),'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None,'credit':OWNPH[n][1] if (not tb and n in OWNPH) else None})
                 badge=(f'<span class="mi drv">🚗 {esc(DRIVE[n])}</span>' if n in DRIVE else '')+('<span class="mi loc">지역맛집</span>' if n in LOCAL else '')+('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
                 xx='<span class="mi x">휴무</span>' if x else ''
                 f=photos[0]['f'] if photos else None
@@ -885,7 +888,7 @@ def food_html():
     badlead=[(d['n'],d['ph'][0]['f']) for d in data if d['ph'] and re.search(r'store|shop|building|exterior|sample|street|alley|montage|Japan0\ds|Brewery|Main1|Omakase',d['ph'][0]['f'],re.I)]
     norp=[d['n'] for d in data if d['tb'] and not (d['rp'] and len(d['rp'])>=5)]
     rpall=_c.Counter(u for d in data if d['rp'] for u in d['rp']); duprp=[u for u,c in rpall.items() if c>1]
-    badrp=[(d['n'],u) for d in data if d['rp'] for u in d['rp'] if not re.match(r'https://tblg\.k-img\.com/restaurant/images/Rvw/\d+/[0-9a-z_]+\.jpg$',u)]
+    badrp=[(d['n'],u) for d in data if d['rp'] and not d.get('credit') for u in d['rp'] if not re.match(r'https://tblg\.k-img\.com/restaurant/images/Rvw/\d+/[0-9a-z_]+\.jpg$',u)]
     if dupn or dupp or miss or badlead or norp or duprp or badrp:
         raise SystemExit(f'FOOD 검사 실패 · 이름중복={dupn} 대표사진중복={dupp} 타베로그누락={miss} 비요리대표사진={badlead} 실제사진누락={norp} 실제사진중복={duprp} 사진URL이상={badrp}')
     print(f'FOOD 검사 통과 · {len(data)}곳 · 실제 사진 {sum(len(d["rp"]) for d in data if d["rp"])}장 · 식당 간 사진 중복 없음')
@@ -941,7 +944,7 @@ SHOP={
    ('p_applepie','삿포로농학교 갓 구운 애플파이','焼きたて北海道アップルパイ 札幌農学校','공항 한정 갓 구운 파이 · 밀크쿠키도',[('loc','공항 한정')],'きのとや 札幌農学校 新千歳空港店',None,None,'당일 · 공항 2F',['갓 구운 애플파이','삿포로농학교 밀크쿠키','어디서: 공항 2F'],'출국 전 간식으로','신치토세공항 공식',None),
    ('p_classic','삿포로 클래식 맥주','サッポロクラシック','홋카이도에서만 파는 맥주 · 선물 6캔',[('loc','홋카이도 한정')],'新千歳空港 国際線 免税店','ChIJXZ3RkEEgdV8RY8oIw5Fd3Us',None,'면세점 6캔 팩 · 편의점 1캔',['클래식 6캔 (면세점)','클래식 후지(겨울 한정) 있으면','어디서: 출국 후 면세점 · 편의점'],'한국 입국 술 한도(2병 · 합 2L)에 맥주도 포함 → 위스키 살 거면 같이 계산','北海道新聞',None),
   ]),('✈️ 공항 출국 후',[
-   ('dutyfree','면세점 North / South','新千歳空港 国際線 免税店','담배 · 주류 · 화장품 + 홋카이도 과자',[],'新千歳空港 国際線 免税店','ChIJXZ3RkEEgdV8RY8oIw5Fd3Us','+81 123-46-5254','08:00–20:00 · 보안 검색 후 · South는 게이트 66~69 쪽',['일본 위스키 · 삿포로 클래식 6캔','담배 · 향수 · 화장품','시로이코이비토 · 자가포쿨 · 롯카테이 (돈키보다 쌈)'],'여권+탑승권','사진 없음',(2.9,41)),
+   ('dutyfree','면세점 North / South','新千歳空港 国際線 免税店','담배 · 주류 · 화장품 + 홋카이도 과자',[],'新千歳空港 国際線 免税店','ChIJXZ3RkEEgdV8RY8oIw5Fd3Us','+81 123-46-5254','08:00–20:00 · 보안 검색 후 · South는 게이트 66~69 쪽',['일본 위스키 · 삿포로 클래식 6캔','담배 · 향수 · 화장품','시로이코이비토 · 자가포쿨 · 롯카테이 (돈키보다 쌈)'],'여권+탑승권','신치토세공항 공식',(2.9,41)),
   ]),('🏬 시내 매장',[
    ('ishiya','ISHIYA 삿포로 오도리 본점','ISHIYA 札幌大通本店','시로이코이비토 낱개 · 한정맛 · 소프트',[('loc','여기만')],'ISHIYA 札幌大通本店','ChIJkerGVZwpC18RwbFmpLRvpL8','+81 11-231-1483','10:00–20:00 · 大通西4 · 호텔 도보 10분',['낱개 (오전 품절)','한정 랑그드샤 (말차 · 치즈)','1층 소프트크림','ISHIYA CAFÉ 파르페'],'낱개·한정맛은 공항에 없음','Walkerplus · fashion-press · Impress',(4.2,198)),
    ('kitakaro','기타카로 삿포로 본관','北菓楼 札幌本館','안도 타다오가 고친 옛 도서관 · 본관 한정 쿠키',[('loc','건물')],'北菓楼 札幌本館','ChIJq6qePZwpC18RtS5FF_v5uMA',None,'10:00–18:00 · 北1西5',['본관 한정 도서관 초콜릿 샌드 쿠키 1,080엔','1F 전 라인업','2F 카페 케이크 세트 (줄)','계절 바움쿠헨'],'주차 비쌈 → 도보','Walkerplus · PR TIMES',(4.2,2568)),
@@ -1020,7 +1023,7 @@ SIGHTS={
 
 def _photo_card(data, idx, n, cat, badges, rp, g, tb=None):
     badge=''.join(f'<span class="mi {c}">{("🚗 " if c=="drv" else "")+esc(t)}</span>' for c,t in badges)
-    img=f'<img src="{esc(rp[0])}" loading="lazy" referrerpolicy="no-referrer" alt="" onerror="this.hidden=true">' if rp else ''
+    img=f'<img src="{esc(rp[0])}" data-alt="{esc("|".join(rp[1:]))}" loading="lazy" referrerpolicy="no-referrer" alt="" onerror="var a=(this.dataset.alt||\'\').split(\'|\').filter(Boolean);if(a.length){{this.dataset.alt=a.slice(1).join(\'|\');this.src=a[0]}}else this.hidden=true">' if rp else ''
     gl=('<div class="fcg">'+(f'<span class="tb">타베로그 {tb[0]:.2f}'+(f' ({tb[1]:,})' if tb[1] else '')+'</span>' if tb else '')+(f'<small>구글 {g[0]:.1f} ({g[1]:,})</small>' if g else '')+'</div>') if (g or tb) else ''
     return f'<button class="fc real" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}</div><div class="fcn2">{len(rp)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>'
 
@@ -1052,7 +1055,7 @@ def shop_html(data):
     html=cards_html(data,SHOP_CATS,SHOP,'shop',hints,extra,'schips','sa','s')
     import collections as _c
     shops=[d for d in data if d.get('kind')=='shop']
-    nop=[d['n'] for d in shops if not d['rp'] and d['n']!='면세점 North / South']
+    nop=[d['n'] for d in shops if not d['rp']]
     allu=_c.Counter(u for d in data if d['rp'] for u in d['rp']); dup=[u for u,c in allu.items() if c>1]
     dupn=[n for n,c in _c.Counter(d['n'] for d in data).items() if c>1]
     tbl=[d['n'] for d in shops if any('tblg.k-img.com' in u for u in d['rp'])]
@@ -1594,7 +1597,7 @@ JS = r'''
     var fj=el('div','fj',d.ja+' · '+d.cat);shB.appendChild(fj);
     if(d.tb||d.g){var sc=el('div','sc');if(d.tb){sc.appendChild(el('b','tbs','타베로그 '+d.tb[0].toFixed(2)+(d.tb[1]?' ('+d.tb[1].toLocaleString()+')':'')))}if(d.g){sc.appendChild(el('span','gs','구글 ★'+d.g[0].toFixed(1)+' ('+d.g[1].toLocaleString()+')'))}shB.appendChild(sc)}
     var cr=el('div','cr');var st=el('div','sh-strip');shB.appendChild(st);
-    function crFill(){cr.innerHTML='';if(real&&(d.kind==='shop'||d.kind==='sight')){cr.textContent='사진: '+(d.credit||'공식·언론 사진');return}if(real){cr.textContent='사진: 이 식당의 실제 요리 사진 · ';var tp=el('a','map','타베로그 사진 전부 보기');tp.href=(d.tb&&d.tb[2]?d.tb[2]:'https://tabelog.com/')+'dtlphotolst/';tp.target='_blank';tp.rel='noopener';cr.appendChild(tp);return}if(!first)return;cr.textContent='⚠️ 참고 사진 (실제 사진을 못 불러와서 같은 메뉴 예시로 표시) · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);if(d.tb&&d.tb[2]){var ph=el('a','map','실제 사진 보기 (타베로그)');ph.href=d.tb[2]+'dtlphotolst/';ph.target='_blank';ph.rel='noopener';cr.appendChild(document.createTextNode(' · '));cr.appendChild(ph)}}
+    function crFill(){cr.innerHTML='';if(real&&(d.kind==='shop'||d.kind==='sight'||d.credit)){cr.textContent='사진: '+(d.credit||'공식·언론 사진');return}if(real){cr.textContent='사진: 이 식당의 실제 요리 사진 · ';var tp=el('a','map','타베로그 사진 전부 보기');tp.href=(d.tb&&d.tb[2]?d.tb[2]:'https://tabelog.com/')+'dtlphotolst/';tp.target='_blank';tp.rel='noopener';cr.appendChild(tp);return}if(!first)return;cr.textContent='⚠️ 참고 사진 (실제 사진을 못 불러와서 같은 메뉴 예시로 표시) · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);if(d.tb&&d.tb[2]){var ph=el('a','map','실제 사진 보기 (타베로그)');ph.href=d.tb[2]+'dtlphotolst/';ph.target='_blank';ph.rel='noopener';cr.appendChild(document.createTextNode(' · '));cr.appendChild(ph)}}
     function strip(list){st.innerHTML='';list.forEach(function(p){var w=el('div');var pi=document.createElement('img');pi.alt='';pi.loading='lazy';pi.referrerPolicy='no-referrer';pi.src=p.s;pi.onerror=function(){w.remove()};pi.addEventListener('click',function(){big.src=p.b;big.hidden=false});w.appendChild(pi);if(p.l)w.appendChild(el('span',null,p.l));st.appendChild(w)})}
     if(real)strip(rp.map(function(u,k){return {s:u,b:u,l:'사진 '+(k+1)}}));else if(d.ph&&d.ph.length)strip(d.ph.map(function(p){return {s:wurl(p.f,500),b:wurl(p.f,960),l:p.l}}));
     var kv=el('div','kv2');var menu=(d.items||(d.ph||[]).map(function(p){return p.l})).filter(Boolean).join(' · ');[[d.kind==='shop'?'🛍️':(d.kind==='sight'?'👀':'🍽️'),menu],['🕐',d.ht],['💡',d.tip]].forEach(function(r){if(!r[1])return;kv.appendChild(el('span',null,r[0]));kv.appendChild(el('span',null,r[1]))});shB.appendChild(kv);
@@ -1704,11 +1707,11 @@ JS = r'''
   function imgList(){var u=[];H.forEach(function(d){u.push(d.img)});$$('.ti img,.tk-img img,.fc img,.days button').forEach(function(el){var src=el.tagName==='IMG'?el.getAttribute('src'):(el.style.getPropertyValue('--im')||'').replace(/^url\(|\)$/g,'');if(src&&u.indexOf(src)<0)u.push(src)});$$('[data-f]').forEach(function(b){if(b.dataset.f){var w=wurl(b.dataset.f,960);if(u.indexOf(w)<0)u.push(w)}});return u}
   var warming=false,warmTries=0,ost=$('#off-st');
   function warm(force){if(warming||!window.caches||!window.isSecureContext)return;if(navigator.onLine===false){ost.textContent='오프라인 · 인터넷 연결되면 사진 저장';return}warming=true;
-    caches.open('sg-img').then(function(c){var list=imgList(),done=0,miss=[];
+    caches.open('sg-img2').then(function(c){var list=imgList(),done=0,miss=[];
       return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
         ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
         var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<4)setTimeout(function(){warm()},20000);return}
-          var u=miss[i++];var wm=u.indexOf('upload.wikimedia.org')>0;fetch(u,{mode:wm?'cors':'no-cors'}).then(function(r){if(r.ok||r.type==='opaque'){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
+          var u=miss[i++];var wm=u.indexOf('upload.wikimedia.org')>0;fetch(u,{mode:wm?'cors':'no-cors',referrerPolicy:'no-referrer',credentials:'omit'}).then(function(r){if(r.ok||r.type==='opaque'){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
         next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
   $('#off-b').addEventListener('click',function(){warm(true)});
   if('requestIdleCallback' in window)requestIdleCallback(function(){warm()},{timeout:4000});else setTimeout(warm,2500);
@@ -1784,7 +1787,7 @@ PAGE=f'''<!doctype html>
 MANIFEST={"name":"삿포로 여행","short_name":"삿포로","description":"2026.12.03–12.06 삿포로 · 비에이 · 오타루 렌터카 여행","id":"sapporo-trip-app-2","start_url":"./?src=app","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0f1c2e","theme_color":"#0f1c2e","lang":"ko",
  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png"},{"src":"./icon-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 
-SW = r'''const V='sg-'+'%VER%';const IMG='sg-img',FONT='sg-font';
+SW = r'''const V='sg-'+'%VER%';const IMG='sg-img2',FONT='sg-font';
 const CORE=['./','./index.html','./app.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./apple-touch-icon.png','./bus.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('sg-')&&k!==V&&k!==IMG&&k!==FONT).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
@@ -1794,7 +1797,7 @@ self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;c
       e.respondWith(fetch(u.href,{cache:'no-cache',credentials:'same-origin'}).then(res=>{if(res.ok){const c=res.clone();caches.open(V).then(x=>{x.put('./index.html',c.clone());x.put('./',c)})}return res}).catch(()=>caches.match('./index.html')));return}
     e.respondWith(caches.match(r).then(c=>c||fetch(r).then(res=>{if(res.ok){const cc=res.clone();caches.open(V).then(x=>x.put(r,cc))}return res})));return}
   if(u.hostname==='upload.wikimedia.org'||u.hostname==='tblg.k-img.com'||r.destination==='image'){
-    e.respondWith(caches.open(IMG).then(async c=>{const h=await c.match(r);if(h)return h;const res=await fetch(r);if(res.ok||res.type==='opaque')c.put(r,res.clone()).catch(()=>{});return res}).catch(()=>new Response('',{status:504})));return}
+    e.respondWith(caches.open(IMG).then(async c=>{const h=await c.match(r.url);if(h)return h;const res=await fetch(r.url,{mode:u.hostname==='upload.wikimedia.org'?'cors':'no-cors',referrerPolicy:'no-referrer',credentials:'omit'});if(res.ok||res.type==='opaque')c.put(r.url,res.clone()).catch(()=>{});return res}).catch(()=>new Response('',{status:504})));return}
   if(u.hostname==='fonts.googleapis.com'||u.hostname==='fonts.gstatic.com'){
     e.respondWith(caches.open(FONT).then(async c=>{const h=await c.match(r);const n=fetch(r).then(res=>{if(res.ok)c.put(r,res.clone());return res}).catch(()=>h);return h||n}));return}
 });

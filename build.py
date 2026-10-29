@@ -679,8 +679,8 @@ G={
 
 # 날짜 → 끼니 → (이름, 일본어, 종류, 미슐랭, 지도검색어, 전화, 시간·휴무, [(메뉴, 사진키[:번호])...], 팁, 휴무표시)
 FOOD=[
- ('삿포로','12/3 목 · 15시 호텔 도착 → 늦은 점심 or 수플레 팬케이크 → 디저트 → 저녁(징기스칸 · 털게 · 초밥 · 프렌치 중) → 시메 · 호텔(南4西5) 도보권 + 🚗 차로 10분권(円山 등) · 타베로그 점수순 · 가격 상한 없음 · 차로 가면 운전자 술 ✗',[
-  ('🍽️ 늦은 점심 · 15시에 문 연 곳 (라멘 · 소바 · 징기스칸 · 카이센동 · 양식 / 회전초밥은 ↓시라코 섹션 하나마루 11–21시)',[
+ ('삿포로','12/3 목 · 15시 호텔 도착 → 늦은 점심(15시에 여는 곳) or 팬케이크 → 디저트 → 저녁(징기스칸 · 털게 · 초밥 · 시라코 · 이자카야 중) → 시메 · 호텔(南4西5) 도보권 + 🚗 차로 10분권(円山 등) · 타베로그 점수순 · 인당 2만엔 이하 · 차로 가면 운전자 술 ✗',[
+  ('🍽️ 늦은 점심 · 15시에 여는 곳 (회전초밥은 ↓시라코 · 하나마루)',[
    ('멘야 사이미','麺屋 彩未','미소라멘 (타베로그 삿포로 라멘 1위 · 100名店)','','麺屋 彩未 札幌 美園','+81 11-820-6511','11:00–15:15 (금토 17:00–19:30 추가) · 월 휴무',[('미소라멘 1,100엔 (생강 한 점 · 진하지만 깔끔)','miso_ramen'),('카라시 쇼유 (가게 추천)','shoyu_ramen'),('반 사이즈 · 차슈 추가','miso_ramen:3')],'豊平区 美園10条5 · 札幌IC에서 10분이라 공항→호텔 가는 길에 딱 · ⚠️ 12/3 15:15 마감이라 14:40까지 도착해야 함(픽업 13:30 → 바로 출발하면 가능, 비행기 늦으면 포기) · 그 외 날짜는 우리 일정과 안 맞음 · 주차 15대 · 10시부터 줄, 최대 60분','',(3.96,4365,'A0101/A010303/1000018')),
    ('수아게+ 본점','soup curry Suage+ 本店','수프카레 (타베로그 스스키노 1위)','','Suage+ 本店 札幌 南4条西5','+81 11-233-2911','11:30–21:00 · 무휴',[('파리파리 치킨 수프카레 1,500엔','soup_curry'),('라벤더 포크 꼬치 카레','soup_curry:1')],'호텔 옆 블록 · 15시에도 열려 있음 · 체크인 전 바로 · 번호표 대기','',(3.69,2392,'A0101/A010103/1006004')),
    ('케야키 스스키노 본점','けやき すすきの本店','미소라멘 (타베로그 스스키노 라멘 1위)','','けやき すすきの本店 札幌','+81 11-552-4601','10:30–03:00 · 무휴',[('미소라멘 (채소 듬뿍)','miso_ramen'),('콘버터 미소','miso_ramen:1'),('교자','karaage:1')],'南6西3 · 도보 6분 · 15시엔 줄 짧음 · 차슈가 스테이크처럼 두툼 · 짠 편','',(3.70,3282,'A0101/A010103/1000150')),
@@ -971,7 +971,7 @@ SHOP_TAX_TEXT=('<h3 class="sec">💴 면세 = 2026-11-01부터 환급 방식</h3
  +'<h3 class="sec">🇰🇷 한국 입국 한도 (1인)</h3><div class="shi"><div class="shw">총 <b>US$800</b> · 술 <b>2병(합 2L · $400↓)</b> · 담배 200개비 · 향수 100mL · 초과분 자진신고 시 세금 30% 감면</div></div>')
 
 # ───────────── 볼거리 ─────────────
-SIGHT_CATS=['🏙️ 삿포로','🌾 비에이·후라노','⚓ 오타루·余市','🚗 근교']
+SIGHT_CATS=['🏙️ 삿포로','🌾 비에이','⚓ 오타루','🚗 근교']
 # (key, 이름, 일본어, 한 줄, 뱃지, 지도 검색어, place_id, 시간, 할 것[], 언제·팁, 출처)
 SIGHTS={
  0:[('🎄 12/3 저녁 · 호텔 도보권',[
@@ -990,7 +990,7 @@ SIGHTS={
    ('s_jingu','홋카이도 신궁','北海道神宮','홋카이도 총진수 · 마루야마 공원 옆',[('drv','호텔 차 10분')],'北海道神宮','ChIJk6jwxNwpC18RCNdmWzXijew','겨울 07:00–16:00 무렵 · 무료',['참배 · 오미쿠지 (한국어 있음)','롯카테이 신궁 찻집','눈 덮인 참배길'],'円山 초밥 갈 때 겸사겸사','visit-hokkaido'),
   ])],
  1:[('🌨️ 12/4 비에이',[
-   ('s_pond','청의 호수','白金青い池','겨울 라이트업 · 눈 쌓인 나무 + 파란 조명',[('loc','12/4 16:30')],'白金青い池','ChIJbyoi3mLMDF8RnndLnx8YzQQ','점등 일몰~21:00 (11~4월) · 주차 유료(220대)',['라이트업 산책 (주차장에서 5분)','블루 소프트크림 (주차장 매점)','호수가 얼면 위가 하얗게 덮임'],'일정 탭 16:30','visit-hokkaido'),
+   ('s_pond','청의 호수','白金青い池','겨울 라이트업 · 눈 쌓인 나무 + 파란 조명',[('loc','12/4 16:30')],'白金青い池','ChIJbyoi3mLMDF8RnndLnx8YzQQ','점등 일몰~21:00 (11~4월) · 주차 1,000엔 (220대)',['라이트업 산책 (주차장에서 5분)','블루 소프트크림 (주차장 매점)','호수가 얼면 위가 하얗게 덮임'],'일정 탭 16:30','visit-hokkaido'),
    ('s_falls','흰수염폭포','白ひげの滝','절벽에서 솟는 폭포 · 다리 위에서',[],'白ひげの滝','ChIJX3VG4K7MDF8RJmYvjz6VBgU','24시간 · 무료 주차 · 겨울 밤 라이트업',['白金 다리 위에서 폭포 + 파란 강','겨울엔 서리 낀 나무 조명'],'다리 좁고 미끄러움 · 사진 찍고 바로','visit-hokkaido'),
    ('s_seven','세븐스타 나무 · 패치워크 길','セブンスターの木','설원 위 한 그루 · 패치워크 길',[],'セブンスターの木','ChIJC3IhmnLEDF8RDGL0pq7wdhE','24시간 · 무료 주차 20대',['세븐스타 나무','켄과 메리 나무 (차 5분)','눈 덮인 언덕 드라이브'],'밭은 출입 금지 · 사진 5분 컷','visit-hokkaido'),
    ('s_shikisai','시키사이노오카','四季彩の丘','겨울 스노모빌 · 스노우래프팅 · 알파카',[('loc','눈 놀이')],'四季彩の丘','ChIJDeIPuVXIDF8RPhiBRw83_ag','09:10–16:30 (11~12월) · 겨울 입장 무료 · 주차 500엔 (현금)',['스노모빌 · 스노우래프팅 (유료)','알파카 목장 (연중)','언덕 전망'],'크리스마스트리 나무(美馬牛) 바로 옆','visit-hokkaido'),
@@ -1171,7 +1171,8 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .fc.closed{opacity:.5}
 .fci{position:relative;height:112px;background:var(--night2)}
 .fci img{width:100%;height:100%;object-fit:cover;display:block}
-.fcb{position:absolute;left:6px;top:6px;display:flex;gap:4px}
+.fcb{position:absolute;left:6px;right:6px;top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.fcb .mi{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;font-size:10.5px}
 .fcn{font-size:14px;font-weight:700;padding:8px 10px 0;line-height:1.3}
 .fcg{font-size:12.5px;color:var(--lamp);font-weight:700;padding:2px 10px 0;line-height:1.3}
 .fcg .tb{color:#d9480f}
@@ -1489,6 +1490,41 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
+/* 귀여운 겨울 */
+.hd{overflow:hidden}
+.hd-in,.seg{position:relative;z-index:1}
+.hsnow{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.hsnow i{position:absolute;top:-6px;border-radius:50%;background:#fff;animation:hfall linear infinite}
+@keyframes hfall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(7px,calc(var(--hh,110px) * .5),0)}100%{transform:translate3d(-4px,calc(var(--hh,110px) + 10px),0)}}
+.dday::after{content:"❄";display:inline-block;margin-left:4px;font-size:13px;color:#cfe8fb;vertical-align:2px;animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fgrid .fc{animation:cardin .38s cubic-bezier(.2,.8,.3,1.2) both}
+.fgrid .fc:nth-child(2){animation-delay:.04s}.fgrid .fc:nth-child(3){animation-delay:.08s}.fgrid .fc:nth-child(4){animation-delay:.12s}.fgrid .fc:nth-child(5){animation-delay:.16s}.fgrid .fc:nth-child(6){animation-delay:.2s}.fgrid .fc:nth-child(n+7){animation-delay:.24s}
+@keyframes cardin{from{opacity:0;transform:translateY(12px) scale(.96)}}
+.schips button[aria-pressed="true"],.gchips button[aria-pressed="true"],.achips button[aria-pressed="true"],.seg button[aria-selected="true"]{animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
+@keyframes chip{50%{transform:scale(1.08)}}
+.duck{position:fixed;left:100%;bottom:60px;width:56px;height:48px;z-index:19;padding:0;border:0;background:none;transform:translateX(0);transition-property:transform;transition-timing-function:linear;-webkit-tap-highlight-color:transparent}
+.duck[hidden]{display:none}
+.duck svg{width:56px;height:48px;overflow:visible;display:block;transform-origin:50% 92%}
+.duck.mv svg{animation:wad .42s ease-in-out infinite}
+.duck .ft1,.duck .ft2{transform-box:fill-box;transform-origin:50% 0}
+.duck.mv .ft1{animation:step .42s ease-in-out infinite}
+.duck.mv .ft2{animation:step .42s ease-in-out infinite reverse}
+.duck .hd2{transform-box:fill-box;transform-origin:70% 90%}
+.duck.look .hd2{animation:look 2.2s ease-in-out}
+.duck .eye{transform-box:fill-box;transform-origin:center;animation:blink 3.6s infinite}
+.duck.hop svg{animation:hop .5s cubic-bezier(.3,1.5,.5,1)}
+.duck.flip svg{scale:-1 1}
+.duck .bub{position:absolute;left:-6px;top:-24px;font:800 12px/1 var(--f);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:4px 7px;white-space:nowrap;opacity:0;transform:translateY(4px) scale(.8);transition:opacity .2s,transform .25s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.duck .bub.on{opacity:1;transform:none}
+.duck .pf{position:absolute;width:5px;height:5px;border-radius:50%;background:#dbeefc;left:24px;top:18px;pointer-events:none;animation:puff .7s ease-out forwards}
+@keyframes puff{to{transform:translate(var(--x),var(--y)) scale(.4);opacity:0}}
+@keyframes wad{0%,100%{rotate:-6deg}50%{rotate:6deg}}
+@keyframes step{50%{transform:scaleY(.4)}}
+@keyframes look{20%,40%{rotate:-14deg}60%,80%{rotate:10deg}}
+@keyframes blink{0%,46%,50%,100%{transform:scaleY(1)}48%{transform:scaleY(.1)}}
+@keyframes hop{40%{transform:translateY(-16px) rotate(-8deg)}70%{transform:translateY(0) scaleY(.88)}}
+@media (prefers-reduced-motion:reduce){.hsnow,.hero #snow,.duck{display:none}.fgrid .fc,.dday::after{animation:none}}
 '''
 
 JS = r'''
@@ -1661,6 +1697,40 @@ JS = r'''
   (function(){if(!snow)return;var h='';for(var i=0;i<26;i++){var w=(Math.random()*2.2+1.4).toFixed(1),d=(Math.random()*9+9).toFixed(1),dl=(-Math.random()*18).toFixed(1),o=(Math.random()*.45+.35).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}snow.innerHTML=h})();
   function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
   function snowSet(){}
+  /* 헤더 눈 */
+  var hs=$('#hsnow'),hd=$('.hd');
+  (function(){if(!hs)return;var h='';for(var i=0;i<16;i++){var w=(Math.random()*1.8+1.2).toFixed(1),d=(Math.random()*7+8).toFixed(1),dl=(-Math.random()*15).toFixed(1),o=(Math.random()*.35+.25).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}hs.innerHTML=h})();
+  function hsH(){if(hs&&hd)hs.style.setProperty('--hh',hd.offsetHeight+'px')}hsH();window.addEventListener('resize',hsH);
+  /* 눈오리 산책 */
+  (function(){
+    var dk=$('#duck'),bub=$('#bub'),bn=$('.bn');if(!dk)return;
+    var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)return;
+    var busy=false,tm=[];
+    function later(f,ms){tm.push(setTimeout(f,ms))}
+    function place(){dk.style.bottom=((bn&&bn.offsetHeight)||60)-4+'px'}
+    function go(x,sec,cb){dk.classList.add('mv');dk.style.transitionDuration=sec+'s';dk.style.transform='translateX('+x+'px)';later(function(){dk.classList.remove('mv');cb&&cb()},sec*1000)}
+    function sheetOpen(){var sh=$('#sheet');return sh&&!sh.hidden}
+    function walk(){
+      if(busy||document.hidden||sheetOpen()){later(walk,20000);return}
+      busy=true;place();var W=window.innerWidth;
+      dk.classList.remove('flip');dk.style.transitionDuration='0s';dk.style.transform='translateX(0)';dk.hidden=false;
+      void dk.offsetWidth;
+      var stop=-Math.round(W*(.35+Math.random()*.3));
+      later(function(){go(stop,Math.abs(stop)/62,function(){
+        dk.classList.add('look');
+        later(function(){dk.classList.remove('look');
+          if(Math.random()<.35){dk.classList.add('flip');go(0,Math.abs(stop)/70,done)}
+          else go(-W-70,(W+70+stop)/66,done)},2300)})},60);
+    }
+    function done(){dk.hidden=true;dk.classList.remove('flip');busy=false;later(walk,35000+Math.random()*40000)}
+    var quacks=['꽥!','꽥꽥!','눈 온다 ❄','삿포로 가자!','예은 석영 화이팅!','시라코 먹자 🐟','D-'+(($('#dday')&&$('#dday').textContent.replace(/[^0-9]/g,''))||'?')+'!'];
+    dk.addEventListener('click',function(e){e.stopPropagation();dk.classList.remove('hop');void dk.offsetWidth;dk.classList.add('hop');
+      bub.textContent=quacks[Math.floor(Math.random()*quacks.length)];bub.classList.add('on');setTimeout(function(){bub.classList.remove('on')},1300);
+      for(var i=0;i<7;i++){var f=document.createElement('i');f.className='pf';var a=Math.random()*Math.PI*2,r=18+Math.random()*16;f.style.setProperty('--x',Math.cos(a)*r+'px');f.style.setProperty('--y',Math.sin(a)*r-8+'px');dk.appendChild(f);setTimeout(function(n){return function(){n.remove()}}(f),750)}
+      if(typeof buzz==='function')buzz(8)});
+    window.addEventListener('resize',place);
+    later(walk,5000);
+  })();
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
   theme(ls.get('sg-theme'));
@@ -1743,7 +1813,7 @@ PAGE=f'''<!doctype html>
 <style>{themeize(CSS)}</style>
 </head>
 <body>
-<header class="hd"><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hsnow" id="hsnow" aria-hidden="true"></div><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 {DAYVIEW}
 {view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
@@ -1751,7 +1821,7 @@ PAGE=f'''<!doctype html>
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
 {view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
-<nav class="bn" aria-label="메뉴">
+<button class="duck" id="duck" type="button" aria-label="눈오리" hidden><span class="bub" id="bub">꽥!</span><svg viewBox="0 0 60 50" aria-hidden="true"><ellipse class="ft1" cx="26" cy="47" rx="3.6" ry="2" fill="#f4a340"/><ellipse class="ft2" cx="38" cy="47" rx="3.6" ry="2" fill="#f4a340"/><path d="M50 30 L59 22 L55 34 Z" fill="#fff" stroke="#c9d7e3" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="33" cy="34" rx="22" ry="13.5" fill="#fff" stroke="#c9d7e3" stroke-width="1.5"/><path d="M33 32 q8 -7 14 2 q-7 5 -14 -2z" fill="#eef4f9" stroke="#c9d7e3" stroke-width="1.2"/><circle cx="40" cy="40" r="1" fill="#dce6ee"/><circle cx="27" cy="42" r=".9" fill="#dce6ee"/><g class="hd2"><path d="M9 26 q8 6 18 -1 l1 4 q-10 6 -19 1z" fill="#e5484d"/><path d="M24 27 l4 8 l-5 -1z" fill="#e5484d"/><circle cx="16" cy="17" r="11" fill="#fff" stroke="#c9d7e3" stroke-width="1.5"/><ellipse cx="4.6" cy="19.5" rx="5.2" ry="3.1" fill="#f4a340"/><path d="M1 19.6 h8" stroke="#d98a2b" stroke-width=".9"/><g class="eye"><circle cx="12.6" cy="14.6" r="1.9" fill="#1d2733"/><circle cx="13.2" cy="14" r=".6" fill="#fff"/></g><circle cx="16.8" cy="21" r="2.5" fill="#ffb3c1" opacity=".75"/><path d="M15 6.5 q2 -4 5 -1" fill="none" stroke="#c9d7e3" stroke-width="1.3" stroke-linecap="round"/></g></svg></button><nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>

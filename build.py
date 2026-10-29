@@ -1496,6 +1496,34 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
+/* 일본 날씨 */
+.hd-r{gap:3px}
+.wx{display:inline-flex;align-items:center;gap:3px;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:2px 8px 2px 6px;font:inherit;font-size:12px;line-height:1.4;cursor:pointer}
+.wx b{font-family:var(--d);font-weight:400;font-size:14px;letter-spacing:.02em}
+.wx small{font-size:10.5px;opacity:.75}
+.wx:active{transform:scale(.95)}
+.wxm{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.wxm[hidden]{display:none}
+.wxm-bg{position:absolute;inset:0;background:rgba(8,15,26,.55)}
+.wxm-c{position:relative;width:100%;max-width:520px;max-height:86vh;overflow:auto;background:var(--card);color:var(--ink);border-radius:20px 20px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:sheetup .25s ease-out}
+.wxm-h{display:flex;align-items:center;justify-content:space-between;font-size:16px}
+.wxm-x{border:0;background:var(--snow);color:var(--mut);width:32px;height:32px;border-radius:50%;font-size:15px}
+.wxm-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--snow);border:1px solid var(--line);border-radius:999px;padding:3px;margin:12px 0 10px}
+.wxm-tabs button{border:0;background:none;color:var(--mut);border-radius:999px;padding:7px 0;font-size:12.5px;font-weight:700}
+.wxm-tabs button[aria-pressed="true"]{background:var(--night);color:#fff}
+.wxm-now{display:flex;align-items:center;gap:12px;padding:6px 2px 10px;border-bottom:1px solid var(--line)}
+.wxm-now .big{font-size:40px;line-height:1}
+.wxm-now .tt{font-family:var(--d);font-size:34px;line-height:1}
+.wxm-now .dd{font-size:12.5px;color:var(--mut);line-height:1.5}
+.wxm-list{display:flex;flex-direction:column}
+.wxm-list .r{display:grid;grid-template-columns:72px 30px minmax(0,1fr) 76px;align-items:center;gap:6px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:13.5px}
+.wxm-list .r.trip{background:var(--ice-soft);border-radius:10px;border-bottom-color:transparent;padding-left:8px;padding-right:8px;margin:2px 0}
+.wxm-list .r .d small{display:block;font-size:11px;color:var(--mut)}
+.wxm-list .r .i{font-size:20px;text-align:center}
+.wxm-list .r .m{font-size:12px;color:var(--mut);line-height:1.35}
+.wxm-list .r .t{text-align:right;font-variant-numeric:tabular-nums}
+.wxm-list .r .t b{color:#e5484d;font-weight:700}.wxm-list .r .t span{color:#2f80d1;font-weight:700}
+.wxm-n{font-size:11.5px;color:var(--mut);margin:10px 2px 0;line-height:1.5}
 /* 귀여운 겨울 */
 .hd{overflow:hidden}
 .hd-in,.seg{position:relative;z-index:1}
@@ -1563,7 +1591,7 @@ JS = r'''
   var now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,dd=now.getDate(),tripDay=(y===2026&&m===12&&dd>=3&&dd<=6)?dd-2:0;
   function tz(){var z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}if(z==='Asia/Tokyo')return '일본';if(z==='Asia/Seoul')return '한국';var t=new Date();return (t>=new Date(2026,11,3,12,45)&&t<=new Date(2026,11,6,14,5))?'일본':'한국'}
   function hhmm(t){return (t.getHours()<10?'0':'')+t.getHours()+':'+(t.getMinutes()<10?'0':'')+t.getMinutes()}
-  function clock(){var t=new Date(),c=$('#clock'),w=tz();c.innerHTML='';var kr=new Date(t.getTime()+(t.getTimezoneOffset()+540)*60000),jp=kr;[['🇰🇷',kr,w==='한국'],['🇯🇵',jp,w==='일본']].forEach(function(x){var s=document.createElement('span');s.className='ck'+(x[2]?' on':'');s.textContent=x[0];var b=document.createElement('b');b.textContent=hhmm(x[1]);s.appendChild(b);c.appendChild(s)})}
+  function clock(){var t=new Date(),c=$('#clock');c.innerHTML='';var kr=new Date(t.getTime()+(t.getTimezoneOffset()+540)*60000);var s=document.createElement('span');s.className='ck on';s.textContent='🇰🇷🇯🇵';var b=document.createElement('b');b.textContent=hhmm(kr);s.appendChild(b);c.appendChild(s)}
   clock();setInterval(clock,20000);
   function markNext(){var list=$('.tl[data-day="'+curDay+'"]');if(!list)return;$$('.tl li.next,.tl li.done').forEach(function(l){l.classList.remove('next');l.classList.remove('done')});$$('.tl li.now').forEach(function(l){l.remove()});
     var t=new Date(),hm=t.getHours()*60+t.getMinutes(),live=tripDay===curDay,lis=$$('li',list),last=-1,ins=null;if(!live)return;
@@ -1683,6 +1711,36 @@ JS = r'''
   if(snow)snow.innerHTML=flakes(84,[[1.4,2.4,10,16,.4,.65,14,0],[1.4,2.4,10,16,.4,.65,14,0],[2.6,4.2,6.5,9.5,.6,.85,22,0],[2.6,4.2,6.5,9.5,.6,.85,22,0],[4.8,7.5,4.2,6.2,.75,.95,30,.8]]);
   function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
   function snowSet(){}
+  /* 일본 날씨 (Open-Meteo · 키 없음 · 오프라인이면 마지막 값) */
+  (function(){
+    var P=[['삿포로',43.0618,141.3545],['비에이',43.5883,142.4669],['오타루',43.1907,140.9947],['공항',42.7752,141.6923]];
+    function W(c){if(c===0)return['☀️','맑음'];if(c<=2)return['🌤️','구름 조금'];if(c===3)return['☁️','흐림'];if(c===45||c===48)return['🌫️','안개'];if(c>=51&&c<=57)return['🌦️','이슬비'];if(c>=61&&c<=67)return['🌧️','비'];if(c>=71&&c<=75)return['🌨️',c===75?'폭설':'눈'];if(c===77)return['🌨️','싸락눈'];if(c>=80&&c<=82)return['🌧️','소나기'];if(c>=85&&c<=86)return['❄️','눈보라'];if(c>=95)return['⛈️','뇌우'];return['🌡️','']}
+    function dayIdx(){var t=new Date(),y=t.getFullYear(),m=t.getMonth()+1,d=t.getDate();if(y===2026&&m===12){if(d===4)return 1;if(d===5)return 2;if(d===6)return 3}return 0}
+    var cur=dayIdx(),data={};
+    function key(i){return 'sg-wx-'+i}
+    function load(i){try{return JSON.parse(ls.get(key(i))||'null')}catch(e){return null}}
+    function fetchP(i){var p=P[i],u='https://api.open-meteo.com/v1/forecast?latitude='+p[1]+'&longitude='+p[2]+'&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,snowfall&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,snowfall_sum&timezone=Asia%2FTokyo&forecast_days=16&wind_speed_unit=ms';
+      return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){j._at=Date.now();data[i]=j;ls.set(key(i),JSON.stringify(j));return j})}
+    function get(i){if(data[i])return Promise.resolve(data[i]);var c=load(i);if(c)data[i]=c;if(c&&Date.now()-c._at<30*60000)return Promise.resolve(c);return fetchP(i).catch(function(){if(c)return c;throw 0})}
+    function ago(at){var m=Math.round((Date.now()-at)/60000);return m<2?'방금':m<60?m+'분 전':m<1440?Math.round(m/60)+'시간 전':Math.round(m/1440)+'일 전'}
+    function chip(){get(cur).then(function(j){var w=W(j.current.weather_code);$('#wx-i').textContent=w[0];$('#wx-t').textContent=Math.round(j.current.temperature_2m)+'°';$('#wx-p').textContent=P[cur][0]}).catch(function(){$('#wx-t').textContent='--°'})}
+    var sel=cur,DW=['일','월','화','수','목','금','토'];
+    function render(){var tb=$('#wxm-tabs');tb.innerHTML='';P.forEach(function(p,i){var b=document.createElement('button');b.textContent=p[0];b.setAttribute('aria-pressed',i===sel?'true':'false');b.addEventListener('click',function(){sel=i;render()});tb.appendChild(b)});
+      var now=$('#wxm-now'),li=$('#wxm-list'),nt=$('#wxm-n');now.innerHTML='<div class="dd">불러오는 중…</div>';li.innerHTML='';
+      get(sel).then(function(j){var c=j.current,w=W(c.weather_code);
+        now.innerHTML='<div class="big">'+w[0]+'</div><div><div class="tt">'+Math.round(c.temperature_2m)+'°</div></div><div class="dd"><b>'+P[sel][0]+' 지금 · '+w[1]+'</b><br>체감 '+Math.round(c.apparent_temperature)+'° · 바람 '+Math.round(c.wind_speed_10m)+'m/s'+(c.snowfall>0?' · 눈 '+c.snowfall+'cm/h':'')+'</div>';
+        var d=j.daily,h='',hasTrip=false;for(var k=0;k<d.time.length;k++){var ds=d.time[k],dt=new Date(ds+'T12:00:00'),wi=W(d.weather_code[k]),trip=ds>='2026-12-03'&&ds<='2026-12-06';if(trip)hasTrip=true;
+          h+='<div class="r'+(trip?' trip':'')+'"><div class="d">'+(k===0?'오늘':(dt.getMonth()+1)+'/'+dt.getDate())+'<small>'+DW[dt.getDay()]+(trip?' · 여행':'')+'</small></div><div class="i">'+wi[0]+'</div><div class="m">'+wi[1]+(d.precipitation_probability_max[k]!=null?' · 강수 '+d.precipitation_probability_max[k]+'%':'')+(d.snowfall_sum[k]>0?' · 눈 '+Math.round(d.snowfall_sum[k])+'cm':'')+'</div><div class="t"><b>'+Math.round(d.temperature_2m_max[k])+'°</b> / <span>'+Math.round(d.temperature_2m_min[k])+'°</span></div></div>'}
+        li.innerHTML=h;
+        nt.textContent=(hasTrip?'파란 줄 = 여행 날짜 · ':'여행 날짜(12/3~6)는 11/18쯤부터 이 목록에 나와요 · ')+'최고/최저 기온 · '+ago(j._at)+' 기준'+(navigator.onLine===false?' (오프라인 · 마지막 저장값)':'')+' · 자료 Open-Meteo';
+      }).catch(function(){now.innerHTML='<div class="dd">날씨를 불러오지 못했어요 · 인터넷 연결 후 다시 눌러주세요</div>';nt.textContent=''})}
+    var wxm=$('#wxm');
+    $('#wx').addEventListener('click',function(){sel=cur;wxm.hidden=false;render();try{history.pushState({sg:'wx'},'')}catch(e){}buzz(6)});
+    $$('[data-x]',wxm).forEach(function(x){x.addEventListener('click',function(){wxm.hidden=true;if(history.state&&history.state.sg==='wx')history.back()})});
+    window.addEventListener('popstate',function(){if(!wxm.hidden)wxm.hidden=true});
+    chip();setInterval(chip,30*60000);window.addEventListener('online',chip);
+    if(navigator.onLine!==false)setTimeout(function(){P.forEach(function(p,i){if(i!==cur)get(i).catch(function(){})})},4000);
+  })();
   /* 헤더 눈 */
   var hs=$('#hsnow'),hd=$('.hd');
   if(hs)hs.innerHTML=flakes(46,[[1.2,2.2,8,13,.3,.55,10,0],[1.2,2.2,8,13,.3,.55,10,0],[2.4,3.6,5.5,8,.5,.8,16,0],[3.8,5.2,4,5.5,.65,.9,20,.6]]);
@@ -1770,7 +1828,7 @@ PAGE=f'''<!doctype html>
 <style>{themeize(CSS)}</style>
 </head>
 <body>
-<header class="hd"><div class="hsnow" id="hsnow" aria-hidden="true"></div><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hsnow" id="hsnow" aria-hidden="true"></div><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div><button class="wx" id="wx" type="button" aria-label="일본 날씨 · 눌러서 예보"><span id="wx-i">🌨️</span><b id="wx-t">--°</b><small id="wx-p">삿포로</small></button></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 {DAYVIEW}
 {view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
@@ -1778,7 +1836,7 @@ PAGE=f'''<!doctype html>
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
 {view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
-<nav class="bn" aria-label="메뉴">
+<div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>

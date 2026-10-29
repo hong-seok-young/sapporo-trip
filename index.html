@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-theme="light">
+<html lang="ko" data-theme="light" data-ver="20261029-1721">
 <head>
 <script>try{var t=localStorage.getItem('sg-theme');if(t==="dark"||t==="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta charset="utf-8">
@@ -710,7 +710,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 <h3 class="sec">📴 오프라인</h3>
 <div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="st">자동 저장: 앱을 열 때 · 인터넷이 다시 연결될 때 · 앱으로 돌아올 때 알아서 받음 (누를 것 없음) · 카드 대표 사진 + 일정 사진은 미리, 상세 사진은 한 번 열어본 것부터 저장</div></div>
 <p class="hint">입력한 값·체크·도장은 이 폰 브라우저에만 저장되고 파일·깃허브에는 올라가지 않음</p>
-<p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 20261029-1719</p>
+<p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 20261029-1721</p>
 </div></section>
 </main>
 <nav class="bn" aria-label="메뉴">
@@ -913,14 +913,14 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 
 
   /* 오프라인 */
-  var offb=$('#off');function offSet(){offb.hidden=navigator.onLine!==false}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
+  var offb=$('#off'),VV=(document.documentElement.dataset.ver||'').replace(/^\d{4}(\d\d)(\d\d)-(\d\d)(\d\d)$/,'$1/$2 $3:$4');function offSet(){offb.hidden=navigator.onLine!==false;offb.textContent='오프라인 · '+VV+' 버전'}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
   function imgList(){var u=[];H.forEach(function(d){u.push(d.img)});$$('.ti img,.tk-img img,.fc img,.days button').forEach(function(el){var src=el.tagName==='IMG'?el.getAttribute('src'):(el.style.getPropertyValue('--im')||'').replace(/^url\(|\)$/g,'');if(src&&u.indexOf(src)<0)u.push(src)});$$('[data-f]').forEach(function(b){if(b.dataset.f){var w=wurl(b.dataset.f,960);if(u.indexOf(w)<0)u.push(w)}});return u}
   var warming=false,warmTries=0,ost=$('#off-st');
   function warm(force){if(warming||!window.caches||!window.isSecureContext)return;if(navigator.onLine===false){ost.textContent='오프라인 · 인터넷 연결되면 사진 저장';return}warming=true;
     caches.open('sg-img2').then(function(c){var list=imgList(),done=0,miss=[];
       return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
-        ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
-        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<10)setTimeout(function(){warm()},60000);return}
+        ost.textContent=miss.length?'사진 '+done+'/'+list.length+' 저장됨 · 받는 중…':'✅ 오프라인 준비 완료 · 사진 '+done+'/'+list.length+' · 앱 '+VV+' 버전';
+        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent=(left?'사진 '+done+'/'+list.length+' 저장됨 · 나머지 잠시 후 자동으로 다시 받음':'✅ 오프라인 준비 완료 · 사진 '+done+'/'+list.length+' · 앱 '+VV+' 버전');if(left&&warmTries++<10)setTimeout(function(){warm()},60000);return}
           var u=miss[i++];var wm=u.indexOf('upload.wikimedia.org')>0;fetch(u,{mode:wm?'cors':'no-cors',referrerPolicy:'no-referrer',credentials:'omit'}).then(function(r){if(r.ok||r.type==='opaque'){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
         next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}

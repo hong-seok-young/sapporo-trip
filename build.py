@@ -1703,14 +1703,14 @@ JS = r'''
 
 
   /* 오프라인 */
-  var offb=$('#off');function offSet(){offb.hidden=navigator.onLine!==false}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
+  var offb=$('#off'),VV=(document.documentElement.dataset.ver||'').replace(/^\d{4}(\d\d)(\d\d)-(\d\d)(\d\d)$/,'$1/$2 $3:$4');function offSet(){offb.hidden=navigator.onLine!==false;offb.textContent='오프라인 · '+VV+' 버전'}offSet();window.addEventListener('online',function(){offSet();warm()});window.addEventListener('offline',offSet);
   function imgList(){var u=[];H.forEach(function(d){u.push(d.img)});$$('.ti img,.tk-img img,.fc img,.days button').forEach(function(el){var src=el.tagName==='IMG'?el.getAttribute('src'):(el.style.getPropertyValue('--im')||'').replace(/^url\(|\)$/g,'');if(src&&u.indexOf(src)<0)u.push(src)});$$('[data-f]').forEach(function(b){if(b.dataset.f){var w=wurl(b.dataset.f,960);if(u.indexOf(w)<0)u.push(w)}});return u}
   var warming=false,warmTries=0,ost=$('#off-st');
   function warm(force){if(warming||!window.caches||!window.isSecureContext)return;if(navigator.onLine===false){ost.textContent='오프라인 · 인터넷 연결되면 사진 저장';return}warming=true;
     caches.open('sg-img2').then(function(c){var list=imgList(),done=0,miss=[];
       return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
-        ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
-        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<10)setTimeout(function(){warm()},60000);return}
+        ost.textContent=miss.length?'사진 '+done+'/'+list.length+' 저장됨 · 받는 중…':'✅ 오프라인 준비 완료 · 사진 '+done+'/'+list.length+' · 앱 '+VV+' 버전';
+        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent=(left?'사진 '+done+'/'+list.length+' 저장됨 · 나머지 잠시 후 자동으로 다시 받음':'✅ 오프라인 준비 완료 · 사진 '+done+'/'+list.length+' · 앱 '+VV+' 버전');if(left&&warmTries++<10)setTimeout(function(){warm()},60000);return}
           var u=miss[i++];var wm=u.indexOf('upload.wikimedia.org')>0;fetch(u,{mode:wm?'cors':'no-cors',referrerPolicy:'no-referrer',credentials:'omit'}).then(function(r){if(r.ok||r.type==='opaque'){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
         next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
@@ -1746,7 +1746,7 @@ DAYVIEW=f'''<section class="view" id="v-day" hidden>
 </section>'''
 
 PAGE=f'''<!doctype html>
-<html lang="ko" data-theme="light">
+<html lang="ko" data-theme="light" data-ver="{VER}">
 <head>
 <script>try{{var t=localStorage.getItem('sg-theme');if(t==="dark"||t==="auto")document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 <meta charset="utf-8">

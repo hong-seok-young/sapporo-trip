@@ -511,6 +511,11 @@ SET='''
 '''+''.join(f'<label><span>{l}</span><input id="s-{k}" data-s="{k}" autocomplete="off" autocapitalize="off" spellcheck="false"{" placeholder=\""+ph+"\"" if ph else ""}></label>' for k,l,ph in FIELDS)+'''
 <div class="btns"><button id="s-save" class="pri">저장</button><button id="s-clear">전체 지우기</button></div>
 </div></details>
+<h3 class="sec">⭐ 찜 (별표)</h3>
+<div class="form"><div class="st" id="st-st">이 폰 주인: 아직 안 정함</div><div class="btns" id="st-me"><button data-me="sy">나는 석영</button><button data-me="ye">나는 예은</button></div>
+<div class="st">카드 오른쪽 위 ☆를 누르면 내 별표 · <b class="c-sy">파랑 ★ = 석영</b> · <b class="c-ye">분홍 ★ = 예은</b><br>서로 폰에 보이게 하려면 ↓ "내 별표 보내기"로 카톡 전송 → 받은 사람은 링크를 누르거나 코드를 아래에 붙여넣기 (서버 없이 폰끼리만 주고받음)</div>
+<div class="btns"><button id="st-send" class="pri">내 별표 보내기</button></div>
+<textarea id="st-code" rows="2" placeholder="받은 별표 코드 붙여넣기 (SGSTAR1.…)" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="btns"><button id="st-apply">받은 별표 적용</button></div></div>
 <h3 class="sec">🌙 다크 모드</h3>
 <div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
@@ -1496,6 +1501,29 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
+/* 찜 별표 */
+.fci .stb{position:absolute;right:6px;bottom:6px;display:flex;gap:2px;align-items:center;background:rgba(255,255,255,.92);border-radius:999px;padding:2px 6px;font-size:15px;line-height:1.2;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
+.fci .stb .e{color:#9aa8b6}
+.fci .stb .sy,.c-sy,.whob .sy{color:#2f80d1}
+.fci .stb .ye,.c-ye,.whob .ye{color:#ec5f8f}
+.fci .stb.pop{animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
+.fci .fcn2{right:auto;left:6px}
+.fc.has-st{box-shadow:0 0 0 2px #ffd36b inset}
+.strow{display:flex;gap:6px;margin:8px 0 2px;flex-wrap:wrap}
+.strow button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;color:var(--mut)}
+.strow button.on.sy{border-color:#2f80d1;color:#2f80d1;background:rgba(47,128,209,.1)}
+.strow button.on.ye{border-color:#ec5f8f;color:#ec5f8f;background:rgba(236,95,143,.1)}
+.strow button[disabled]{opacity:1}
+.stfab{position:fixed;right:14px;bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:18;display:flex;align-items:center;gap:4px;border:0;background:var(--night);color:#fff;border-radius:999px;padding:9px 14px;font:700 13px/1 var(--f);box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.stfab b{font-size:15px}
+.whob{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 4px}
+.whob button{border:2px solid currentColor;background:var(--card);border-radius:14px;padding:16px 0;font-size:17px;font-weight:800}
+.stl h5{margin:14px 0 6px;font-size:13px;color:var(--mut)}
+.stl button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:10px 2px;color:var(--ink);font-size:14px}
+.stl button small{color:var(--mut);font-size:12px;margin-left:auto;white-space:nowrap}
+.stl .who{font-size:14px;min-width:30px}
+.stl .sy{color:#2f80d1}.stl .ye{color:#ec5f8f}
+.stl .emp{color:var(--mut);font-size:13px;padding:10px 2px}
 /* 일본 날씨 */
 .hd-r{gap:3px}
 .wx{display:inline-flex;align-items:center;gap:3px;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:2px 8px 2px 6px;font:inherit;font-size:12px;line-height:1.4;cursor:pointer}
@@ -1625,7 +1653,7 @@ JS = r'''
     big.onerror=function(){if(real&&first){real=false;big.src=wurl(first.f,960);strip(d.ph.map(function(p){return {s:wurl(p.f,500),b:wurl(p.f,960),l:p.l}}));crFill()}else{big.hidden=true}};shI.appendChild(big);
     var x=el('button','x','✕');x.setAttribute('aria-label','닫기');x.addEventListener('click',closeFood);shI.appendChild(x);
     var h=el('h4',null,d.n);(d.badges||[]).forEach(function(b){h.appendChild(el('span','mi '+b[0],(b[0]==='drv'?'🚗 ':'')+b[1]))});if(d.drv){h.appendChild(el('span','mi drv','🚗 '+d.drv))}if(d.loc){h.appendChild(el('span','mi loc','지역맛집'))}if(d.mi){var m=el('span','mi'+(d.mi==='빕'?' bib':''),d.mi==='빕'?'빕구르망':d.mi);h.appendChild(m)}if(d.x){h.appendChild(el('span','mi x','우리 날짜 휴무'))}shB.appendChild(h);
-    var fj=el('div','fj',d.ja+' · '+d.cat);shB.appendChild(fj);
+    var fj=el('div','fj',d.ja+' · '+d.cat);shB.appendChild(fj);if(window.starRow)window.starRow(i,shB,fj);
     if(d.tb||d.g){var sc=el('div','sc');if(d.tb){sc.appendChild(el('b','tbs','타베로그 '+d.tb[0].toFixed(2)+(d.tb[1]?' ('+d.tb[1].toLocaleString()+')':'')))}if(d.g){sc.appendChild(el('span','gs','구글 ★'+d.g[0].toFixed(1)+' ('+d.g[1].toLocaleString()+')'))}shB.appendChild(sc)}
     var cr=el('div','cr');var st=el('div','sh-strip');shB.appendChild(st);
     function crFill(){cr.innerHTML='';if(real&&d.credit&&d.tb){cr.textContent='사진: '+d.credit+' · 나머지 타베로그 · ';var tq=el('a','map','타베로그 사진 전부 보기');tq.href=d.tb[2]+'dtlphotolst/';tq.target='_blank';tq.rel='noopener';cr.appendChild(tq);return}if(real&&(d.kind==='shop'||d.kind==='sight'||d.credit)){cr.textContent='사진: '+(d.credit||'공식·언론 사진');return}if(real){cr.textContent='사진: 이 식당의 실제 요리 사진 · ';var tp=el('a','map','타베로그 사진 전부 보기');tp.href=(d.tb&&d.tb[2]?d.tb[2]:'https://tabelog.com/')+'dtlphotolst/';tp.target='_blank';tp.rel='noopener';cr.appendChild(tp);return}if(!first)return;cr.textContent='⚠️ 참고 사진 (실제 사진을 못 불러와서 같은 메뉴 예시로 표시) · ';var ca=el('a',null,'Wikimedia Commons');ca.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(first.f.split('/').slice(2).join('/'));ca.target='_blank';ca.rel='noopener';cr.appendChild(ca);if(d.tb&&d.tb[2]){var ph=el('a','map','실제 사진 보기 (타베로그)');ph.href=d.tb[2]+'dtlphotolst/';ph.target='_blank';ph.rel='noopener';cr.appendChild(document.createTextNode(' · '));cr.appendChild(ph)}}
@@ -1641,6 +1669,39 @@ JS = r'''
   $('#sh-bg').addEventListener('click',closeFood);
   $$('.fc').forEach(function(b){b.addEventListener('click',function(){openFood(+b.dataset.i)})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFood()});
+  /* 찜 별표 (석영=sy · 예은=ye) · 폰끼리 코드/링크로 공유 */
+  var ST={sy:[],ye:[]},NM={sy:'석영',ye:'예은'};
+  function sid(n){var h=5381;for(var i=0;i<n.length;i++)h=((h<<5)+h+n.charCodeAt(i))>>>0;return h.toString(36)}
+  function stLoad(){['sy','ye'].forEach(function(k){try{ST[k]=JSON.parse(ls.get('sg-star-'+k)||'[]')||[]}catch(e){ST[k]=[]}})}
+  function stSave(k){ls.set('sg-star-'+k,JSON.stringify(ST[k]))}
+  function me(){var m=ls.get('sg-me');return m==='sy'||m==='ye'?m:null}
+  function has(k,i){return ST[k].indexOf(sid(FOOD_DATA[i].n))>=0}
+  function toggle(i){var m=me();if(!m){askMe(function(){toggle(i)});return}var id=sid(FOOD_DATA[i].n),a=ST[m],p=a.indexOf(id);if(p>=0)a.splice(p,1);else a.push(id);stSave(m);paint();buzz(p>=0?6:14);flash(p>=0?'찜 취소':NM[m]+' 찜 ★')}
+  function paint(){$$('.fc').forEach(function(c){var i=+c.dataset.i,sy=has('sy',i),ye=has('ye',i),b=c.querySelector('.stb');if(!b)return;b.innerHTML=(sy?'<span class="sy">★</span>':'')+(ye?'<span class="ye">★</span>':'')+(!sy&&!ye?'<span class="e">☆</span>':((me()&&!has(me(),i))?'<span class="e">☆</span>':''));c.classList.toggle('has-st',sy||ye)});
+    var n=0;FOOD_DATA.forEach(function(d,i){if(has('sy',i)||has('ye',i))n++});$$('.stn').forEach(function(e){e.textContent='찜 '+n});
+    var m=me();$('#st-st').textContent='이 폰 주인: '+(m?NM[m]:'아직 안 정함')+' · 석영 '+ST.sy.length+'곳 · 예은 '+ST.ye.length+'곳';$$('#st-me button').forEach(function(b){b.classList.toggle('pri',b.dataset.me===m)})}
+  $$('.fc').forEach(function(c){var fi=c.querySelector('.fci');if(!fi)return;var b=document.createElement('span');b.className='stb';b.setAttribute('role','button');b.setAttribute('aria-label','찜');b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggle(+c.dataset.i);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')});fi.appendChild(b)});
+  var whom=$('#whom'),whoCb=null;
+  function askMe(cb){whoCb=cb;whom.hidden=false}
+  function setMe(k){ls.set('sg-me',k);whom.hidden=true;paint();flash('이 폰 = '+NM[k]);if(whoCb){var f=whoCb;whoCb=null;f()}}
+  $$('[data-me]').forEach(function(b){b.addEventListener('click',function(){setMe(b.dataset.me)})});
+  $$('[data-wx2]').forEach(function(x){x.addEventListener('click',function(){whom.hidden=true;whoCb=null})});
+  window.starRow=function(i,host,after){var r=el('div','strow');['sy','ye'].forEach(function(k){var on=has(k,i),mine=me()===k,b=el('button',k+(on?' on':''),(on?'★ ':'☆ ')+NM[k]+(on?' 찜':(mine?' 찜하기':'')));if(!mine&&me()){b.disabled=true}b.addEventListener('click',function(){if(me()&&!mine)return;toggle(i);var nr=window.starRow(i,host,r);r.remove()});r.appendChild(b)});host.insertBefore(r,after?after.nextSibling:host.firstChild);return r};
+  function code(k){return 'SGSTAR1.'+k+'.'+ST[k].join('-')}
+  function applyCode(t,quiet){var m=/SGSTAR1\.(sy|ye)\.([0-9a-z\-]*)/.exec(t||'');if(!m){if(!quiet)flash('코드가 아니에요');return false}var k=m[1];if(me()===k){if(!quiet)flash('내 코드예요 · '+NM[k==='sy'?'ye':'sy']+' 폰에서 받아야 해요');return false}if(!me())ls.set('sg-me',k==='sy'?'ye':'sy');ST[k]=m[2]?m[2].split('-').filter(Boolean):[];stSave(k);paint();flash(NM[k]+' 별표 '+ST[k].length+'곳 받음 ★');return true}
+  $('#st-send').addEventListener('click',function(){var m=me();if(!m){askMe(function(){$('#st-send').click()});return}var c=code(m),url=location.origin+location.pathname+'#star='+c,txt=NM[m]+' 찜 '+ST[m].length+'곳 ⭐\n링크: '+url+'\n(앱에서 받을 땐 설정 › 찜에 코드 붙여넣기)\n'+c;
+    if(navigator.share){navigator.share({text:txt}).catch(function(){})}else{cp(txt)}});
+  $('#st-apply').addEventListener('click',function(){if(applyCode($('#st-code').value))$('#st-code').value=''});
+  function hashStar(){var h=location.hash;if(h.indexOf('#star=')===0){applyCode(decodeURIComponent(h.slice(6)));try{history.replaceState(history.state,'',location.pathname+location.search)}catch(e){}}}hashStar();window.addEventListener('hashchange',hashStar);
+  var stm=$('#stm');
+  function stList(){var b=$('#stm-b');b.innerHTML='';var g={both:[],sy:[],ye:[]};FOOD_DATA.forEach(function(d,i){var a=has('sy',i),c=has('ye',i);if(a&&c)g.both.push(i);else if(a)g.sy.push(i);else if(c)g.ye.push(i)});
+    var any=g.both.length+g.sy.length+g.ye.length;if(!any){b.appendChild(el('p','wxm-n','아직 찜한 곳이 없어요 · 카드 오른쪽 아래 ☆를 눌러보세요'));return}
+    var wrap=el('div','stl');[['both','💞 둘 다 찜','<span class="sy">★</span><span class="ye">★</span>'],['sy','석영만','<span class="sy">★</span>'],['ye','예은만','<span class="ye">★</span>']].forEach(function(x){if(!g[x[0]].length)return;wrap.appendChild(el('h5',null,x[1]+' · '+g[x[0]].length));
+      g[x[0]].forEach(function(i){var d=FOOD_DATA[i],bt=el('button');var w=el('span','who');w.innerHTML=x[2];bt.appendChild(w);bt.appendChild(el('span',null,d.n));bt.appendChild(el('small',null,d.kind==='shop'?'🛍️ 쇼핑':(d.kind==='sight'?'📍 볼거리':'🍽️ 맛집')));bt.addEventListener('click',function(){stm.hidden=true;openFood(i)});wrap.appendChild(bt)})});
+    b.appendChild(wrap)}
+  $$('[data-stl]').forEach(function(f){f.addEventListener('click',function(){stList();stm.hidden=false;buzz(6)})});
+  $$('[data-sx]').forEach(function(x){x.addEventListener('click',function(){stm.hidden=true})});
+  stLoad();paint();
   /* 맛집 지역 */
   function foodArea(i,quiet){$$('.achips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.a==i?'true':'false')});$$('.fa').forEach(function(f){f.hidden=f.dataset.a!=i});ls.set('sg-food',i);if(!quiet)navPush()}
   $$('.achips button').forEach(function(b){b.addEventListener('click',function(){foodArea(b.dataset.a);buzz(6)})});
@@ -1802,9 +1863,9 @@ DAYVIEW=f'''<section class="view" id="v-day" hidden>
 <div class="days">{day_btns()}</div>
 {day_cards()}
 </div>
-<div class="sub" data-sub="food" data-label="🍽️ 맛집">{FOOD_HTML}</div>
-<div class="sub" data-sub="shop" data-label="🛍️ 쇼핑">{SHOP_HTML}</div>
-<div class="sub" data-sub="sight" data-label="📍 볼거리">{SIGHT_HTML}</div>
+<div class="sub" data-sub="food" data-label="🍽️ 맛집">{FOOD_HTML}<button class="stfab" type="button" data-stl><b>⭐</b><span class="stn">찜</span></button></div>
+<div class="sub" data-sub="shop" data-label="🛍️ 쇼핑">{SHOP_HTML}<button class="stfab" type="button" data-stl><b>⭐</b><span class="stn">찜</span></button></div>
+<div class="sub" data-sub="sight" data-label="📍 볼거리">{SIGHT_HTML}<button class="stfab" type="button" data-stl><b>⭐</b><span class="stn">찜</span></button></div>
 </section>'''
 
 PAGE=f'''<!doctype html>
@@ -1836,7 +1897,7 @@ PAGE=f'''<!doctype html>
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
 {view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
-<div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><nav class="bn" aria-label="메뉴">
+<div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><div class="wxm" id="stm" hidden><div class="wxm-bg" data-sx></div><div class="wxm-c" role="dialog" aria-label="찜 목록"><div class="wxm-h"><b>⭐ 우리 찜</b><button class="wxm-x" data-sx aria-label="닫기">✕</button></div><div id="stm-b"></div></div></div><div class="wxm" id="whom" hidden><div class="wxm-bg" data-wx2></div><div class="wxm-c" role="dialog" aria-label="누구 폰?"><div class="wxm-h"><b>이 폰은 누구 거예요?</b><button class="wxm-x" data-wx2 aria-label="닫기">✕</button></div><p class="wxm-n">한 번만 고르면 돼요 · 별표 색이 사람마다 달라요 (설정에서 바꿀 수 있음)</p><div class="whob"><button data-me="sy" class="sy">★ 석영</button><button data-me="ye" class="ye">★ 예은</button></div></div></div><nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>

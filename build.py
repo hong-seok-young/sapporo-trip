@@ -1503,28 +1503,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 @keyframes cardin{from{opacity:0;transform:translateY(12px) scale(.96)}}
 .schips button[aria-pressed="true"],.gchips button[aria-pressed="true"],.achips button[aria-pressed="true"],.seg button[aria-selected="true"]{animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
 @keyframes chip{50%{transform:scale(1.08)}}
-.duck{position:fixed;left:100%;bottom:60px;width:56px;height:48px;z-index:19;padding:0;border:0;background:none;transform:translateX(0);transition-property:transform;transition-timing-function:linear;-webkit-tap-highlight-color:transparent}
-.duck[hidden]{display:none}
-.duck svg{width:56px;height:48px;overflow:visible;display:block;transform-origin:50% 92%}
-.duck.mv svg{animation:wad .42s ease-in-out infinite}
-.duck .ft1,.duck .ft2{transform-box:fill-box;transform-origin:50% 0}
-.duck.mv .ft1{animation:step .42s ease-in-out infinite}
-.duck.mv .ft2{animation:step .42s ease-in-out infinite reverse}
-.duck .hd2{transform-box:fill-box;transform-origin:70% 90%}
-.duck.look .hd2{animation:look 2.2s ease-in-out}
-.duck .eye{transform-box:fill-box;transform-origin:center;animation:blink 3.6s infinite}
-.duck.hop svg{animation:hop .5s cubic-bezier(.3,1.5,.5,1)}
-.duck.flip svg{scale:-1 1}
-.duck .bub{position:absolute;left:-6px;top:-24px;font:800 12px/1 var(--f);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:4px 7px;white-space:nowrap;opacity:0;transform:translateY(4px) scale(.8);transition:opacity .2s,transform .25s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
-.duck .bub.on{opacity:1;transform:none}
-.duck .pf{position:absolute;width:5px;height:5px;border-radius:50%;background:#dbeefc;left:24px;top:18px;pointer-events:none;animation:puff .7s ease-out forwards}
-@keyframes puff{to{transform:translate(var(--x),var(--y)) scale(.4);opacity:0}}
-@keyframes wad{0%,100%{rotate:-6deg}50%{rotate:6deg}}
-@keyframes step{50%{transform:scaleY(.4)}}
-@keyframes look{20%,40%{rotate:-14deg}60%,80%{rotate:10deg}}
-@keyframes blink{0%,46%,50%,100%{transform:scaleY(1)}48%{transform:scaleY(.1)}}
-@keyframes hop{40%{transform:translateY(-16px) rotate(-8deg)}70%{transform:translateY(0) scaleY(.88)}}
-@media (prefers-reduced-motion:reduce){.hsnow,.hero #snow,.duck{display:none}.fgrid .fc,.dday::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.hsnow,.hero #snow{display:none}.fgrid .fc,.dday::after{animation:none}}
 '''
 
 JS = r'''
@@ -1701,36 +1680,6 @@ JS = r'''
   var hs=$('#hsnow'),hd=$('.hd');
   (function(){if(!hs)return;var h='';for(var i=0;i<16;i++){var w=(Math.random()*1.8+1.2).toFixed(1),d=(Math.random()*7+8).toFixed(1),dl=(-Math.random()*15).toFixed(1),o=(Math.random()*.35+.25).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}hs.innerHTML=h})();
   function hsH(){if(hs&&hd)hs.style.setProperty('--hh',hd.offsetHeight+'px')}hsH();window.addEventListener('resize',hsH);
-  /* 눈오리 산책 */
-  (function(){
-    var dk=$('#duck'),bub=$('#bub'),bn=$('.bn');if(!dk)return;
-    var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)return;
-    var busy=false,tm=[];
-    function later(f,ms){tm.push(setTimeout(f,ms))}
-    function place(){dk.style.bottom=((bn&&bn.offsetHeight)||60)-4+'px'}
-    function go(x,sec,cb){dk.classList.add('mv');dk.style.transitionDuration=sec+'s';dk.style.transform='translateX('+x+'px)';later(function(){dk.classList.remove('mv');cb&&cb()},sec*1000)}
-    function sheetOpen(){var sh=$('#sheet');return sh&&!sh.hidden}
-    function walk(){
-      if(busy||document.hidden||sheetOpen()){later(walk,20000);return}
-      busy=true;place();var W=window.innerWidth;
-      dk.classList.remove('flip');dk.style.transitionDuration='0s';dk.style.transform='translateX(0)';dk.hidden=false;
-      void dk.offsetWidth;
-      var stop=-Math.round(W*(.35+Math.random()*.3));
-      later(function(){go(stop,Math.abs(stop)/62,function(){
-        dk.classList.add('look');
-        later(function(){dk.classList.remove('look');
-          if(Math.random()<.35){dk.classList.add('flip');go(0,Math.abs(stop)/70,done)}
-          else go(-W-70,(W+70+stop)/66,done)},2300)})},60);
-    }
-    function done(){dk.hidden=true;dk.classList.remove('flip');busy=false;later(walk,35000+Math.random()*40000)}
-    var quacks=['꽥!','꽥꽥!','눈 온다 ❄','삿포로 가자!','예은 석영 화이팅!','시라코 먹자 🐟','D-'+(($('#dday')&&$('#dday').textContent.replace(/[^0-9]/g,''))||'?')+'!'];
-    dk.addEventListener('click',function(e){e.stopPropagation();dk.classList.remove('hop');void dk.offsetWidth;dk.classList.add('hop');
-      bub.textContent=quacks[Math.floor(Math.random()*quacks.length)];bub.classList.add('on');setTimeout(function(){bub.classList.remove('on')},1300);
-      for(var i=0;i<7;i++){var f=document.createElement('i');f.className='pf';var a=Math.random()*Math.PI*2,r=18+Math.random()*16;f.style.setProperty('--x',Math.cos(a)*r+'px');f.style.setProperty('--y',Math.sin(a)*r-8+'px');dk.appendChild(f);setTimeout(function(n){return function(){n.remove()}}(f),750)}
-      if(typeof buzz==='function')buzz(8)});
-    window.addEventListener('resize',place);
-    later(walk,5000);
-  })();
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});
   theme(ls.get('sg-theme'));
@@ -1821,7 +1770,7 @@ PAGE=f'''<!doctype html>
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
 {view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
-<button class="duck" id="duck" type="button" aria-label="눈오리" hidden><span class="bub" id="bub">꽥!</span><svg viewBox="0 0 60 50" aria-hidden="true"><ellipse class="ft1" cx="26" cy="47" rx="3.6" ry="2" fill="#f4a340"/><ellipse class="ft2" cx="38" cy="47" rx="3.6" ry="2" fill="#f4a340"/><path d="M50 30 L59 22 L55 34 Z" fill="#fff" stroke="#c9d7e3" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="33" cy="34" rx="22" ry="13.5" fill="#fff" stroke="#c9d7e3" stroke-width="1.5"/><path d="M33 32 q8 -7 14 2 q-7 5 -14 -2z" fill="#eef4f9" stroke="#c9d7e3" stroke-width="1.2"/><circle cx="40" cy="40" r="1" fill="#dce6ee"/><circle cx="27" cy="42" r=".9" fill="#dce6ee"/><g class="hd2"><path d="M9 26 q8 6 18 -1 l1 4 q-10 6 -19 1z" fill="#e5484d"/><path d="M24 27 l4 8 l-5 -1z" fill="#e5484d"/><circle cx="16" cy="17" r="11" fill="#fff" stroke="#c9d7e3" stroke-width="1.5"/><ellipse cx="4.6" cy="19.5" rx="5.2" ry="3.1" fill="#f4a340"/><path d="M1 19.6 h8" stroke="#d98a2b" stroke-width=".9"/><g class="eye"><circle cx="12.6" cy="14.6" r="1.9" fill="#1d2733"/><circle cx="13.2" cy="14" r=".6" fill="#fff"/></g><circle cx="16.8" cy="21" r="2.5" fill="#ffb3c1" opacity=".75"/><path d="M15 6.5 q2 -4 5 -1" fill="none" stroke="#c9d7e3" stroke-width="1.3" stroke-linecap="round"/></g></svg></button><nav class="bn" aria-label="메뉴">
+<nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>

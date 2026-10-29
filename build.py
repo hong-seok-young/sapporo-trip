@@ -1505,6 +1505,13 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .fci .stb.pop{animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
 .fci .fcn2{right:auto;left:6px}
 .fc.has-st{box-shadow:0 0 0 2px #ffd36b inset}
+.stsec{color:#b07a00}
+.stempty{display:none}
+body.stonly .fa>*:not(.stsec):not(.stgrid):not(.stempty),body.stonly .sa>*:not(.stsec):not(.stgrid):not(.stempty),body.stonly .ga>*:not(.stsec):not(.stgrid):not(.stempty){display:none!important}
+body.stonly .stgrid[hidden]+.stempty{display:block}
+body.stonly .stfab{background:#f2a900;color:#1c1300}
+body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(.achips):not(.schips):not(.gchips):not(.chipwrap){display:none}
+.stgrid{margin-bottom:6px}
 .strow{display:flex;gap:6px;margin:8px 0 2px;flex-wrap:wrap}
 .strow button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;color:var(--mut)}
 .strow button.on{border-color:#f2a900;color:#b07a00;background:rgba(242,169,0,.12)}
@@ -1673,8 +1680,13 @@ JS = r'''
   function publish(){pending=true;if(pubT)return;pubT=setTimeout(function(){pubT=null;if(navigator.onLine===false)return;var body=JSON.stringify({v:1,m:SM});if(body===lastBody&&Date.now()-lastAt<3*3600e3){pending=false;return}fetch(NT,{method:'POST',body:body}).then(function(r){if(r.ok){pending=false;lastBody=body;lastAt=Date.now();ls.set('sg-stars-pub',JSON.stringify([body,lastAt]));stat('🟢 실시간 공유 중')}}).catch(function(){stat('🟡 연결 안 됨 · 다시 연결되면 자동 전송')})},900)}
   function stat(t){sync=t;paint()}
   function toggle(i){var id=sid(FOOD_DATA[i].n),o=on(i);SM[id]=[o?0:1,now36()];smSave();paint();publish();buzz(o?6:14);flash(o?'찜 취소':'찜 ★ · 같이 보임')}
-  function paint(){var n=0;$$('.fc').forEach(function(c){var i=+c.dataset.i,b=c.querySelector('.stb'),o=on(i);if(b)b.innerHTML=o?'<span class="y">★</span>':'<span class="e">☆</span>';c.classList.toggle('has-st',o)});
-    FOOD_DATA.forEach(function(d,i){if(on(i))n++});$$('.stn').forEach(function(e){e.textContent='찜 '+n});var st=$('#st-st');if(st)st.textContent=sync+' · 찜 '+n+'곳'}
+  /* 찜한 카드는 그 탭(지역) 맨 위 '⭐ 찜한 곳'으로 옮김 · 풀면 원래 자리로 */
+  function stBox(pn){var g=pn.querySelector(':scope > .stgrid');if(!g){var h=document.createElement('h3');h.className='sec stsec';h.textContent='⭐ 찜한 곳';g=document.createElement('div');g.className='fgrid stgrid';pn.insertBefore(g,pn.firstChild);pn.insertBefore(h,g);var em=document.createElement('p');em.className='hint stempty';em.textContent='이 탭(지역)엔 아직 찜한 곳이 없어요 · 다른 지역 칩도 눌러보세요';pn.insertBefore(em,g.nextSibling)}return g}
+  function place(){$$('.fc').forEach(function(c){if(!c._home){var pn=c.closest('.fa,.sa,.ga');if(!pn)return;var mk=document.createComment('fc');c.parentNode.insertBefore(mk,c);c._home=mk;c._pn=pn}});
+    var boxes=[];$$('.fc').forEach(function(c){if(!c._pn)return;var g=stBox(c._pn);if(boxes.indexOf(g)<0)boxes.push(g);var i=+c.dataset.i;if(on(i)){if(c.parentNode!==g)g.appendChild(c)}else if(c.parentNode===g){c._home.parentNode.insertBefore(c,c._home.nextSibling)}});
+    boxes.forEach(function(g){var cs=[].slice.call(g.children).sort(function(x,y){return +x.dataset.i-+y.dataset.i});cs.forEach(function(c){g.appendChild(c)});var e=!cs.length;g.hidden=e;g.previousElementSibling.hidden=e})}
+  function paint(){var n=0;$$('.fc').forEach(function(c){var i=+c.dataset.i,b=c.querySelector('.stb'),o=on(i);if(b)b.innerHTML=o?'<span class="y">★</span>':'<span class="e">☆</span>';c.classList.toggle('has-st',o)});place();
+    FOOD_DATA.forEach(function(d,i){if(on(i))n++});var so=document.body.classList.contains('stonly');$$('.stn').forEach(function(e){e.textContent=so?'전체 보기':'찜만 보기 · '+n});$$('.stfab b').forEach(function(e){e.textContent=so?'↩︎':'⭐'});var st=$('#st-st');if(st)st.textContent=sync+' · 찜 '+n+'곳'}
   $$('.fc').forEach(function(c){var fi=c.querySelector('.fci');if(!fi)return;var b=document.createElement('span');b.className='stb';b.setAttribute('role','button');b.setAttribute('aria-label','찜');b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggle(+c.dataset.i);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')});fi.appendChild(b)});
   window.starRow=function(i,host,after){var r=el('div','strow'),o=on(i),b=el('button',o?'on':'',o?'★ 찜함 (같이 보임)':'☆ 찜하기');b.addEventListener('click',function(){toggle(i);window.starRow(i,host,r);r.remove()});r.appendChild(b);host.insertBefore(r,after?after.nextSibling:host.firstChild);return r};
   /* 실시간 받기: 서버에 남아있는 최근 기록(최대 12시간) + 이후 실시간 */
@@ -1692,7 +1704,9 @@ JS = r'''
     var wrap=el('div','stl');[['food','🍽️ 맛집'],['shop','🛍️ 쇼핑'],['sight','📍 볼거리']].forEach(function(g){var arr=L.filter(function(i){return (FOOD_DATA[i].kind||'food')===g[0]});if(!arr.length)return;wrap.appendChild(el('h5',null,g[1]+' · '+arr.length));
       arr.forEach(function(i){var d=FOOD_DATA[i],bt=el('button');bt.appendChild(el('span','who y','★'));bt.appendChild(el('span',null,d.n));bt.appendChild(el('small',null,d.cat));bt.addEventListener('click',function(){stm.hidden=true;openFood(i)});wrap.appendChild(bt)})});
     b.appendChild(wrap);b.appendChild(el('p','wxm-n',sync))}
-  $$('[data-stl]').forEach(function(f){f.addEventListener('click',function(){stList();stm.hidden=false;buzz(6)})});
+  function stOnly(v){document.body.classList.toggle('stonly',v);ls.set('sg-stonly',v?'1':'');paint();window.scrollTo(0,0)}
+  $$('[data-stl]').forEach(function(f){f.addEventListener('click',function(){stOnly(!document.body.classList.contains('stonly'));buzz(8);flash(document.body.classList.contains('stonly')?'⭐ 찜한 곳만 보는 중':'전체 보기')})});
+  if(ls.get('sg-stonly'))document.body.classList.add('stonly');
   $$('[data-sx]').forEach(function(x){x.addEventListener('click',function(){stm.hidden=true})});
   smLoad();paint();listen();
   /* 맛집 지역 */

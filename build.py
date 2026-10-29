@@ -1445,8 +1445,8 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 /* 모션 */
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
 .hero #snow{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-.hero #snow i{position:absolute;top:-8px;border-radius:50%;background:#fff;animation:fall linear infinite}
-@keyframes fall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(10px,calc(var(--h) * .5),0)}100%{transform:translate3d(-6px,calc(var(--h) + 16px),0)}}
+.hero #snow i{position:absolute;top:-8px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(255,255,255,.55);will-change:transform;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(var(--dx,10px),calc(var(--h) * .5),0)}100%{transform:translate3d(calc(var(--dx,10px) * -.6),calc(var(--h) + 16px),0)}}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .sub:not([hidden]){animation:up .28s ease-out}
 .tl li{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -1500,8 +1500,8 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 .hd{overflow:hidden}
 .hd-in,.seg{position:relative;z-index:1}
 .hsnow{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.hsnow i{position:absolute;top:-6px;border-radius:50%;background:#fff;animation:hfall linear infinite}
-@keyframes hfall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(7px,calc(var(--hh,110px) * .5),0)}100%{transform:translate3d(-4px,calc(var(--hh,110px) + 10px),0)}}
+.hsnow i{position:absolute;top:-6px;border-radius:50%;background:#fff;will-change:transform;animation:hfall linear infinite}
+@keyframes hfall{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(var(--dx,7px),calc(var(--hh,110px) * .5),0)}100%{transform:translate3d(calc(var(--dx,7px) * -.6),calc(var(--hh,110px) + 10px),0)}}
 .dday::after{content:"❄";display:inline-block;margin-left:4px;font-size:13px;color:#cfe8fb;vertical-align:2px;animation:spin 6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .fgrid .fc{animation:cardin .38s cubic-bezier(.2,.8,.3,1.2) both}
@@ -1679,12 +1679,13 @@ JS = r'''
 
   /* 눈 */
   var snow=$('#snow');
-  (function(){if(!snow)return;var h='';for(var i=0;i<26;i++){var w=(Math.random()*2.2+1.4).toFixed(1),d=(Math.random()*9+9).toFixed(1),dl=(-Math.random()*18).toFixed(1),o=(Math.random()*.45+.35).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}snow.innerHTML=h})();
+  function flakes(n,layers){var h='';for(var i=0;i<n;i++){var L=layers[i%layers.length],r=Math.random,w=(L[0]+r()*(L[1]-L[0])).toFixed(1),d=(L[2]+r()*(L[3]-L[2])).toFixed(1),o=(L[4]+r()*(L[5]-L[4])).toFixed(2),dx=((r()*2-1)*L[6]).toFixed(0);h+='<i style="left:'+(r()*104-2).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';--dx:'+dx+'px;animation-duration:'+d+'s;animation-delay:'+(-r()*d).toFixed(1)+'s'+(L[7]?';filter:blur('+L[7]+'px)':'')+'"></i>'}return h}
+  if(snow)snow.innerHTML=flakes(84,[[1.4,2.4,10,16,.4,.65,14,0],[1.4,2.4,10,16,.4,.65,14,0],[2.6,4.2,6.5,9.5,.6,.85,22,0],[2.6,4.2,6.5,9.5,.6,.85,22,0],[4.8,7.5,4.2,6.2,.75,.95,30,.8]]);
   function snowH(){if(snow)snow.style.setProperty('--h',($('#hero').offsetHeight||240)+'px')}snowH();window.addEventListener('resize',snowH);
   function snowSet(){}
   /* 헤더 눈 */
   var hs=$('#hsnow'),hd=$('.hd');
-  (function(){if(!hs)return;var h='';for(var i=0;i<16;i++){var w=(Math.random()*1.8+1.2).toFixed(1),d=(Math.random()*7+8).toFixed(1),dl=(-Math.random()*15).toFixed(1),o=(Math.random()*.35+.25).toFixed(2);h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+w+'px;height:'+w+'px;opacity:'+o+';animation-duration:'+d+'s;animation-delay:'+dl+'s"></i>'}hs.innerHTML=h})();
+  if(hs)hs.innerHTML=flakes(46,[[1.2,2.2,8,13,.3,.55,10,0],[1.2,2.2,8,13,.3,.55,10,0],[2.4,3.6,5.5,8,.5,.8,16,0],[3.8,5.2,4,5.5,.65,.9,20,.6]]);
   function hsH(){if(hs&&hd)hs.style.setProperty('--hh',hd.offsetHeight+'px')}hsH();window.addEventListener('resize',hsH);
   function theme(t){t=(t==='dark'||t==='auto')?t:'light';document.documentElement.dataset.theme=t;$$('#theme button').forEach(function(b){b.classList.toggle('pri',b.dataset.t===t)});ls.set('sg-theme',t)}
   $$('#theme button').forEach(function(b){b.addEventListener('click',function(){theme(b.dataset.t);flash('다크 모드 '+b.textContent)})});

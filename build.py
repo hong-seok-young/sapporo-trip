@@ -514,7 +514,7 @@ SET='''
 <h3 class="sec">🌙 다크 모드</h3>
 <div class="form"><div class="btns" id="theme"><button data-t="light">끄기</button><button data-t="dark">켜기</button><button data-t="auto">폰 설정 따름</button></div><div class="st">기본은 끄기(밝은 화면) · 폰 설정 따름 = 폰이 다크모드면 어둡게</div></div>
 <h3 class="sec">📴 오프라인</h3>
-<div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="btns"><button id="off-b">사진 지금 받기</button></div></div>
+<div class="form"><div class="st" id="off-st">앱 화면·글은 자동 저장됨 · 사진 저장 확인 중…</div><div class="st">자동 저장: 앱을 열 때 · 인터넷이 다시 연결될 때 · 앱으로 돌아올 때 알아서 받음 (누를 것 없음) · 카드 대표 사진 + 일정 사진은 미리, 상세 사진은 한 번 열어본 것부터 저장</div></div>
 <p class="hint">입력한 값·체크·도장은 이 폰 브라우저에만 저장되고 파일·깃허브에는 올라가지 않음</p>
 <p class="hint">장소 사진 · Wikimedia Commons (팝업에 원본 링크) · 버전 '''+VER+'''</p>
 '''
@@ -1710,10 +1710,11 @@ JS = r'''
     caches.open('sg-img2').then(function(c){var list=imgList(),done=0,miss=[];
       return Promise.all(list.map(function(u){return c.match(u).then(function(r){if(r)done++;else miss.push(u)})})).then(function(){
         ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(miss.length?' · 받는 중…':' · 오프라인에서도 전부 보임');
-        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<4)setTimeout(function(){warm()},20000);return}
+        var i=0;function next(){if(i>=miss.length){warming=false;var left=list.length-done;ost.textContent='사진 '+done+'/'+list.length+' 저장됨'+(left?' · 나머지 잠시 후 다시 시도':' · 오프라인에서도 전부 보임');if(left&&warmTries++<10)setTimeout(function(){warm()},60000);return}
           var u=miss[i++];var wm=u.indexOf('upload.wikimedia.org')>0;fetch(u,{mode:wm?'cors':'no-cors',referrerPolicy:'no-referrer',credentials:'omit'}).then(function(r){if(r.ok||r.type==='opaque'){done++;return c.put(u,r)}}).catch(function(){}).then(function(){ost.textContent='사진 '+done+'/'+list.length+' 저장 중…';setTimeout(next,force?150:350)})}
         next()})}).catch(function(){warming=false;ost.textContent='사진 저장 불가 (브라우저 미지원)'})}
-  $('#off-b').addEventListener('click',function(){warm(true)});
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)warm()});
   if('requestIdleCallback' in window)requestIdleCallback(function(){warm()},{timeout:4000});else setTimeout(warm,2500);
   /* PWA */
   var dp=null,inst=$('#inst'),standalone=(navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches),ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);

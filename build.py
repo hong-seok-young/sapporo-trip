@@ -9,6 +9,7 @@ def esc(t): return html.escape(t, quote=True)
 
 # ───────────── 장소 데이터 (지도 검색어, 일본어 주소, 영어 주소, 사진 파일) ─────────────
 PL = {
+ 'JUNE': ('인천공항 호텔 준','인천공항 호텔 준 신도시남로150번길 18',['인천광역시 영종구 신도시남로150번길 18','18 Sindosinam-ro 150beon-gil, Incheon'],None),
  'P5': ('인천 P5 예약주차장','인천광역시 중구 운서동 2851-76',['인천광역시 영종구 운서동 2851-76'],None),
  'T1': ('인천공항 T1','인천국제공항 제1여객터미널',['인천광역시 영종구 공항로 272 인천국제공항 제1여객터미널'],None),
  'CTS': ('신치토세 국제선','新千歳空港 国際線ターミナルビル',['北海道千歳市美々 新千歳空港 国際線ターミナルビル','New Chitose Airport International Terminal, Bibi, Chitose, Hokkaido'],'e/e0/New_Chitose_Airport.jpg'),
@@ -53,7 +54,7 @@ PL = {
  'NIKKA': ('닛카 위스키 余市 증류소','ニッカウヰスキー余市蒸溜所',['北海道余市郡余市町黒川町7-6','7-6 Kurokawacho, Yoichi, Hokkaido'],None),
 }
 # 타일 직링크 사진 (타베로그 · 둘만 보는 비상업 용도)
-PLSRC={'OASIS':'https://tblg.k-img.com/restaurant/images/Rvw/209828/640x640_rect_976bd0e05987782eca6419ee0568ca49.jpg',
+PLSRC={'JUNE':'https://content.r9cdn.net/rimg/himg/2f/7d/cc/onda_me-203723-45c358-652580.jpg?width=1200&height=630&crop=true','OASIS':'https://tblg.k-img.com/restaurant/images/Rvw/209828/640x640_rect_976bd0e05987782eca6419ee0568ca49.jpg',
  'SHIROI':'https://tblg.k-img.com/restaurant/images/Rvw/121308/640x640_rect_121308667.jpg',
  'TANAKA':'https://tblg.k-img.com/restaurant/images/Rvw/306266/640x640_rect_6011683dfe2e1505a3ddeb7c83464150.jpg',
  'NIKKA':'https://tblg.k-img.com/restaurant/images/Rvw/95711/640x640_rect_95711722.jpg'}
@@ -131,7 +132,7 @@ DAYS=[
 ]
 TL={
 1:''.join([
- stop('전날','12/2 영종도 숙소 1박','예약 전',ic='🛏️'),
+ stop('전날','12/2 인천공항 호텔 준 1박','체크인 16:00 · 운서역 바로 앞 · 주차 무료 · 상세는 예약 › 숙소',tiles(tile('JUNE',cap='인천공항 호텔 준 로비',phone=('+82327464417','032-746-4417'))),ic='🛏️'),
  stop('07:10','숙소 체크아웃 → P5','차로 10~20분',ic='🚗'),
  stop('07:25','P5 입차','예약 07:30',tiles(tile('P5')),ic='🅿️'),
  stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',tiles(tile_img('./bus.jpg','순환버스 시간표','순환버스 시간표 (T1 3G ↔ 하얏트·예약주차장 ↔ T2)','누르면 크게')),ic='🚌'),
@@ -215,6 +216,19 @@ FLIGHT=f'''
 '''
 
 STAY=f'''
+<article class="tk">
+  <div class="tk-img"><img src="https://content.r9cdn.net/rimg/himg/2f/7d/cc/onda_me-203723-45c358-652580.jpg?width=1200&height=630&crop=true" loading="lazy" referrerpolicy="no-referrer" alt="" onerror="this.hidden=true"><div class="tk-cap"><b>인천공항 호텔 준</b><span>Hotel June Incheon Airport · 출국 전날</span></div></div>
+  <div class="leg"><div><b>12.02</b><span>수 16:00 체크인</span></div><div class="nts">1박</div><div><b>12.03</b><span>목 12:00 체크아웃</span></div></div>
+  <div class="tk-cut"></div>
+  <div class="kv"><div><span>숙소 예약번호</span>{sv('junno','copyable mono')}</div><div><span>통합 주문번호</span>{sv('junord','copyable mono')}</div></div>
+  {row('객실','디럭스트윈 · 실리침대 Q 배치 · 넓은 객실·욕조 · 기준 2명')}
+  {row('포함','넷플릭스(본인 계정)·유튜브 · 라면카페 + 음료 무료')}
+  {row('주소','인천 영종구 신도시남로150번길 18 · 운서역 도보 1~5분<div class="ta">'+acts('JUNE',phone=('+82327464417','032-746-4417'))+'</div>')}
+  {row('주차','무료 · 차량방문으로 예약됨')}
+  {row('다음날','07:10 체크아웃 → P5 차로 10~20분 · 23시 이후 도착이면 셀프 체크인 기계')}
+  {row('결제','71,000원 (73,000 − 할인 2,000) · 카카오페이 · 10/30')}
+  {row('무료 취소','12/2(수) 00:00 전까지 · 놀(NOL) 앱')}
+</article>
 <article class="tk">
   <div class="tk-img"><img src="{esc(thumb('6/6b/Sapporo_television_tower_01.jpg'))}" loading="lazy" alt="" onerror="this.hidden=true"><div class="tk-cap"><b>삿포로 도큐 REI 호텔</b><span>Sapporo Tokyu REI Hotel · 札幌東急REIホテル</span></div></div>
   <div class="leg"><div><b>12.03</b><span>목 15:00 체크인</span></div><div class="nts">2박</div><div><b>12.05</b><span>토 11:00 체크아웃</span></div></div>
@@ -376,7 +390,6 @@ TODO=f'''
 <div class="ring-wrap"><svg class="ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle cx="18" cy="18" r="15.5" class="fg" id="todo-ring"/></svg><div><b id="todo-n">0/0</b><span>할 일</span></div></div>
 <h3 class="sec">📌 지금</h3>
 <ul class="checks" data-l="todo">
-{chk('t13','인천공항 근처 숙소 예약 (12/2 1박)','영종도 · 12/3 아침 P5 입차 가능 11:30까지')}
 {chk('t1','국제운전면허증 수령','10/26 신청 · 발급 완료 · 회사(DX팀)로 등기 · 11/2~11/9경 도착 · 발송 당일 문자','둘 다 운전 시 둘 다 · 종이 원본 지참')}
 </ul>
 <h3 class="sec">🗓️ 1~2주 전</h3>
@@ -449,15 +462,16 @@ JP=f'''
 
 COST=f'''
 <div class="sum">
-  <div><span>결제 완료</span><b>2,054,560<small>원</small></b></div>
+  <div><span>결제 완료</span><b>2,125,560<small>원</small></b></div>
   <div><span>현장 예상</span><b>약 5만<small>엔</small></b><em>렌터카·HEP·주차·기름 48,700–51,700</em></div>
   <div><span>현금 준비</span><b>3~5만<small>엔</small></b><em>1,000엔권 넉넉히</em></div>
 </div>
 <h3 class="sec">💳 결제 완료 <small>원</small></h3>
 <div class="bars">
-  <div style="--p:43.2"><span>항공권</span><b>888,400</b><i></i><em>항공 요금 868,400 + 대행수수료 20,000</em></div>
-  <div style="--p:41.6"><span>료칸 1박</span><b>854,129</b><i></i><em>객실 705,881 + 세금·봉사료 148,248 · Master <span class="sv" data-k="card4" data-fmt="card"></span></em></div>
-  <div style="--p:13"><span>도큐 REI 2박</span><b>267,751</b><i></i><em>객실 221,280 + 세금·봉사료 46,471 · Master <span class="sv" data-k="card4" data-fmt="card"></span></em></div>
+  <div style="--p:41.8"><span>항공권</span><b>888,400</b><i></i><em>항공 요금 868,400 + 대행수수료 20,000</em></div>
+  <div style="--p:40.2"><span>료칸 1박</span><b>854,129</b><i></i><em>객실 705,881 + 세금·봉사료 148,248 · Master <span class="sv" data-k="card4" data-fmt="card"></span></em></div>
+  <div style="--p:12.6"><span>도큐 REI 2박</span><b>267,751</b><i></i><em>객실 221,280 + 세금·봉사료 46,471 · Master <span class="sv" data-k="card4" data-fmt="card"></span></em></div>
+  <div style="--p:3.3"><span>인천공항 호텔 준 1박</span><b>71,000</b><i></i><em>12/2 · 카카오페이 · 12/2 00시 전 무료 취소</em></div>
   <div style="--p:1.1"><span>이심</span><b>22,840</b><i></i><em>도시락이심 · 네이버페이 · 10/26</em></div>
   <div style="--p:.6"><span>여행자 보험</span><b>11,440</b><i></i></div>
   <div style="--p:.5"><span>인천 P5 보증금</span><b>10,000</b><i></i><em>잔액은 출차 시</em></div>
@@ -502,7 +516,7 @@ INFO=f'''
 '''
 
 FIELDS=[('name','이름','홍길동'),('nameEn','영문 이름','HONG GILDONG'),('stayName','숙소 예약자명','Gil dong'),('phone','전화','010-0000-0000'),('email','이메일','me@example.com'),
- ('pnr','항공 예약번호','6자리'),('p5no','P5 예약번호',''),('p5car','차량번호','12가3456'),('p5pw','P5 비밀번호',''),('carno','타임즈 예약번호',''),('carpw','타임즈 패스워드',''),('card4','카드 뒷 4자리','0000')]
+ ('pnr','항공 예약번호','6자리'),('p5no','P5 예약번호',''),('p5car','차량번호','12가3456'),('p5pw','P5 비밀번호',''),('carno','타임즈 예약번호',''),('carpw','타임즈 패스워드',''),('card4','카드 뒷 4자리','0000'),('junno','호텔 준 숙소 예약번호',''),('junord','호텔 준 통합 주문번호','')]
 SET='''
 <div class="inst" id="inst" hidden><div><b>홈 화면에 추가</b><span id="inst-t">앱처럼 열리고 오프라인에서도 동작</span></div><button id="inst-b">설치</button></div>
 <h3 class="sec">🔑 내 정보 넣기 <small>이 폰에만 저장</small></h3>
@@ -1751,7 +1765,7 @@ JS = r'''
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closePh()});
 
   /* 내 정보 (이 기기에만) */
-  var S={},SK='sg-secrets',KEYS=['name','nameEn','stayName','phone','email','pnr','p5no','p5car','p5pw','carno','carpw','card4'];
+  var S={},SK='sg-secrets',KEYS=['name','nameEn','stayName','phone','email','pnr','p5no','p5car','p5pw','carno','carpw','card4','junno','junord'];
   try{S=JSON.parse(ls.get(SK)||'{}')||{}}catch(e){}
   function fmt(v,f){if(!v)return '';if(f==='intl'){var d=v.replace(/\D/g,'');return d.charAt(0)==='0'?'82'+d.slice(1):d}
     if(f==='words'){var W=['zero','one','two','three','four','five','six','seven','eight','nine'];return v.toUpperCase().split('').filter(function(c){return c!==' '}).map(function(c){return /\d/.test(c)?W[+c]:c}).join('-')}

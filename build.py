@@ -10,6 +10,7 @@ def esc(t): return html.escape(t, quote=True)
 # ───────────── 장소 데이터 (지도 검색어, 일본어 주소, 영어 주소, 사진 파일) ─────────────
 PL = {
  'JUNE': ('인천공항 호텔 준','인천공항 호텔 준 신도시남로150번길 18',['인천광역시 영종구 신도시남로150번길 18','18 Sindosinam-ro 150beon-gil, Incheon'],None),
+ 'SHIKI': ('시키사이노오카 스노랜드','四季彩の丘 美瑛',['北海道上川郡美瑛町新星第三','Shinsei Daisan, Biei-cho, Hokkaido'],None),
  'P5': ('인천 P5 예약주차장','인천광역시 중구 운서동 2851-76',['인천광역시 영종구 운서동 2851-76'],None),
  'T1': ('인천공항 T1','인천국제공항 제1여객터미널',['인천광역시 영종구 공항로 272 인천국제공항 제1여객터미널'],None),
  'CTS': ('신치토세 국제선','新千歳空港 国際線ターミナルビル',['北海道千歳市美々 新千歳空港 国際線ターミナルビル','New Chitose Airport International Terminal, Bibi, Chitose, Hokkaido'],'e/e0/New_Chitose_Airport.jpg'),
@@ -54,7 +55,7 @@ PL = {
  'NIKKA': ('닛카 위스키 余市 증류소','ニッカウヰスキー余市蒸溜所',['北海道余市郡余市町黒川町7-6','7-6 Kurokawacho, Yoichi, Hokkaido'],None),
 }
 # 타일 직링크 사진 (타베로그 · 둘만 보는 비상업 용도)
-PLSRC={'JUNE':'https://content.r9cdn.net/rimg/himg/2f/7d/cc/onda_me-203723-45c358-652580.jpg?width=1200&height=630&crop=true','OASIS':'https://tblg.k-img.com/restaurant/images/Rvw/209828/640x640_rect_976bd0e05987782eca6419ee0568ca49.jpg',
+PLSRC={'SHIKI':'https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery01.jpg','JUNE':'https://content.r9cdn.net/rimg/himg/2f/7d/cc/onda_me-203723-45c358-652580.jpg?width=1200&height=630&crop=true','OASIS':'https://tblg.k-img.com/restaurant/images/Rvw/209828/640x640_rect_976bd0e05987782eca6419ee0568ca49.jpg',
  'SHIROI':'https://tblg.k-img.com/restaurant/images/Rvw/121308/640x640_rect_121308667.jpg',
  'TANAKA':'https://tblg.k-img.com/restaurant/images/Rvw/306266/640x640_rect_6011683dfe2e1505a3ddeb7c83464150.jpg',
  'NIKKA':'https://tblg.k-img.com/restaurant/images/Rvw/95711/640x640_rect_95711722.jpg'}
@@ -151,7 +152,8 @@ TL={
  stop('(선택)','아사히야마 동물원','겨울 10:30–15:30 · 1,000엔 · 2시간 필요 · 旭川鷹栖IC 30분 → 美瑛 40분 · 넣으면 언덕 길은 패치워크 길만 (펭귄 산책은 12월 하순부터)',tiles(tile('ZOO')),ic='🐧'),
  stop('오전','언덕 길',None,tiles(tile('PATCH',cap='비에이 패치워크 길 (여름)'),tile('KEN'),tile('SEVEN')),at='10:30',ic='🌾'),
  stop('점심','비에이 시내','<b>주유 한 번 더</b>',tiles(tile('BIEI')),at='12:30',ic='🍱'),
- stop('오후','나무 → 폭포',None,tiles(tile('XMAS'),tile('FALLS')),at='14:00',ic='🎄'),
+ stop('13:30','(선택) 시키사이노오카 스노랜드 · 눈썰매','스노모빌이 끄는 눈썰매 보트 1,200엔/인 · 썰매 500엔 · 1시간 · 크리스마스트리 나무 바로 옆 · ⚠️ 눈 쌓여야 개장(12월 상순~) → 당일 아침 확인 · 볼거리 탭 「비에이」',tiles(tile('SHIKI',cap='시키사이노오카 스노랜드',phone=('+81166952758','0166-95-2758'))),ic='🛷'),
+ stop('오후','나무 → 폭포',None,tiles(tile('XMAS'),tile('FALLS')),at='14:30',ic='🎄'),
  stop('16:30','청의 호수 조명','~21:00 · 30분이면 충분',tiles(tile('POND',cap='청의 호수 (여름)')),ic='🌌'),
  stop('밤','삿포로 복귀 약 3시간','밤 눈길 · 호텔 재입고 · 저녁은 맛집 탭 「귀로 저녁」: 旭川 라멘(가까움) / 美唄 야키토리 다쓰미(美唄IC 5분 · LO 20:30) / 滝川 마쓰오 징기스칸(滝川IC 5분 · 22시)',at='20:30',ic='🌙'),
 ]),
@@ -1015,7 +1017,7 @@ SIGHTS={
    ('s_pond','청의 호수','白金青い池','겨울 라이트업 · 눈 쌓인 나무 + 파란 조명',[('loc','12/4 16:30')],'白金青い池','ChIJbyoi3mLMDF8RnndLnx8YzQQ','점등 일몰~21:00 (11~4월) · 주차 1,000엔 (220대)',['라이트업 산책 (주차장에서 5분)','블루 소프트크림 (주차장 매점)','호수가 얼면 위가 하얗게 덮임'],'일정 탭 16:30','visit-hokkaido'),
    ('s_falls','흰수염폭포','白ひげの滝','절벽에서 솟는 폭포 · 다리 위에서',[],'白ひげの滝','ChIJX3VG4K7MDF8RJmYvjz6VBgU','24시간 · 무료 주차 · 겨울 밤 라이트업',['白金 다리 위에서 폭포 + 파란 강','겨울엔 서리 낀 나무 조명'],'다리 좁고 미끄러움 · 사진 찍고 바로','visit-hokkaido'),
    ('s_seven','세븐스타 나무 · 패치워크 길','セブンスターの木','설원 위 한 그루 · 패치워크 길',[],'セブンスターの木','ChIJC3IhmnLEDF8RDGL0pq7wdhE','24시간 · 무료 주차 20대',['세븐스타 나무','켄과 메리 나무 (차 5분)','눈 덮인 언덕 드라이브'],'밭은 출입 금지 · 사진 5분 컷','visit-hokkaido'),
-   ('s_shikisai','시키사이노오카','四季彩の丘','겨울 스노모빌 · 스노우래프팅 · 알파카',[('loc','눈 놀이')],'四季彩の丘','ChIJDeIPuVXIDF8RPhiBRw83_ag','09:10–16:30 (11~12월) · 겨울 입장 무료 · 주차 500엔 (현금)',['스노모빌 · 스노우래프팅 (유료)','알파카 목장 (연중)','언덕 전망'],'크리스마스트리 나무(美馬牛) 바로 옆','visit-hokkaido'),
+   ('s_shikisai','시키사이노오카 스노랜드','四季彩の丘 スノーランド','눈썰매 보트(스노우래프팅) · 썰매 · 스노모빌 · 알파카',[('loc','눈 놀이'),('loc','12/4 오후')],'四季彩の丘','ChIJDeIPuVXIDF8RPhiBRw83_ag','09:10–16:30 · 스노랜드는 12월 상순~ 눈 쌓이면 개장 (12/4엔 아직일 수도) · 입장 무료 · 주차 500엔 (현금)',['스노우래프팅 = 스노모빌이 끄는 눈썰매 보트 1,200엔/인','썰매 500엔/대','스노모빌 숲길 1인 15,000 · 2인 20,000엔 (10~20분)','스노모빌 투어링 10km 18,000엔~ (예약)','알파카 목장 500엔'],'크리스마스트리 나무(美馬牛) 바로 옆 · 개장은 적설 따라 매년 달라서 (2022년은 12/5 개장) 당일 아침 공식 홈페이지 확인 · 날씨 나쁘면 운휴','四季彩の丘 공식'),
    ('s_shinei','신에이노오카 전망공원','新栄の丘展望公園','언덕 전망 · 석양 · 한산',[],'新栄の丘展望公園','ChIJN62Fu5jIDF8RIHsgUAlAs14','일출~일몰 · 무료 주차 30대',['十勝岳 연봉 전망','석양 (12월은 16시 전)','비에이 우유 소프트 · 로스터리 카페'],'크리스마스트리 나무 → 여기 → 청의 호수','visit-hokkaido'),
    ('s_birke','白金ビルケ (도로 휴게소)','道の駅びえい「白金ビルケ」','청의 호수 옆 휴게소 · 화장실 · 버거',[],'道の駅びえい 白金ビルケ','ChIJ121Coa7MDF8Rl63lXaknSKg','09:00–17:00',['BETWEEN THE BREAD 버거 (맛집 탭)','청의 호수 컬러 기념품','노스페이스 코너'],'라이트업 전 화장실·대기','visit-hokkaido'),
    ('s_zoo','아사히야마 동물원','旭山動物園','행동전시 · 펭귄·북극곰·바다표범',[('drv','旭川鷹栖IC 30분')],'旭山動物園','ChIJyyPgtczgDF8R01OoHb3cJcg','겨울 10:30–15:30 · 1,000엔',['펭귄관 수중 터널','북극곰관 · 바다표범 원통 수조'],'2시간 필요 → 넣으면 언덕 길 절반 포기','ANA'),

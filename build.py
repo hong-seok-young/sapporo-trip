@@ -899,7 +899,7 @@ def hours_line(ht):
     return f'<div class="fch fchl">🕐 {esc(hrs)}{esc(offs)}</div>'
 
 def food_html():
-    out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>'+'<div class="kchips" role="group" aria-label="종류">'+''.join(f'<button data-kf="{k}" class="k-{k}" aria-pressed="false">{l}</button>' for k,l in KINDLBL.items())+'</div>']
+    out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>'+'<div class="kchips" role="group" aria-label="종류"><button data-kf="" class="k-all" aria-pressed="true">전체</button>'+''.join(f'<button data-kf="{k}" class="k-{k}" aria-pressed="false">{l}</button>' for k,l in KINDLBL.items())+'</div>']
     data=[]
     used_all=set()
     for i,(area,sub,slots) in enumerate(FOOD):
@@ -1699,6 +1699,7 @@ html:not(.io) .fc .fci::before{transform:none}
 @keyframes capin{to{transform:scaleY(1)}}
 .fc:active{transform:scale(.97) rotate(-.4deg)}
 /* 맛집 종류 색 */
+.k-all{--k:#17304f;--kb:#eef3f9}:root[data-theme="dark"] .k-all{--k:#9cc3ff;--kb:#1c2a3c}
 .k-meal{--k:#f07a3c;--kb:#fff3ea}.k-drink{--k:#6f5bd9;--kb:#f1eeff}.k-sweet{--k:#e8578f;--kb:#ffeef5}
 :root[data-theme="dark"] .k-meal{--kb:#3a261b}:root[data-theme="dark"] .k-drink{--kb:#25213f}:root[data-theme="dark"] .k-sweet{--kb:#3a1f2b}
 @media (prefers-color-scheme:dark){:root[data-theme="auto"] .k-meal{--kb:#3a261b}:root[data-theme="auto"] .k-drink{--kb:#25213f}:root[data-theme="auto"] .k-sweet{--kb:#3a1f2b}}
@@ -1995,10 +1996,10 @@ JS = r'''
       if(q.length&&!t)t=requestAnimationFrame(function(){q.sort(function(a,b){return a.getBoundingClientRect().top-b.getBoundingClientRect().top||a.getBoundingClientRect().left-b.getBoundingClientRect().left});q.forEach(function(c,i){c.style.setProperty('--d',Math.min(i,8)*0.07+'s');c.classList.add('in')});q=[];t=null})},{rootMargin:'0px 0px -6% 0px'});
     function watch(){$$('.fgrid .fc').forEach(function(c){if(!c._io){c._io=1;io.observe(c)}})}watch();setTimeout(watch,800);document.addEventListener('click',function(){setTimeout(watch,200)});
     setTimeout(function(){$$('.fgrid .fc').forEach(function(c){var r=c.getBoundingClientRect();if(r.height&&r.top<innerHeight&&r.bottom>0&&!c.classList.contains('in'))c.classList.add('in')})},2500)})();
-  (function(){var cur=ls.get('sg-kf')||'';function apply(){$$('.kchips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.kf===cur?'true':'false')});
+  (function(){var cur='';function apply(){$$('.kchips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.kf===cur?'true':'false')});
       $$('.fa').forEach(function(f){if(cur)f.setAttribute('data-kf',cur);else f.removeAttribute('data-kf');
         $$('.fgrid',f).forEach(function(g){var any=!cur||g.querySelector('.fc[data-k="'+cur+'"]');g.style.display=any?'':'none';var h=g.previousElementSibling;if(h&&h.matches('h3.sec'))h.style.display=any?'':'none'})})}
-    $$('.kchips button').forEach(function(b){b.addEventListener('click',function(){cur=cur===b.dataset.kf?'':b.dataset.kf;ls.set('sg-kf',cur);apply();buzz(6);window.scrollTo({top:Math.min(window.scrollY,$('.kchips').getBoundingClientRect().top+window.scrollY-120),behavior:'smooth'})})});apply()})();
+    $$('.kchips button').forEach(function(b){b.addEventListener('click',function(){cur=b.dataset.kf;apply();buzz(6);window.scrollTo({top:Math.min(window.scrollY,$('.kchips').getBoundingClientRect().top+window.scrollY-120),behavior:'smooth'})})});apply()})();
   /* 일정 메모 접기 */
   (function(){function setup(){$$('.tl .sn').forEach(function(n){if(n._m)return;if(n.scrollHeight>n.clientHeight+3){n._m=1;var b=document.createElement('button');b.className='snm';b.type='button';b.textContent='더보기 ▾';n.after(b);function tg(e){e.stopPropagation();var o=n.classList.toggle('open');b.textContent=o?'접기 ▴':'더보기 ▾'}b.addEventListener('click',tg);n.addEventListener('click',tg)}})}
     setTimeout(setup,300);document.addEventListener('click',function(){setTimeout(setup,150)});window.addEventListener('resize',function(){setTimeout(setup,200)})})();

@@ -875,6 +875,7 @@ DRIVE={'나카야 과자점 (砂川)':'가는 길 · 砂川IC 5분','기타카�
 # 맛집 카드 색: 식사(기본) / 술 / 디저트·카페
 DRINK={'쿠사치','스기노','교사이','하치쿄 본점','이자카야 후루사토 삿포로 총본점','룻쿠 & 우오헤이','오타루테이 스스키노빌딩점','야키토리 히게보즈','야키토리 다쓰미 (美唄)','오타루 창고 No.1','니시이 형제 스스키노 본점'}
 SWEET={'밀크무라 삿포로 본점','롯카테이 삿포로 본점','사토 (파르페·커피·술)','이니셜 삿포로','KANON PANCAKES','로지우라 카페','후왓토 마루야마 키친','시아와세노 팬케이크 삿포로점','히바리도','푸푸리에','마루야마 우유판매점','파르페테리아 PaL','나나카마도','나카야 과자점 (砂川)','기타카로 砂川 SA점','비에이 방목낙농장','비에이 선카 공방','야마나카 목장 오타루점','기타이치 홀','르타오 본점 카페','아마토 본점','요츠바 화이트 코지','홋카이도 우유 카스텔라','밀크스탠드','스나플스 공항점','로이즈 공항점'}
+RSV={'스시노쿠라':'예약 필수','야키토리 히게보즈':'예약 필수','쿠넬':'예약 필수','덴푸라 아라키':'예약 필수','스시도코로 아리마':'예약 필수','쿠키젠':'예약 필수','료칸 가이세키':'예약됨'}
 KINDLBL={'meal':'🍚 식사','drink':'🍶 술','sweet':'🍰 디저트·카페'}
 LOCAL={'나카야 과자점 (砂川)','야키토리 다쓰미 (美唄)','마쓰오 징기스칸 滝川 본점','카마에이 공장직매점','카키자키 상점 해선공방 (余市)','수아게+ 본점','다루마 본점','롯카테이 삿포로 본점','하치쿄 본점','아지노 히쓰지가오카','시노이에','사케토 소바 마루키','돈부리 차야 니조시장점','자지','트리톤 아사히카와 교쿠신점','네무로 하나마루 코코노 스스키노점','이자카야 후루사토 삿포로 총본점','룻쿠 & 우오헤이','파르페테리아 PaL','니조시장 오이소','준페이','타키나미 식당','나루토 본점','르타오 본점 카페','오타루 마사즈시 본점','에비소바 이치겐 공항점','로이즈 공항점','효세츠노몬'}
 # 타베로그 사진 앞에 붙일 '그 메뉴'의 실제 사진 (블로그 실사)
@@ -935,7 +936,7 @@ def food_html():
                 link=('https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+('&query_place_id='+g[2] if g else ''))
                 data.append({'n':n,'ja':ja,'cat':cat,'mi':mi,'q':link,'tel':tel,'ht':ht,'ph':photos,'rp':rp,'tip':tip,'x':bool(x),'loc':n in LOCAL,'drv':DRIVE.get(n),'g':[g[0],g[1]] if g else None,'tb':[tb[0],tb[1],tbl] if tb else None,'credit':OWNPH[n][1] if (not tb and n in OWNPH) else (LEADPH[n][1] if n in LEADPH else None)})
                 badge=(f'<span class="mi drv">🚗 {esc(DRIVE[n])}</span>' if n in DRIVE else '')+('<span class="mi loc">지역맛집</span>' if n in LOCAL else '')+('<span class="mi bib">빕</span>' if mi=='빕' else (f'<span class="mi">{mi}</span>' if mi else ''))
-                xx='<span class="mi x">휴무</span>' if x else ''
+                xx=('<span class="mi x">휴무</span>' if x else '')+(f'<span class="mi rsv">📞 {RSV[n]}</span>' if n in RSV else '')
                 f=photos[0]['f'] if photos else None
                 if rp:   # 실제 사진 우선 · 못 불러오면 참고 사진(메뉴 예시)으로 자동 교체
                     fb=(f"this.onerror=null;this.src='{esc(thumb(f))}';this.closest('.fc').classList.remove('real')" if f else 'this.hidden=true')
@@ -1711,6 +1712,7 @@ html:not(.io) .fc .fci::before{transform:none}
 .fc[data-k] .fcn{padding-top:15px}
 .fc[data-k] .fcn3{bottom:auto;top:30px}
 .fc[data-k] .fci .fcn2{bottom:17px}
+.mi.rsv{background:#d92d20;color:#fff}
 .kchips{display:flex;gap:5px;margin:-6px 0 -4px;justify-content:center}
 .sub:not(.plan){padding-top:10px}
 .achips,.schips,.gchips{padding:2px}

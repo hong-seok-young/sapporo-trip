@@ -138,6 +138,7 @@ def stop(t, title, note=None, extra='', cls='', at=None, ic=''):
     tt=f' data-t="{st}"' if st else ''
     n=f'<div class="sn">{note}</div>' if note else ''
     i=f'<span class="ic">{ic}</span>' if ic else ''
+    if t=='(선택)' or title.startswith('(선택)'): cls=(cls+' opt').strip()
     return f'<li{tt} class="{cls}"><time>{esc(t)}</time><div class="sb"><div class="sh">{i}{title}</div>{n}{extra}</div></li>'
 
 # ───────────── 일정 ─────────────
@@ -158,8 +159,8 @@ TL={
  stop('10:05','인천 출발 <span class="code">WE0531</span>',ic='✈️'),
  stop('12:45','신치토세 도착','입국 · 세관',tiles(tile('CTS',cap='신치토세 공항')),ic='🛬'),
  stop('13:30','타임즈 카운터 → 셔틀 약 10분','<a class="lk" href="https://www.timescar-rental.com/en/hokkaido/shop/0105/route02.html" target="_blank" rel="noopener">국제선에서 카운터 가는 길</a>',tiles(tile('TIMES')),ic='🚐'),
- stop('','렌터카 픽업','서류 · 결제 · HEP 4일권 · 흠집 사진 (상세는 예약 › 렌터카)',at='13:45',ic='🔑'),
- stop('(선택)','🍺 맥주 공장 견학 → 호텔','삿포로 맥주 홋카이도 공장(恵庭 · 공항 25분 · 삿포로 가는 길) 픽업 후 14:15 출발 → 15:00 투어 60분 1,000엔 · 갓 만든 サッポロクラシック 2잔 (운전자는 무알콜) · 투어 4주 전 오전 8시부터 웹 예약 (12/3 회는 11/5부터 열림 → 지금 예약 가능) · 넣으면 16:10 공장 출발 → 호텔 17시쯤 · 기린 치토세 공장은 볼거리 탭 「근교」',tiles(tile('SBEER',phone=('+81123325802','0123-32-5802'))),ic='🍺'),
+ stop('13:45','렌터카 픽업','서류 · 결제 · HEP 4일권 · 흠집 사진 (상세는 예약 › 렌터카)',ic='🔑'),
+ stop('(선택)','맥주 공장 견학 → 호텔','삿포로 맥주 홋카이도 공장(恵庭 · 공항 25분 · 삿포로 가는 길) 픽업 후 14:15 출발 → 15:00 투어 60분 1,000엔 · 갓 만든 サッポロクラシック 2잔 (운전자는 무알콜) · 투어 4주 전 오전 8시부터 웹 예약 (12/3 회는 11/5부터 열림 → 지금 예약 가능) · 넣으면 16:10 공장 출발 → 호텔 17시쯤 · 기린 치토세 공장은 볼거리 탭 「근교」',tiles(tile('SBEER',phone=('+81123325802','0123-32-5802'))),ic='🍺'),
  stop('14:15','호텔로 출발 · 약 1시간','15:15쯤 도착 · 체크인 15:00부터 · 호텔 기계식 주차 (상세는 예약 › 숙소) · 맥주 공장 넣으면 17시 도착',tiles(tile('REI',cap='삿포로 도큐 REI 호텔')),ic='🏨'),
  stop('16:00','(배고프면) 가볍게 간식','호텔 근처 크레페 · 파르페 조금만 → 첫 끼는 미슐랭 · 맛집 탭 「크레페」',ic='🥐'),
  stop('17:30','첫 끼 · 미슐랭 저녁 (예약)','1순위 쿠넬 17:30 (프렌치 1★ · 도보 10분 · 인당 1~1.5만엔) / 덴푸라 아라키 18:00 (2★ · 도보 8분) / 스시 아리마 18:00 (1★ · 도보 5분) · 상세는 맛집 탭 「미슐랭 첫 저녁」',ic='🌟'),
@@ -1540,6 +1541,35 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 @keyframes ring{from{stroke-dashoffset:97.4}}
 .ring .fg.go{animation:ring .9s cubic-bezier(.2,.7,.2,1)}
 @media (min-width:600px){.hero{height:300px}.tile{flex-basis:150px}}
+/* 일정 콤팩트 */
+.hero{height:32vw;min-height:128px;max-height:200px}
+@media (min-width:600px){.hero{height:200px}}
+.hero-t h1{font-size:24px}
+.days{padding:8px 16px 2px;gap:6px}
+.days button{height:48px;border-radius:10px}
+.days button b{font-size:15px}
+.tl{padding:6px 16px 10px}
+.tl li{grid-template-columns:44px minmax(0,1fr);padding:0 0 11px}
+.tl li::before{left:50px}
+.tl li::after{left:46px}
+.tl time{font-size:14px;line-height:1.55}
+.tl .sb{padding-left:10px}
+.tl .sh{font-size:14.5px;line-height:1.4}
+.tl .sn{font-size:12px;line-height:1.4;margin-top:1px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.tl .sn.open{display:block}
+.tl .snm{border:0;background:none;padding:0;margin-top:1px;font:inherit;font-size:11px;font-weight:700;color:var(--ice);cursor:pointer}
+.tl li.opt time{font-size:11px;color:var(--mut)}
+.tl li.opt .sh{font-size:13.5px;color:var(--mut)}
+.tl li.opt .sn{-webkit-line-clamp:1}
+.tl .strip{margin-top:5px;gap:6px}
+.tl .tile{flex:0 0 auto;max-width:78vw;display:grid;grid-template-columns:44px auto;grid-template-rows:auto auto;column-gap:8px;align-items:center;padding:5px 8px 5px 5px;border-radius:10px}
+.tl .tile .ti{grid-row:1/3;width:44px;height:44px;border-radius:7px}
+.tl .tile.nop{grid-template-columns:auto;padding-left:8px}
+.tl .tile .tn{padding:0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+.tl .tile .tx{padding:0;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+.tl .tile .ta{padding:3px 0 0;flex-wrap:nowrap;gap:3px}
+.tl .tile .tx+.ta{grid-column:2}
+.tl .tile .ta a,.tl .tile .ta button{padding:4px 5px;font-size:10.5px}
 /* 찜 별표 */
 .fci .stb{position:absolute;right:6px;bottom:6px;display:flex;gap:2px;align-items:center;background:rgba(255,255,255,.92);border-radius:999px;padding:2px 6px;font-size:15px;line-height:1.2;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
 .fci .stb .e{color:#9aa8b6}
@@ -1878,6 +1908,9 @@ JS = r'''
     chip();setInterval(chip,30*60000);window.addEventListener('online',chip);
     if(navigator.onLine!==false)setTimeout(function(){P.forEach(function(p,i){if(i!==cur)get(i).catch(function(){})})},4000);
   })();
+  /* 일정 메모 접기 */
+  (function(){function setup(){$$('.tl .sn').forEach(function(n){if(n._m)return;if(n.scrollHeight>n.clientHeight+3){n._m=1;var b=document.createElement('button');b.className='snm';b.type='button';b.textContent='더보기 ▾';n.after(b);function tg(e){e.stopPropagation();var o=n.classList.toggle('open');b.textContent=o?'접기 ▴':'더보기 ▾'}b.addEventListener('click',tg);n.addEventListener('click',tg)}})}
+    setTimeout(setup,300);document.addEventListener('click',function(){setTimeout(setup,150)});window.addEventListener('resize',function(){setTimeout(setup,200)})})();
   /* 🔔 알림 */
   (function(){
     var N=NEWS_DATA,K='sg-news',seen=null;try{seen=localStorage.getItem(K)}catch(e){}

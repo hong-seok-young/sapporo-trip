@@ -388,9 +388,9 @@
   "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/norimonoPh03.jpg",
   "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery02.jpg",
   "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery03.jpg",
-  "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery04.jpg",
   "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery05.jpg",
-  "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/norimonoPh01.jpg"
+  "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/norimonoPh01.jpg",
+  "https://www.shikisainooka.jp/wp-content/themes/shikisainooka/images/winterseason/winerGallery01.jpg"
  ],
  "s_shinei": [
   "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/0361/10361_4_l.jpg",
@@ -503,5 +503,25 @@
  ],
  "dutyfree": [
   "https://www.hokkaido-airports.com/ja/new-chitose/spend/assets/images/hero-spend-dutyfree-1.jpg"
+ ],
+ "s_sbeer": [
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/1207/11207_1_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/1207/11207_3_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/1207/11207_5_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/1207/11207_4_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/1207/11207_6_l.jpg"
+ ],
+ "s_kirin": [
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_1_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_3_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_5_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_6_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_7_l.jpg",
+  "https://www.visit-hokkaido.jp/lsc/upfile/spot/0001/2911/12911_2_l.jpg"
+ ],
+ "s_otbeer": [
+  "https://www.arukikata.co.jp/wp-content/uploads/7f8b6c90bdf71317208f4b1e1bc97bf3.jpg",
+  "https://www.arukikata.co.jp/wp-content/uploads/028b9e82d9eb0884cd5eb3fb1b68c724.jpg",
+  "https://www.shift.jp.org/guide/wp-content/uploads/2010/06/otaru-soko-no11.jpg"
  ]
 }

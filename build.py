@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 """삿포로 여행 PWA 빌드: index.html / manifest / sw.js 생성"""
-import html, urllib.parse, json, time, os, re
+import html, urllib.parse, json, time, os, re, hashlib
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 VER = time.strftime('%Y%m%d-%H%M')
 
 def esc(t): return html.escape(t, quote=True)
+
+# 🔔 알림 — 사이트 바뀔 때마다 맨 위에 한 줄 추가 (최신이 위)
+NEWS=[
+ ('11/06','🔔 알림칸 생김 · 사이트가 바뀌면 빨간 점이 떠요','more/set'),
+ ('11/06','📅 12/3 일정 정리 · 호텔 15:15 도착 → 16:00 늦은 점심 단계 추가','day/plan'),
+ ('11/06','🍺 맥주 공장 3곳 · 삿포로 맥주 에니와(12/3 선택 견학) · 기린 치토세 · 오타루 맥주 (볼거리 탭)','day/sight'),
+ ('11/05','🛷 12/4 시키사이노오카 스노랜드 눈썰매 (선택)','day/plan'),
+ ('10/30','🛏️ 12/2 인천공항 호텔 준 1박 예약 반영 (예약 › 숙소)','book/stay'),
+ ('10/29','⭐ 찜 별표 · 두 폰 실시간 공유 · 찜한 곳은 맨 위 · 찜만 보기 버튼','day/food'),
+ ('10/29','🌨️ 헤더에 일본 날씨 · 누르면 16일 예보','day/plan'),
+ ('10/29','📴 오프라인 자동 저장 · 일본에서 인터넷 없어도 열림','more/set'),
+ ('10/29','🐟 시라코(타치) 제철 맛집 · 🍽️ 늦은 점심(15시 영업) 다양하게','day/food'),
+ ('10/29','🛍️ 쇼핑 탭 · 브랜드 · 드럭·가챠 · 기념품 · 면세','day/shop'),
+]
+NEWS_JSON=json.dumps([{'d':d,'t':t,'g':g,'id':hashlib.md5((d+t).encode()).hexdigest()[:8]} for d,t,g in NEWS],ensure_ascii=False)
 
 # ───────────── 장소 데이터 (지도 검색어, 일본어 주소, 영어 주소, 사진 파일) ─────────────
 PL = {
@@ -61,7 +76,6 @@ PLSRC={'SHIKI':'https://www.shikisainooka.jp/wp-content/themes/shikisainooka/ima
  'TANAKA':'https://tblg.k-img.com/restaurant/images/Rvw/306266/640x640_rect_6011683dfe2e1505a3ddeb7c83464150.jpg',
  'NIKKA':'https://tblg.k-img.com/restaurant/images/Rvw/95711/640x640_rect_95711722.jpg'}
 
-import hashlib
 def cf(name):
     """Commons 파일명 → 'a/ab/Name' 경로"""
     n=name.replace(' ','_'); h=hashlib.md5(n.encode('utf-8')).hexdigest()
@@ -1551,6 +1565,22 @@ body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(
 .wx b{font-family:var(--d);font-weight:400;font-size:14px;letter-spacing:.02em}
 .wx small{font-size:10.5px;opacity:.75}
 .wx:active{transform:scale(.95)}
+.hd-rr{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hd-rr .wx{white-space:nowrap;flex-shrink:0}
+.hd-r{flex-shrink:0}
+.brand{min-width:0}
+.bell{position:relative;border:0;background:rgba(255,255,255,.12);border-radius:50%;width:26px;height:26px;font-size:13px;line-height:26px;padding:0;cursor:pointer}
+.bell:active{transform:scale(.92)}
+.bell i{position:absolute;top:1px;right:1px;width:8px;height:8px;border-radius:50%;background:#ff3b30;box-shadow:0 0 0 1.5px var(--night);animation:bdot 1.6s ease-in-out infinite}
+.bell i[hidden]{display:none}
+.bell.ring{animation:bring 1.2s ease-in-out 2}
+@keyframes bdot{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes bring{0%,100%{transform:rotate(0)}15%{transform:rotate(14deg)}30%{transform:rotate(-12deg)}45%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}75%{transform:rotate(2deg)}}
+.nwl{display:flex;flex-direction:column;margin-top:8px}
+.nwl .r{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;text-align:left;background:none;border-left:0;border-right:0;border-top:0;color:inherit;font-family:inherit;width:100%;cursor:pointer}
+.nwl .r .d{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums;padding-top:1px}
+.nwl .r.new{background:var(--ice-soft);border-radius:10px;border-bottom-color:transparent;margin:2px 0;padding-left:8px;padding-right:8px}
+.nwl .r .nw{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:#ff3b30;border-radius:6px;padding:0 5px;margin-right:4px;vertical-align:1px}
 .wxm{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
 .wxm[hidden]{display:none}
 .wxm-bg{position:absolute;inset:0;background:rgba(8,15,26,.55)}
@@ -1832,6 +1862,20 @@ JS = r'''
     chip();setInterval(chip,30*60000);window.addEventListener('online',chip);
     if(navigator.onLine!==false)setTimeout(function(){P.forEach(function(p,i){if(i!==cur)get(i).catch(function(){})})},4000);
   })();
+  /* 🔔 알림 */
+  (function(){
+    var N=NEWS_DATA,K='sg-news',seen=null;try{seen=localStorage.getItem(K)}catch(e){}
+    var top=N.length?N[0].id:'',dot=$('#bell-dot'),bell=$('#bell'),m=$('#nwm');
+    var idx=-1;for(var i=0;i<N.length;i++)if(N[i].id===seen){idx=i;break}
+    var nNew=seen===top?0:(idx<0?Math.min(3,N.length):idx);
+    if(nNew){dot.hidden=false;setTimeout(function(){bell.classList.add('ring')},900)}
+    function render(){var h='';N.forEach(function(x,i){h+='<button class="r'+(i<nNew?' new':'')+'" data-g="'+x.g+'"><span class="d">'+x.d+'</span><span>'+(i<nNew?'<span class="nw">NEW</span>':'')+x.t.replace(/[<>&]/g,'')+'</span></button>'});$('#nwl').innerHTML=h;
+      $$('.r',$('#nwl')).forEach(function(b){b.addEventListener('click',function(){var g=b.getAttribute('data-g').split('/');close();setTimeout(function(){showView(g[0]);if(g[1]&&$('#v-'+g[0]+' .sub[data-sub="'+g[1]+'"]'))showSub(g[0],g[1])},80)})})}
+    function close(){m.hidden=true;if(history.state&&history.state.sg==='nw')history.back()}
+    bell.addEventListener('click',function(){render();m.hidden=false;dot.hidden=true;bell.classList.remove('ring');try{localStorage.setItem(K,top)}catch(e){}nNew=0;try{history.pushState({sg:'nw'},'')}catch(e){}buzz(6)});
+    $$('[data-nx]',m).forEach(function(x){x.addEventListener('click',close)});
+    window.addEventListener('popstate',function(){if(!m.hidden)m.hidden=true});
+  })();
   /* 헤더 눈 */
   var hs=$('#hsnow'),hd=$('.hd');
   if(hs)hs.innerHTML=flakes(46,[[1.2,2.2,8,13,.3,.55,10,0],[1.2,2.2,8,13,.3,.55,10,0],[2.4,3.6,5.5,8,.5,.8,16,0],[3.8,5.2,4,5.5,.65,.9,20,.6]]);
@@ -1919,7 +1963,7 @@ PAGE=f'''<!doctype html>
 <style>{themeize(CSS)}</style>
 </head>
 <body>
-<header class="hd"><div class="hsnow" id="hsnow" aria-hidden="true"></div><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div><button class="wx" id="wx" type="button" aria-label="일본 날씨 · 눌러서 예보"><span id="wx-i">🌨️</span><b id="wx-t">--°</b><small id="wx-p">삿포로</small></button></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
+<header class="hd"><div class="hsnow" id="hsnow" aria-hidden="true"></div><div class="hd-in"><div class="brand"><b>예은이와 석영이의 삿포로 여행</b><small>2026.12.03 – 12.06 <span class="clock" id="clock"></span></small></div><div class="hd-r"><div class="dday" id="dday"></div><div class="hd-rr"><button class="wx" id="wx" type="button" aria-label="일본 날씨 · 눌러서 예보"><span id="wx-i">🌨️</span><b id="wx-t">--°</b><small id="wx-p">삿포로</small></button><button class="bell" id="bell" type="button" aria-label="업데이트 알림">🔔<i id="bell-dot" hidden></i></button></div></div><span class="off" id="off" hidden>오프라인</span></div><nav class="seg" id="seg" aria-label="세부"></nav></header>
 <main>
 {DAYVIEW}
 {view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
@@ -1927,13 +1971,13 @@ PAGE=f'''<!doctype html>
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
 {view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
-<div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><div class="wxm" id="stm" hidden><div class="wxm-bg" data-sx></div><div class="wxm-c" role="dialog" aria-label="찜 목록"><div class="wxm-h"><b>⭐ 우리 찜</b><button class="wxm-x" data-sx aria-label="닫기">✕</button></div><div id="stm-b"></div></div></div><nav class="bn" aria-label="메뉴">
+<div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><div class="wxm" id="nwm" hidden><div class="wxm-bg" data-nx></div><div class="wxm-c" role="dialog" aria-label="업데이트 알림"><div class="wxm-h"><b>🔔 업데이트 소식</b><button class="wxm-x" data-nx aria-label="닫기">✕</button></div><div class="nwl" id="nwl"></div><p class="wxm-n">사이트가 바뀌면 🔔에 빨간 점이 떠요 · 열어보면 사라져요</p></div></div><div class="wxm" id="stm" hidden><div class="wxm-bg" data-sx></div><div class="wxm-c" role="dialog" aria-label="찜 목록"><div class="wxm-h"><b>⭐ 우리 찜</b><button class="wxm-x" data-sx aria-label="닫기">✕</button></div><div id="stm-b"></div></div></div><nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>
 </nav>
 <div class="lb" id="lb" role="dialog" aria-modal="true"><button class="x" id="lbx" aria-label="닫기">✕</button><figure><img id="lbi" alt=""><div class="st" id="lbs"></div><figcaption id="lbc"></figcaption></figure></div>
 <div class="sheet" id="sheet" hidden><div class="sh-bg" id="sh-bg"></div><div class="sh-c"><div class="sh-img" id="sh-img"></div><div class="sh-b" id="sh-b"></div></div></div>
 <div class="toast" id="toast"></div>
-<script>var HERO_DATA={HERO_JSON};var FOOD_DATA={FOOD_JSON};{JS}</script>
+<script>var HERO_DATA={HERO_JSON};var NEWS_DATA={NEWS_JSON};var FOOD_DATA={FOOD_JSON};{JS}</script>
 </body>
 </html>
 '''

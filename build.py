@@ -9,6 +9,7 @@ def esc(t): return html.escape(t, quote=True)
 
 # 🔔 알림 — 사이트 바뀔 때마다 맨 위에 한 줄 추가 (최신이 위)
 NEWS=[  # (날짜, 내용, 탭/서브, 바로가기 대상) · 대상 = 카드 이름 | 'd2:일정 제목 일부' | 'sec:섹션 제목 일부' | ''
+ ('11/06','🛒 일정 추가 · 12/3 22:00 돈키호테 → 호텔','day/plan','d1:돈키호테'),
  ('11/06','🌟 맛집 추가 · 쿠넬 (미슐랭 1★ 프렌치 · 12/3 첫 저녁 1순위)','day/food','쿠넬'),
  ('11/06','📅 일정 추가 · 12/3 17:30 미슐랭 첫 저녁 (예약)','day/plan','d1:첫 끼'),
  ('11/06','🍺 볼거리 추가 · 삿포로 맥주 홋카이도 공장 (12/3 선택)','day/sight','삿포로 맥주 홋카이도 공장'),
@@ -30,6 +31,7 @@ PL = {
  'P5': ('인천 P5 예약주차장','인천광역시 중구 운서동 2851-76',['인천광역시 영종구 운서동 2851-76'],None),
  'T1': ('인천공항 T1','인천국제공항 제1여객터미널',['인천광역시 영종구 공항로 272 인천국제공항 제1여객터미널'],None),
  'CTS': ('신치토세 국제선','新千歳空港 国際線ターミナルビル',['北海道千歳市美々 新千歳空港 国際線ターミナルビル','New Chitose Airport International Terminal, Bibi, Chitose, Hokkaido'],'e/e0/New_Chitose_Airport.jpg'),
+ 'DONKI': ('MEGA 돈키호테 狸小路 본점','MEGAドン・キホーテ 札幌狸小路本店',['北海道札幌市中央区南3条西4丁目12-1','MEGA Don Quijote Sapporo Tanukikoji, Minami 3-jo Nishi 4-12-1'],None),
  'TIMES': ('타임즈 영업소','タイムズカー 北海道千歳市柏台南2-1-4',['北海道千歳市柏台南2-1-4','2-1-4 Kashiwadaiminami, Chitose, Hokkaido'],None),
  'REI': ('도큐 REI 호텔','Sapporo Tokyu REI Hotel',['北海道札幌市中央区南4条西5丁目1 〒064-8509','5-1 Minami 4-Jo Nishi, Chuo-ku, Sapporo 064-8509'],None),
  'ODORI': ('오도리 공원','大通公園',['北海道札幌市中央区大通西1〜12丁目 大通公園','Odori Park, Odori Nishi 1-12, Chuo-ku, Sapporo'],'f/fb/Sapporo_White_Illumination_2016_(184517289).jpeg'),
@@ -163,7 +165,8 @@ TL={
  stop('14:15','호텔로 출발 · 약 1시간','15:15쯤 도착 · 체크인 15:00부터 · 호텔 기계식 주차 (상세는 예약 › 숙소) · 맥주 공장 넣으면 17시 도착',tiles(tile('REI',cap='삿포로 도큐 REI 호텔')),ic='🏨'),
  stop('16:00','(배고프면) 가볍게 간식','호텔 근처 크레페 · 파르페 조금만 → 첫 끼는 미슐랭 · 맛집 탭 「크레페」',ic='🥐'),
  stop('17:30','첫 끼 · 미슐랭 저녁 (예약)','1순위 쿠넬 17:30 (프렌치 1★ · 도보 10분 · 인당 1~1.5만엔) / 덴푸라 아라키 18:00 (2★ · 도보 8분) / 스시 아리마 18:00 (1★ · 도보 5분) · 상세는 맛집 탭 「미슐랭 첫 저녁」',ic='🌟'),
- stop('저녁','시내 도보','일몰 16시 · 저녁 먹고 오도리 일루미네이션 → TV타워 → 시메 파르페 (배 남으면 라멘) · (선택) 白い恋人パーク 점등 16~19시는 호텔에서 차 25분 → 12/5 일정 참고',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초')),at='19:30',ic='🍜'),
+ stop('19:30','시내 도보','일몰 16시 · 저녁 먹고 오도리 일루미네이션 → TV타워 → 시메 파르페 (배 남으면 라멘) · (선택) 白い恋人パーク 점등 16~19시는 호텔에서 차 25분 → 12/5 일정 참고',tiles(tile('ODORI',cap='오도리 공원 화이트 일루미네이션'),tile('TV',cap='삿포로 TV타워'),tile('SUSU'),tile('RAMEN',cap='원조 삿포로 라멘 요코초')),ic='🍜'),
+ stop('22:00','돈키호테 → 호텔','MEGA 돈키호테 狸小路 본점 (24시간 · 호텔 도보 5분) · 과자 · 약 · 화장품 · 위스키 · 면세 카운터 4F (여권) · 밤 11시 넘으면 한산 · 짐 많으면 호텔 들렀다 다시 · 쇼핑 탭 「드럭·가챠」',tiles(tile('DONKI',phone=('+81570096811','0570-096-811'))),ic='🛒'),
 ]),
 2:''.join([
  stop('08:00','주유 → 아사히카와 방면 고속도로','약 2시간 30분 · 주유소는 운전 탭',ic='⛽'),
@@ -879,14 +882,38 @@ LEADPH={'오타루테이 스스키노빌딩점':(['https://johnny88.jp/wp-conten
 # 타베로그가 없는 곳의 실제 사진 (공식 사이트)
 OWNPH={'료칸 가이세키':(['https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-1-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-2-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-3-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/crab-slide-1.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/03/B0093530.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/04_bf.jpg'],'OTARU RETREAT 공식 (석식 · 겨울 게 가이세키 · 조식)')}
 
+def hours_line(ht):
+    import re as _r
+    main=_r.sub(r'\([^)]*\)','',ht)          # 괄호(금토 등 예외)는 빼고
+    rg=_r.findall(r'(\d{1,2}:\d{2})\s*[–-]\s*(\d{1,2}:\d{2})',main)
+    off=_r.search(r'([월화수목금토일·]+) 휴무',ht)
+    offs=(' · '+off.group(1)+' 휴무') if off else (' · 무휴' if ('무휴' in ht) else '')
+    if not rg: return f'<div class="fch">🕐 {esc(ht.split(" · ")[0])}{esc(offs)}</div>'
+    m=lambda t:int(t.split(':')[0])*60+int(t.split(':')[1])
+    rg=sorted(rg,key=lambda r:m(r[0]))
+    brk=[(a[1],b[0]) for a,b in zip(rg,rg[1:]) if m(a[1])<m(b[0])]
+    hrs=' / '.join(f'{a}–{b}' for a,b in rg)
+    o,c=m(rg[0][0]),m(rg[-1][1]); c=c+1440 if c<=o else c
+    if brk: bt='<span class="brk">☕ 브레이크 '+', '.join(f'{a}–{b}' for a,b in brk)+'</span>'
+    elif o<=14*60 and c>=17*60: bt='<span class="brk no">브레이크 없음 · 통영업</span>'
+    elif o>=15*60: bt=f'<span class="brk ev">🌙 저녁 영업만 · {rg[0][0]}~</span>'
+    else: bt=f'<span class="brk ev">☀️ 낮 영업만 · ~{rg[-1][1]}</span>'
+    return f'<div class="fch">🕐 {esc(hrs)}{esc(offs)}</div><div class="fch2">{bt}</div>'
+
 def food_html():
     out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>'+'<div class="kchips" role="group" aria-label="종류">'+''.join(f'<button data-kf="{k}" class="k-{k}" aria-pressed="false">{l}</button>' for k,l in KINDLBL.items())+'</div>']
     data=[]
     used_all=set()
     for i,(area,sub,slots) in enumerate(FOOD):
         used_area=set()
-        out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}><p class="hint">{esc(sub)}</p>')
+        out.append(f'<div class="fa" data-a="{i}"{"" if i==0 else " hidden"}>')
+        KR={'meal':0,'sweet':1,'drink':2}
+        def kof(n): return 'drink' if n in DRINK else ('sweet' if n in SWEET else 'meal')
+        def srank(sl):
+            c=[KR[kof(it[0])] for it in sl[1]]; return min(range(3),key=lambda r:(-c.count(r),r))
+        slots=sorted(slots,key=srank)
         for slot,items in slots:
+            items=sorted(items,key=lambda it:KR[kof(it[0])])
             out.append(f'<h3 class="sec">{esc(slot)}</h3><div class="fgrid">')
             for n,ja,cat,mi,q,tel,ht,menus,tip,x,tb in items:
                 g=G.get(n); idx=len(data)
@@ -919,7 +946,7 @@ def food_html():
                     img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
                 gl=('<div class="fcg">'+(f'<span class="tb">타베로그 {tb[0]:.2f}'+(f' ({tb[1]:,})' if tb[1] else '')+'</span>' if tb else '')+(f'<small>구글 {g[0]:.1f} ({g[1]:,})</small>' if g else '')+'</div>') if (g or tb) else ''
                 kd='drink' if n in DRINK else ('sweet' if n in SWEET else 'meal')
-                out.append(f'<button class="fc k-{kd}{" closed" if x else ""}{" real" if rp else ""}" data-i="{idx}" data-k="{kd}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><span class="ktag">{KINDLBL[kd]}</span><div class="fcn3">참고 사진</div><div class="fcn2">{len(rp) if rp else len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
+                out.append(f'<button class="fc k-{kd}{" closed" if x else ""}{" real" if rp else ""}" data-i="{idx}" data-k="{kd}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><span class="ktag">{KINDLBL[kd]}</span><div class="fcn3">참고 사진</div><div class="fcn2">{len(rp) if rp else len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div>{hours_line(ht)}</button>')
             out.append('</div>')
         out.append('</div>')
     out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 한 끼 인당 2만엔 이상은 제외 · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 🚗 = 렌터카로 가기 좋은 곳(호텔·동선 기준 거리) · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 사진은 전부 그 식당의 실제 요리 사진(타베로그 料理 탭) · 카드를 누르면 사진 더보기·대표 메뉴·시간·팁·타베로그/구글 링크</p>')
@@ -1202,7 +1229,7 @@ main{max-width:640px;margin:0 auto;padding:0 0 calc(76px + env(safe-area-inset-b
 .sec{margin:10px 0 -4px;font-size:14px;font-weight:700;color:var(--ink)}
 .sub.plan{padding:0;gap:0;display:block}
 .achips{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
-.achips button{border:0;background:none;color:var(--mut);border-radius:999px;padding:7px 0;font-size:14px;font-weight:700}
+.achips button{border:0;background:none;color:var(--mut);border-radius:999px;padding:5px 0;font-size:13.5px;font-weight:700}
 .achips button[aria-pressed="true"]{background:var(--night);color:#fff}
 .fa{display:flex;flex-direction:column;gap:12px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -1685,8 +1712,20 @@ html:not(.io) .fc .fci::before{transform:none}
 .fc[data-k] .fcn{padding-top:15px}
 .fc[data-k] .fcn3{bottom:auto;top:30px}
 .fc[data-k] .fci .fcn2{bottom:17px}
-.kchips{display:flex;gap:6px;margin:8px 0 2px;justify-content:center}
-.kchips button{border:1.5px solid var(--k);background:var(--kb);color:var(--k);border-radius:999px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.kchips{display:flex;gap:5px;margin:-6px 0 -4px;justify-content:center}
+.sub:not(.plan){padding-top:10px}
+.achips,.schips,.gchips{padding:2px}
+.schips button,.gchips button{padding-top:5px!important;padding-bottom:5px!important}
+.fa>h3.sec:first-of-type,.sa>h3.sec:first-of-type,.ga>h3.sec:first-of-type{margin-top:0}
+.fch{font-size:11px;color:var(--ink);opacity:.85;padding:0 10px;margin-top:4px;line-height:1.35;font-variant-numeric:tabular-nums}
+.fch2{padding:2px 10px 10px}
+.brk{display:inline-block;font-size:10.5px;font-weight:700;color:#b5541b;background:rgba(240,122,60,.13);border-radius:6px;padding:1px 6px}
+.brk.no{color:#2f7d4f;background:rgba(47,125,79,.12)}
+.brk.ev{color:#4a5a8a;background:rgba(74,90,138,.12)}
+:root[data-theme="dark"] .brk.ev{color:#b9c6ff}
+:root[data-theme="dark"] .brk{color:#ffb98c}:root[data-theme="dark"] .brk.no{color:#8fe0ae}
+.fc[data-k] .fcm{padding-bottom:0}
+.kchips button{border:1.5px solid var(--k);background:var(--kb);color:var(--k);border-radius:999px;padding:3px 10px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
 .kchips button[aria-pressed="true"]{background:var(--k);color:#fff;animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
 .fa[data-kf] .fc[data-k]{display:none}
 .fa[data-kf="meal"] .fc[data-k="meal"],.fa[data-kf="drink"] .fc[data-k="drink"],.fa[data-kf="sweet"] .fc[data-k="sweet"]{display:flex}
@@ -1817,7 +1856,7 @@ JS = r'''
   function stBox(pn){var g=pn.querySelector(':scope > .stgrid');if(!g){var h=document.createElement('h3');h.className='sec stsec';h.textContent='⭐ 찜한 곳';g=document.createElement('div');g.className='fgrid stgrid';pn.insertBefore(g,pn.firstChild);pn.insertBefore(h,g);var em=document.createElement('p');em.className='hint stempty';em.textContent='이 탭(지역)엔 아직 찜한 곳이 없어요 · 다른 지역 칩도 눌러보세요';pn.insertBefore(em,g.nextSibling)}return g}
   function place(){$$('.fc').forEach(function(c){if(!c._home){var pn=c.closest('.fa,.sa,.ga');if(!pn)return;var mk=document.createComment('fc');c.parentNode.insertBefore(mk,c);c._home=mk;c._pn=pn}});
     var boxes=[];$$('.fc').forEach(function(c){if(!c._pn)return;var g=stBox(c._pn);if(boxes.indexOf(g)<0)boxes.push(g);var i=+c.dataset.i;if(on(i)){if(c.parentNode!==g)g.appendChild(c)}else if(c.parentNode===g){c._home.parentNode.insertBefore(c,c._home.nextSibling)}});
-    boxes.forEach(function(g){var cs=[].slice.call(g.children).sort(function(x,y){return +x.dataset.i-+y.dataset.i});cs.forEach(function(c){g.appendChild(c)});var e=!cs.length;g.hidden=e;g.previousElementSibling.hidden=e})}
+    var KR={meal:0,sweet:1,drink:2};boxes.forEach(function(g){var cs=[].slice.call(g.children).sort(function(x,y){return ((KR[x.dataset.k]||0)-(KR[y.dataset.k]||0))||(+x.dataset.i-+y.dataset.i)});cs.forEach(function(c){g.appendChild(c)});var e=!cs.length;g.hidden=e;g.previousElementSibling.hidden=e})}
   function paint(){var n=0;$$('.fc').forEach(function(c){var i=+c.dataset.i,b=c.querySelector('.stb'),o=on(i);if(b)b.innerHTML=o?'<span class="y">★</span>':'<span class="e">☆</span>';c.classList.toggle('has-st',o)});place();
     FOOD_DATA.forEach(function(d,i){if(on(i))n++});var so=document.body.classList.contains('stonly');$$('.stn').forEach(function(e){e.textContent=so?'전체 보기':'찜만 보기 · '+n});$$('.stfab b').forEach(function(e){e.textContent=so?'↩︎':'⭐'});var st=$('#st-st');if(st)st.textContent=sync+' · 찜 '+n+'곳'}
   $$('.fc').forEach(function(c){var fi=c.querySelector('.fci');if(!fi)return;var b=document.createElement('span');b.className='stb';b.setAttribute('role','button');b.setAttribute('aria-label','찜');b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggle(+c.dataset.i);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')});fi.appendChild(b)});

@@ -13,7 +13,6 @@ NEWS=[  # (날짜, 내용, 탭/서브, 바로가기 대상) · 대상 = 카드 �
  ('11/06','📅 일정 추가 · 12/3 17:30 미슐랭 첫 저녁 (예약)','day/plan','d1:첫 끼'),
  ('11/06','🍺 볼거리 추가 · 삿포로 맥주 홋카이도 공장 (12/3 선택)','day/sight','삿포로 맥주 홋카이도 공장'),
  ('11/06','🍺 볼거리 추가 · 기린 맥주 치토세 공장','day/sight','기린 맥주 홋카이도 치토세 공장'),
- ('11/06','🍺 볼거리 추가 · 오타루 맥주 오타루소코 No.1','day/sight','오타루 맥주 오타루소코 No.1'),
  ('11/05','🛷 일정 추가 · 12/4 시키사이노오카 눈썰매 (선택)','day/plan','d2:시키사이노오카'),
  ('11/05','🛷 볼거리 추가 · 시키사이노오카 스노랜드','day/sight','시키사이노오카'),
  ('10/30','🛏️ 숙소 추가 · 12/2 인천공항 호텔 준','day/plan','d1:인천공항 호텔 준'),
@@ -870,6 +869,10 @@ NONFOOD={'letao','brewery','ramen_street','nijo','beer_garden'}  # 장소·외�
 # 실제 식당 사진: 타베로그 「料理」 탭 사진 (식당 공식·리뷰) · tbph.json = {타베로그ID: [url…]} · 둘만 보는 비상업 용도
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'tbph.json'),encoding='utf-8') as _f: TBPH=json.load(_f)
 DRIVE={'나카야 과자점 (砂川)':'가는 길 · 砂川IC 5분','기타카로 砂川 SA점':'가는 길 · 砂川SA 직결','야키토리 다쓰미 (美唄)':'귀로 · 美唄IC 5분','마쓰오 징기스칸 滝川 본점':'귀로 · 滝川IC 5분','트리톤 아사히카와 교쿠신점':'귀로 · 청의 호수→50분','시노이에':'차 5분','카마에이 공장직매점':'小樽IC 5분 · 주차 30대','카키자키 상점 해선공방 (余市)':'오타루→차 25분','멘야 사이미':'공항→호텔 길 · 札幌IC 10분','아사히카와 라멘 아오바 본점':'가는 길 · 차 30분','KANON PANCAKES':'차 10분','후왓토 마루야마 키친':'차 10분','마루야마 우유판매점':'차 10분','푸푸리에':'차 10분','정식 메시야':'차 10분','기타노 구루메테이':'차 10분','비블레':'차 10분','팜 레스토랑 치요다':'차 10분','비에이 방목낙농장':'차 15분','라멘야 텐킨 4조점':'귀로 · 차 30분','하치야 5조 창업점':'귀로 · 차 30분','아오츠카 식당':'차 10분'}
+# 맛집 카드 색: 식사(기본) / 술 / 디저트·카페
+DRINK={'쿠사치','스기노','교사이','하치쿄 본점','이자카야 후루사토 삿포로 총본점','룻쿠 & 우오헤이','오타루테이 스스키노빌딩점','야키토리 히게보즈','야키토리 다쓰미 (美唄)','오타루 창고 No.1','니시이 형제 스스키노 본점'}
+SWEET={'밀크무라 삿포로 본점','롯카테이 삿포로 본점','사토 (파르페·커피·술)','이니셜 삿포로','KANON PANCAKES','로지우라 카페','후왓토 마루야마 키친','시아와세노 팬케이크 삿포로점','히바리도','푸푸리에','마루야마 우유판매점','파르페테리아 PaL','나나카마도','나카야 과자점 (砂川)','기타카로 砂川 SA점','비에이 방목낙농장','비에이 선카 공방','야마나카 목장 오타루점','기타이치 홀','르타오 본점 카페','아마토 본점','요츠바 화이트 코지','홋카이도 우유 카스텔라','밀크스탠드','스나플스 공항점','로이즈 공항점'}
+KINDLBL={'meal':'🍚 식사','drink':'🍶 술','sweet':'🍰 디저트·카페'}
 LOCAL={'나카야 과자점 (砂川)','야키토리 다쓰미 (美唄)','마쓰오 징기스칸 滝川 본점','카마에이 공장직매점','카키자키 상점 해선공방 (余市)','수아게+ 본점','다루마 본점','롯카테이 삿포로 본점','하치쿄 본점','아지노 히쓰지가오카','시노이에','사케토 소바 마루키','돈부리 차야 니조시장점','자지','트리톤 아사히카와 교쿠신점','네무로 하나마루 코코노 스스키노점','이자카야 후루사토 삿포로 총본점','룻쿠 & 우오헤이','파르페테리아 PaL','니조시장 오이소','준페이','타키나미 식당','나루토 본점','르타오 본점 카페','오타루 마사즈시 본점','에비소바 이치겐 공항점','로이즈 공항점','효세츠노몬'}
 # 타베로그 사진 앞에 붙일 '그 메뉴'의 실제 사진 (블로그 실사)
 LEADPH={'오타루테이 스스키노빌딩점':(['https://johnny88.jp/wp-content/uploads/2022/09/IMG_8660_R-580x435.jpg','https://johnny88.jp/wp-content/uploads/2022/09/IMG_8671_R-580x435.jpg','https://johnny88.jp/wp-content/uploads/2022/09/IMG_8662_R-580x435.jpg'],'앞 3장 = おたる亭 タチ天麩羅 실사 (johnny88)')}
@@ -877,7 +880,7 @@ LEADPH={'오타루테이 스스키노빌딩점':(['https://johnny88.jp/wp-conten
 OWNPH={'료칸 가이세키':(['https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-1-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-2-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/dining-hero-3-scaled.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/crab-slide-1.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/03/B0093530.jpg','https://otaru.by-onko-chishin.com/wp-content/uploads/2026/02/04_bf.jpg'],'OTARU RETREAT 공식 (석식 · 겨울 게 가이세키 · 조식)')}
 
 def food_html():
-    out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>']
+    out=['<div class="achips">'+''.join(f'<button data-a="{i}" aria-pressed="{"true" if i==0 else "false"}">{esc(a[0])}</button>' for i,a in enumerate(FOOD))+'</div>'+'<div class="kchips" role="group" aria-label="종류">'+''.join(f'<button data-kf="{k}" class="k-{k}" aria-pressed="false">{l}</button>' for k,l in KINDLBL.items())+'</div>']
     data=[]
     used_all=set()
     for i,(area,sub,slots) in enumerate(FOOD):
@@ -915,7 +918,8 @@ def food_html():
                 else:
                     img=f'<img src="{esc(thumb(f))}" loading="lazy" alt="" onerror="this.hidden=true">' if f else ''
                 gl=('<div class="fcg">'+(f'<span class="tb">타베로그 {tb[0]:.2f}'+(f' ({tb[1]:,})' if tb[1] else '')+'</span>' if tb else '')+(f'<small>구글 {g[0]:.1f} ({g[1]:,})</small>' if g else '')+'</div>') if (g or tb) else ''
-                out.append(f'<button class="fc{" closed" if x else ""}{" real" if rp else ""}" data-i="{idx}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><div class="fcn3">참고 사진</div><div class="fcn2">{len(rp) if rp else len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
+                kd='drink' if n in DRINK else ('sweet' if n in SWEET else 'meal')
+                out.append(f'<button class="fc k-{kd}{" closed" if x else ""}{" real" if rp else ""}" data-i="{idx}" data-k="{kd}"><div class="fci">{img}<div class="fcb">{badge}{xx}</div><span class="ktag">{KINDLBL[kd]}</span><div class="fcn3">참고 사진</div><div class="fcn2">{len(rp) if rp else len(photos)}장</div></div><div class="fcn">{esc(n)}</div>{gl}<div class="fcm">{esc(cat)}</div></button>')
             out.append('</div>')
         out.append('</div>')
     out.append('<p class="hint">선정 기준 = 타베로그(食べログ) 점수 · 3.5↑ 상위 10%, 4.0↑ 상위 0.2% · 한 끼 인당 2만엔 이상은 제외 · 구글 평점은 참고용 · 2026-10-28 기준 · 지역맛집 = 여행객이 가장 많이 찾는 그 지역 대표 맛집 · 🚗 = 렌터카로 가기 좋은 곳(호텔·동선 기준 거리) · 미슐랭 ★ = 홋카이도 가이드 2017 특별판(최신판, 이후 발행 없음) · 빕 = 빕구르망 · 사진은 전부 그 식당의 실제 요리 사진(타베로그 料理 탭) · 카드를 누르면 사진 더보기·대표 메뉴·시간·팁·타베로그/구글 링크</p>')
@@ -1049,7 +1053,6 @@ SIGHTS={
   ])],
  2:[('⚓ 12/5 오타루',[
    ('s_canal','오타루 운하','小樽運河','가스등 63개 · 창고 야경',[('loc','12/5')],'浅草橋 小樽運河','ChIJrSLZL3HhCl8Ryp7mgLx-Maw','24시간 · 가스등 일몰 점등',['아사쿠사바시 → 중앙교 산책','창고군 야경','눈 쌓인 운하'],'20시 야경은 일정 탭','visit-hokkaido'),
-   ('s_otbeer','오타루 맥주 오타루소코 No.1','小樽ビール 小樽倉庫No.1','운하 앞 석조 창고 독일식 브루어리 · 무료 양조장 견학',[('loc','12/5 운하')],'小樽ビール 小樽倉庫No.1','ChIJk-FOGk3gCl8RQ9Yv9HZnul4','11:00–22:00 · 무휴 · 양조장 견학 무료 (약 20분)',['갓 만든 돈켈 · 필스너 小 490엔 · 中 650엔','수제 소시지 · 프레첼 · 슈니첼','운전자용 자체 양조 무알콜도 있음'],'운하 산책 중 들르기 좋음 · 2층 통로에서 양조 설비 구경 · 저녁 료칸 석식이면 낮에 가볍게','지구를 걷는 법 · SHIFT'),
    ('s_cruise','오타루 운하 크루즈','小樽運河クルーズ','40분 보트 · 겨울엔 지붕 + 히터 좌석',[('loc','추천')],'小樽運河クルーズ','ChIJb13VJ03gCl8RCOA9gDK-cUA','낮 1,800엔 · 야간 2,000엔 · 中央橋 · 온라인 예약 60일 전',['가이드 설명 (영어 음성 가이드)','北運河까지','출발 15분 전 도착'],'야간편 추천 · 날씨로 결항 잦으니 예약 후 당일 확인','visit-hokkaido'),
    ('s_tengu','텐구야마 로프웨이','小樽天狗山ロープウエイ','오타루 야경 명소 · 4분 로프웨이',[('drv','차 15분')],'小樽天狗山ロープウエイ','ChIJNZSPr8LgCl8R_ro2ttgpg7U','겨울 09:00–20:00 (마지막 상행 19:48) · 왕복 2,000엔 · 12분 간격 · 주차 무료',['정상 전망대 (항구 · 시내)','다람쥐 공원 · 텐구 신사','콘수프 한 잔'],'정상 바람 엄청 셈 · 일정 탭 16:30','visit-hokkaido'),
    ('s_bank','구 일본은행 금융자료관','日本銀行旧小樽支店金融資料館','1912년 은행 · 무료 · 1억엔 들어보기',[],'日本銀行旧小樽支店金融資料館','ChIJiz9VQFLgCl8RKn4T7XirTuU','10:00–17:00 (12~3월) · 수 휴무 · 무료',['금고 · 1억엔 무게 체험','천장 라이트쇼 (매시)','영어 QR 해설'],'추울 때 30분 실내','visit-hokkaido'),
@@ -1582,7 +1585,7 @@ tr.pick td{background:var(--lamp-soft);font-weight:700}
 body.stonly .fa>*:not(.stsec):not(.stgrid):not(.stempty),body.stonly .sa>*:not(.stsec):not(.stgrid):not(.stempty),body.stonly .ga>*:not(.stsec):not(.stgrid):not(.stempty){display:none!important}
 body.stonly .stgrid[hidden]+.stempty{display:block}
 body.stonly .stfab{background:#f2a900;color:#1c1300}
-body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(.achips):not(.schips):not(.gchips):not(.chipwrap){display:none}
+body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(.achips):not(.kchips):not(.schips):not(.gchips):not(.chipwrap){display:none}
 .stgrid{margin-bottom:6px}
 .strow{display:flex;gap:6px;margin:8px 0 2px;flex-wrap:wrap}
 .strow button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;color:var(--mut)}
@@ -1658,6 +1661,37 @@ body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(
 .dday::after{content:"❄";display:inline-block;margin-left:4px;font-size:13px;color:#cfe8fb;vertical-align:2px;animation:spin 6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .fgrid .fc{animation:cardin .38s cubic-bezier(.2,.8,.3,1.2) both}
+/* ❄️ 겨울 여행 카드 등장 (스크롤해서 보일 때마다) */
+html.io .fgrid .fc{animation:none;opacity:0}
+html.io .fgrid .fc.in{animation:snowdrop .7s cubic-bezier(.2,.9,.25,1.15) both;animation-delay:var(--d,0s)}
+@keyframes snowdrop{0%{opacity:0;transform:translateY(-22px) rotate(-2.5deg) scale(.92);filter:blur(3px) brightness(1.35) saturate(.6)}55%{opacity:1;transform:translateY(3px) rotate(.8deg) scale(1.01);filter:blur(0) brightness(1.08) saturate(.9)}78%{transform:translateY(-1px) rotate(-.3deg)}100%{opacity:1;transform:none;filter:none}}
+.fc .fci::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 45%,rgba(220,240,255,.25) 52%,transparent 66%);transform:translateX(-120%);z-index:1}
+html.io .fgrid .fc.in .fci::after{animation:frost 1.1s ease-out both;animation-delay:calc(var(--d,0s) + .45s)}
+@keyframes frost{to{transform:translateX(120%)}}
+.fc .fci::before{content:"";position:absolute;left:0;right:0;top:-1px;height:9px;z-index:1;pointer-events:none;background:radial-gradient(circle at 8px -2px,#fff 7px,transparent 7.5px) 0 0/22px 9px repeat-x,radial-gradient(circle at 15px -4px,#fff 8px,transparent 8.5px) 4px 0/30px 9px repeat-x;filter:drop-shadow(0 1px 1px rgba(80,110,150,.25));opacity:.96;transform-origin:top;transform:scaleY(0)}
+html.io .fgrid .fc.in .fci::before{animation:capin .5s ease-out both;animation-delay:calc(var(--d,0s) + .3s)}
+html:not(.io) .fc .fci::before{transform:none}
+@keyframes capin{to{transform:scaleY(1)}}
+.fc:active{transform:scale(.97) rotate(-.4deg)}
+/* 맛집 종류 색 */
+.k-meal{--k:#f07a3c;--kb:#fff3ea}.k-drink{--k:#6f5bd9;--kb:#f1eeff}.k-sweet{--k:#e8578f;--kb:#ffeef5}
+:root[data-theme="dark"] .k-meal{--kb:#3a261b}:root[data-theme="dark"] .k-drink{--kb:#25213f}:root[data-theme="dark"] .k-sweet{--kb:#3a1f2b}
+@media (prefers-color-scheme:dark){:root[data-theme="auto"] .k-meal{--kb:#3a261b}:root[data-theme="auto"] .k-drink{--kb:#25213f}:root[data-theme="auto"] .k-sweet{--kb:#3a1f2b}}
+.fc[data-k]{background:var(--kb);border-color:color-mix(in srgb,var(--k) 35%,var(--line));border-top:3px solid var(--k)}
+.fc[data-k] .fci{overflow:visible}
+.fc[data-k] .fci img{border-radius:0}
+.ktag{position:absolute;left:8px;bottom:-11px;z-index:3;font-size:10.5px;font-weight:800;color:#fff;background:var(--k);border-radius:4px 10px 10px 4px;padding:3px 9px 3px 13px;box-shadow:0 2px 6px rgba(0,0,0,.18);letter-spacing:-.01em;white-space:nowrap}
+.ktag::before{content:"";position:absolute;left:4px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--kb)}
+.fc[data-k] .fcn{padding-top:15px}
+.fc[data-k] .fcn3{bottom:auto;top:30px}
+.fc[data-k] .fci .fcn2{bottom:17px}
+.kchips{display:flex;gap:6px;margin:8px 0 2px;justify-content:center}
+.kchips button{border:1.5px solid var(--k);background:var(--kb);color:var(--k);border-radius:999px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.kchips button[aria-pressed="true"]{background:var(--k);color:#fff;animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
+.fa[data-kf] .fc[data-k]{display:none}
+.fa[data-kf="meal"] .fc[data-k="meal"],.fa[data-kf="drink"] .fc[data-k="drink"],.fa[data-kf="sweet"] .fc[data-k="sweet"]{display:flex}
+.fa .kempty{display:none}
+@media (prefers-reduced-motion:reduce){html.io .fgrid .fc{opacity:1}html.io .fgrid .fc.in{animation:none}.fc .fci::after{display:none}.fc .fci::before{transform:none}}
 .fgrid .fc:nth-child(2){animation-delay:.04s}.fgrid .fc:nth-child(3){animation-delay:.08s}.fgrid .fc:nth-child(4){animation-delay:.12s}.fgrid .fc:nth-child(5){animation-delay:.16s}.fgrid .fc:nth-child(6){animation-delay:.2s}.fgrid .fc:nth-child(n+7){animation-delay:.24s}
 @keyframes cardin{from{opacity:0;transform:translateY(12px) scale(.96)}}
 .schips button[aria-pressed="true"],.gchips button[aria-pressed="true"],.achips button[aria-pressed="true"],.seg button[aria-selected="true"]{animation:chip .32s cubic-bezier(.3,1.6,.5,1)}
@@ -1908,6 +1942,17 @@ JS = r'''
     chip();setInterval(chip,30*60000);window.addEventListener('online',chip);
     if(navigator.onLine!==false)setTimeout(function(){P.forEach(function(p,i){if(i!==cur)get(i).catch(function(){})})},4000);
   })();
+  /* ❄️ 카드 등장 · 맛집 종류 필터 */
+  (function(){if(!('IntersectionObserver' in window))return;document.documentElement.classList.add('io');
+    var q=[],t=null;var io=new IntersectionObserver(function(es){es.forEach(function(e){var c=e.target;
+      if(e.isIntersecting){if(!c.classList.contains('in'))q.push(c)}else if(e.boundingClientRect.height===0){c.classList.remove('in')}});
+      if(q.length&&!t)t=requestAnimationFrame(function(){q.sort(function(a,b){return a.getBoundingClientRect().top-b.getBoundingClientRect().top||a.getBoundingClientRect().left-b.getBoundingClientRect().left});q.forEach(function(c,i){c.style.setProperty('--d',Math.min(i,8)*0.07+'s');c.classList.add('in')});q=[];t=null})},{rootMargin:'0px 0px -6% 0px'});
+    function watch(){$$('.fgrid .fc').forEach(function(c){if(!c._io){c._io=1;io.observe(c)}})}watch();setTimeout(watch,800);document.addEventListener('click',function(){setTimeout(watch,200)});
+    setTimeout(function(){$$('.fgrid .fc').forEach(function(c){var r=c.getBoundingClientRect();if(r.height&&r.top<innerHeight&&r.bottom>0&&!c.classList.contains('in'))c.classList.add('in')})},2500)})();
+  (function(){var cur=ls.get('sg-kf')||'';function apply(){$$('.kchips button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.kf===cur?'true':'false')});
+      $$('.fa').forEach(function(f){if(cur)f.setAttribute('data-kf',cur);else f.removeAttribute('data-kf');
+        $$('.fgrid',f).forEach(function(g){var any=!cur||g.querySelector('.fc[data-k="'+cur+'"]');g.style.display=any?'':'none';var h=g.previousElementSibling;if(h&&h.matches('h3.sec'))h.style.display=any?'':'none'})})}
+    $$('.kchips button').forEach(function(b){b.addEventListener('click',function(){cur=cur===b.dataset.kf?'':b.dataset.kf;ls.set('sg-kf',cur);apply();buzz(6);window.scrollTo({top:Math.min(window.scrollY,$('.kchips').getBoundingClientRect().top+window.scrollY-120),behavior:'smooth'})})});apply()})();
   /* 일정 메모 접기 */
   (function(){function setup(){$$('.tl .sn').forEach(function(n){if(n._m)return;if(n.scrollHeight>n.clientHeight+3){n._m=1;var b=document.createElement('button');b.className='snm';b.type='button';b.textContent='더보기 ▾';n.after(b);function tg(e){e.stopPropagation();var o=n.classList.toggle('open');b.textContent=o?'접기 ▴':'더보기 ▾'}b.addEventListener('click',tg);n.addEventListener('click',tg)}})}
     setTimeout(setup,300);document.addEventListener('click',function(){setTimeout(setup,150)});window.addEventListener('resize',function(){setTimeout(setup,200)})})();

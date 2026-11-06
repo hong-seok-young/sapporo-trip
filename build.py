@@ -8,20 +8,20 @@ VER = time.strftime('%Y%m%d-%H%M')
 def esc(t): return html.escape(t, quote=True)
 
 # 🔔 알림 — 사이트 바뀔 때마다 맨 위에 한 줄 추가 (최신이 위)
-NEWS=[
- ('11/06','🌟 12/3 첫 끼 = 미슐랭 저녁 17:30 · 쿠넬(프렌치 1★) · 아라키(덴푸라 2★) · 아리마(스시 1★)','day/food'),
- ('11/06','🔔 알림칸 생김 · 사이트가 바뀌면 빨간 점이 떠요','more/set'),
- ('11/06','📅 12/3 일정 정리 · 호텔 15:15 도착 → 16:00 늦은 점심 단계 추가','day/plan'),
- ('11/06','🍺 맥주 공장 3곳 · 삿포로 맥주 에니와(12/3 선택 견학) · 기린 치토세 · 오타루 맥주 (볼거리 탭)','day/sight'),
- ('11/05','🛷 12/4 시키사이노오카 스노랜드 눈썰매 (선택)','day/plan'),
- ('10/30','🛏️ 12/2 인천공항 호텔 준 1박 예약 반영 (예약 › 숙소)','book/stay'),
- ('10/29','⭐ 찜 별표 · 두 폰 실시간 공유 · 찜한 곳은 맨 위 · 찜만 보기 버튼','day/food'),
- ('10/29','🌨️ 헤더에 일본 날씨 · 누르면 16일 예보','day/plan'),
- ('10/29','📴 오프라인 자동 저장 · 일본에서 인터넷 없어도 열림','more/set'),
- ('10/29','🐟 시라코(타치) 제철 맛집 · 🍽️ 늦은 점심(15시 영업) 다양하게','day/food'),
- ('10/29','🛍️ 쇼핑 탭 · 브랜드 · 드럭·가챠 · 기념품 · 면세','day/shop'),
+NEWS=[  # (날짜, 내용, 탭/서브, 바로가기 대상) · 대상 = 카드 이름 | 'd2:일정 제목 일부' | 'sec:섹션 제목 일부' | ''
+ ('11/06','🌟 맛집 추가 · 쿠넬 (미슐랭 1★ 프렌치 · 12/3 첫 저녁 1순위)','day/food','쿠넬'),
+ ('11/06','📅 일정 추가 · 12/3 17:30 미슐랭 첫 저녁 (예약)','day/plan','d1:첫 끼'),
+ ('11/06','🍺 볼거리 추가 · 삿포로 맥주 홋카이도 공장 (12/3 선택)','day/sight','삿포로 맥주 홋카이도 공장'),
+ ('11/06','🍺 볼거리 추가 · 기린 맥주 치토세 공장','day/sight','기린 맥주 홋카이도 치토세 공장'),
+ ('11/06','🍺 볼거리 추가 · 오타루 맥주 오타루소코 No.1','day/sight','오타루 맥주 오타루소코 No.1'),
+ ('11/05','🛷 일정 추가 · 12/4 시키사이노오카 눈썰매 (선택)','day/plan','d2:시키사이노오카'),
+ ('11/05','🛷 볼거리 추가 · 시키사이노오카 스노랜드','day/sight','시키사이노오카'),
+ ('10/30','🛏️ 숙소 추가 · 12/2 인천공항 호텔 준','day/plan','d1:인천공항 호텔 준'),
+ ('10/29','🐟 맛집 추가 · 시라코(타치) 12월 제철 4곳','day/food','sec:🐟 시라코'),
+ ('10/29','🍽️ 맛집 추가 · 늦은 점심 15시에 여는 곳','day/food','sec:늦은 점심'),
+ ('10/29','🛍️ 쇼핑 추가 · 브랜드 · 드럭·가챠 · 기념품 · 면세','day/shop',''),
 ]
-NEWS_JSON=json.dumps([{'d':d,'t':t,'g':g,'id':hashlib.md5((d+t).encode()).hexdigest()[:8]} for d,t,g in NEWS],ensure_ascii=False)
+NEWS_JSON=json.dumps([{'d':d,'t':t,'g':g,'k':k,'id':hashlib.md5((d+t).encode()).hexdigest()[:8]} for d,t,g,k in NEWS],ensure_ascii=False)
 
 # ───────────── 장소 데이터 (지도 검색어, 일본어 주소, 영어 주소, 사진 파일) ─────────────
 PL = {
@@ -1582,8 +1582,19 @@ body.stonly #v-day .sub:not(.plan)>*:not(.fa):not(.sa):not(.ga):not(.stfab):not(
 @keyframes bdot{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
 @keyframes bring{0%,100%{transform:rotate(0)}15%{transform:rotate(14deg)}30%{transform:rotate(-12deg)}45%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}75%{transform:rotate(2deg)}}
 .nwl{display:flex;flex-direction:column;margin-top:8px}
-.nwl .r{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;text-align:left;background:none;border-left:0;border-right:0;border-top:0;color:inherit;font-family:inherit;width:100%;cursor:pointer}
-.nwl .r .d{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums;padding-top:1px}
+.nwl .r{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;text-align:left;background:none;border-left:0;border-right:0;border-top:0;color:inherit;font-family:inherit;width:100%;cursor:pointer}
+.nwl .r .d{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+.nwl .r .go{font-size:11.5px;font-weight:700;color:var(--night);background:var(--snow);border:1px solid var(--line);border-radius:999px;padding:4px 9px;white-space:nowrap}
+.nwl .r:active .go{background:var(--night);color:#fff}
+.nwtop{background:linear-gradient(135deg,#17304f,#2b5b8f);color:#fff;border-radius:16px;padding:14px 14px 12px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(23,48,79,.25)}
+.nwtl{font-size:11.5px;opacity:.85;margin-bottom:4px}
+.nwtl .nw{margin-right:6px}
+.nwtt{font-size:15px;font-weight:700;line-height:1.45}
+.nwgo{display:block;width:100%;margin-top:12px;border:0;border-radius:12px;background:#fff;color:#17304f;font:inherit;font-size:15px;font-weight:800;padding:12px 0;cursor:pointer}
+.nwgo:active{transform:scale(.98)}
+.nwh{font-size:12px;color:var(--mut);font-weight:700;margin:2px 2px 2px}
+.nwflash{animation:nwfl 1.8s ease-out}
+@keyframes nwfl{0%,40%{box-shadow:0 0 0 3px #ff9f0a,0 0 18px rgba(255,159,10,.6)}100%{box-shadow:0 0 0 0 transparent}}
 .nwl .r.new{background:var(--ice-soft);border-radius:10px;border-bottom-color:transparent;margin:2px 0;padding-left:8px;padding-right:8px}
 .nwl .r .nw{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:#ff3b30;border-radius:6px;padding:0 5px;margin-right:4px;vertical-align:1px}
 .wxm{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
@@ -1874,10 +1885,23 @@ JS = r'''
     var idx=-1;for(var i=0;i<N.length;i++)if(N[i].id===seen){idx=i;break}
     var nNew=seen===top?0:(idx<0?Math.min(3,N.length):idx);
     if(nNew){dot.hidden=false;setTimeout(function(){bell.classList.add('ring')},900)}
-    function render(){var h='';N.forEach(function(x,i){h+='<button class="r'+(i<nNew?' new':'')+'" data-g="'+x.g+'"><span class="d">'+x.d+'</span><span>'+(i<nNew?'<span class="nw">NEW</span>':'')+x.t.replace(/[<>&]/g,'')+'</span></button>'});$('#nwl').innerHTML=h;
-      $$('.r',$('#nwl')).forEach(function(b){b.addEventListener('click',function(){var g=b.getAttribute('data-g').split('/');close();setTimeout(function(){showView(g[0]);if(g[1]&&$('#v-'+g[0]+' .sub[data-sub="'+g[1]+'"]'))showSub(g[0],g[1])},80)})})}
-    function close(){m.hidden=true;if(history.state&&history.state.sg==='nw')history.back()}
-    bell.addEventListener('click',function(){render();m.hidden=false;dot.hidden=true;bell.classList.remove('ring');try{localStorage.setItem(K,top)}catch(e){}nNew=0;try{history.pushState({sg:'nw'},'')}catch(e){}buzz(6)});
+    function esc(t){return String(t).replace(/[<>&"]/g,'')}
+    function render(){var h='';N.forEach(function(x,i){var nw=i<nNew;
+      if(i===0){h+='<div class="nwtop"><div class="nwtl">'+(nw?'<span class="nw">NEW</span>':'')+'가장 최근 · '+x.d+'</div><div class="nwtt">'+esc(x.t)+'</div><button class="nwgo" data-i="0">👉 지금 바로 보러 가기</button></div><div class="nwh">지난 소식 · 누르면 바로 이동</div>';return}
+      h+='<button class="r'+(nw?' new':'')+'" data-i="'+i+'"><span class="d">'+x.d+'</span><span class="tx">'+(nw?'<span class="nw">NEW</span>':'')+esc(x.t)+'</span><span class="go">바로가기 ›</span></button>'});$('#nwl').innerHTML=h;
+      $$('[data-i]',$('#nwl')).forEach(function(b){b.addEventListener('click',function(){var x=N[+b.getAttribute('data-i')];close();buzz(8);setTimeout(function(){goTo(x)},120)})})}
+    function goTo(x){var g=x.g.split('/'),v=g[0],sb=g[1],k=x.k||'';
+      if(document.body.classList.contains('stonly')){var f=$('[data-stl]');if(f)f.click()}
+      showView(v);var sub=sb&&$('#v-'+v+' .sub[data-sub="'+sb+'"]');if(sub)showSub(v,sb,true);if(!sub)sub=$('#v-'+v);
+      var el=null;
+      if(/^d\d:/.test(k)){var d=k[1],q=k.slice(3),db=$('.days button[data-d="'+d+'"]',sub);if(db)db.click();el=$$('.tl[data-day="'+d+'"] li',sub).filter(function(li){var t=li.querySelector('.sh');return t&&t.textContent.indexOf(q)>=0})[0]}
+      else if(k.indexOf('sec:')===0){el=$$('h3.sec',sub).filter(function(e){return e.textContent.indexOf(k.slice(4))>=0})[0]}
+      else if(k){el=$$('.fc',sub).filter(function(e){var n=e.querySelector('.fcn');return n&&n.textContent.indexOf(k)===0})[0]}
+      if(el){var p=el.parentElement;while(p&&p!==sub){['a','s','g'].forEach(function(a){var vv=p.getAttribute&&p.getAttribute('data-'+a);if(vv!=null&&p.hidden){var bt=$('[data-'+a+'="'+vv+'"]:not(div)',sub);if(bt)bt.click()}});p=p.parentElement}
+        setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('nwflash');void el.offsetWidth;el.classList.add('nwflash')},150)}
+      else window.scrollTo(0,0)}
+    function close(){if(m.hidden)return;m.hidden=true;if(history.state&&history.state.sg==='nw')history.back()}
+    bell.addEventListener('click',function(){try{toast.classList.remove('on')}catch(e){}render();m.hidden=false;dot.hidden=true;bell.classList.remove('ring');try{localStorage.setItem(K,top)}catch(e){}nNew=0;try{history.pushState({sg:'nw'},'')}catch(e){}buzz(6)});
     $$('[data-nx]',m).forEach(function(x){x.addEventListener('click',close)});
     window.addEventListener('popstate',function(){if(!m.hidden)m.hidden=true});
   })();

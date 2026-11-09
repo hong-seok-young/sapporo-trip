@@ -488,7 +488,7 @@ COST=f'''
 <div class="sum">
   <div><span>결제 완료</span><b>2,125,560<small>원</small></b></div>
   <div><span>현장 예상</span><b>약 5만<small>엔</small></b><em>렌터카·HEP·주차·기름 48,700–51,700</em></div>
-  <div><span>현금 환전 (2인)</span><b>18만<small>엔</small></b><em>식비 10~12만 · 기름·주차 1.2만 · 입장 1만 · 쇼핑 3~5만 · 렌터카·HEP 3.8만은 카드 · 1만엔권 12 · 5천엔권 6 · 1천엔권 30</em></div>
+  <div><span>현금 환전 (2인)</span><b>4만<small>엔</small></b><em>현금만 받는 곳용 · 나머지는 카드 · 1만엔권 1 · 5천엔권 2 · 1천엔권 20</em></div>
 </div>
 <h3 class="sec">💳 결제 완료 <small>원</small></h3>
 <div class="bars">

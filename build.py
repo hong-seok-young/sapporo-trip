@@ -488,7 +488,7 @@ COST=f'''
 <div class="sum">
   <div><span>결제 완료</span><b>2,125,560<small>원</small></b></div>
   <div><span>현장 예상</span><b>약 5만<small>엔</small></b><em>렌터카·HEP·주차·기름 48,700–51,700</em></div>
-  <div><span>현금 준비</span><b>3~5만<small>엔</small></b><em>1,000엔권 넉넉히</em></div>
+  <div><span>환전 (2인 총)</span><b>약 20만<small>엔</small></b><em>현금 5만 (1,000엔권 넉넉히) + 트래블카드 15만 · 식비 10~12만 · 차 5만 · 입장 1만 · 쇼핑 3~5만</em></div>
 </div>
 <h3 class="sec">💳 결제 완료 <small>원</small></h3>
 <div class="bars">

@@ -9,6 +9,7 @@ def esc(t): return html.escape(t, quote=True)
 
 # 🔔 알림 — 사이트 바뀔 때마다 맨 위에 한 줄 추가 (최신이 위)
 NEWS=[  # (날짜, 내용, 탭/서브, 바로가기 대상) · 대상 = 카드 이름 | 'd2:일정 제목 일부' | 'sec:섹션 제목 일부' | ''
+ ('11/10','🏧 환전·ATM 탭 추가 · 동선 위 세븐일레븐 ATM 8곳','more/atm',''),
  ('11/06','🛒 일정 추가 · 12/3 22:00 돈키호테 → 호텔','day/plan','d1:돈키호테'),
  ('11/06','🌟 맛집 추가 · 쿠넬 (미슐랭 1★ 프렌치 · 12/3 첫 저녁 1순위)','day/food','쿠넬'),
  ('11/06','📅 일정 추가 · 12/3 17:30 미슐랭 첫 저녁 (예약)','day/plan','d1:첫 끼'),
@@ -419,7 +420,7 @@ TODO=f'''
 <h3 class="sec">🗓️ 1~2주 전</h3>
 <ul class="checks" data-l="todo">
 {chk('t4','Visit Japan Web 등록','<a class="lk" href="https://vjw-lp.digital.go.jp" target="_blank" rel="noopener">vjw-lp.digital.go.jp</a> · 착륙 6시간 전까지 · 한 계정에 2인 · 숙소: 도큐 REI · 입국·세관 QR 2개 스크린샷')}
-{chk('t5','엔화 환전','금액은 비용 탭')}
+{chk('t5','엔화 환전 5만엔','1만엔권 2 · 5천엔권 2 · 1천엔권 20 · 모자라면 더보기 › 환전·ATM')}
 {chk('t6','카드 해외결제 · PIN 확인','비자 + 마스터')}
 {chk('t7','식당 예약','12/5 점심 쿠키젠(공식 사이트 온라인) · 12/3 첫 저녁 미슐랭: 쿠넬(전화 011-876-8778 · 12~16시) / 아라키(전화 · 영어 OK) / 아리마(12월분 11/1 오픈 → 지금 전화) · 다루마는 예약 불가 → 줄')}
 {chk('t8','청의 호수 · 푸른 운하 일정 확인')}
@@ -518,6 +519,41 @@ COST=f'''
   <li>현금 필요: 라멘 식권기 · 시장 · 노점 · 작은 이자카야 · 일부 주차장 · 시골 주유소 · 부족 시 세븐일레븐 ATM</li>
 </ul>
 '''
+
+ATMS=[
+ ('🛬 12/3 도착 · 12/6 출국 · 신치토세 공항',[
+  ('세븐은행 ATM · 신치토세 공항','ChIJSS6bSmogdV8RS3Wm_gdjiII','新千歳空港 セブン銀行ATM','06:20–23:00 · 터미널 안 · 도착하자마자 뽑기 좋음',None),
+ ]),
+ ('🏨 삿포로 · 호텔(도큐 REI) 근처',[
+  ('세븐일레븐 南5西4','ChIJq6q7Nz3hAGAR0YjRInKzHYs','セブンイレブン 札幌南5条西4丁目','24시간 · 호텔에서 한 블록 · 제일 가까움',('+81115526330','011-552-6330')),
+  ('세븐일레븐 狸小路 3丁目','ChIJs8BNeYMpC18ROY2OKat5br4','セブンイレブン 札幌狸小路3丁目','24시간 · 다누키코지 한가운데 · 돈키호테 가는 길',('+81112227115','011-222-7115')),
+  ('세븐일레븐 南3西8','ChIJ7ev7-I8pC18RQtiFApMOT7w','セブンイレブン 札幌南3条西8丁目','24시간 · 쿠넬 바로 옆 블록',('+81112717622','011-271-7622')),
+ ]),
+ ('🌾 12/4 비에이',[
+  ('세븐일레븐 비에이 사카에마치','ChIJ1QfkLtzFDF8ReASGkW9OZfc','セブンイレブン 美瑛栄町','24시간 · 비에이역 근처 · 주차장 · 시골이라 여기서 미리',('+81166920771','0166-92-0771')),
+ ]),
+ ('⚓ 12/5 오타루 · 료칸 가는 길',[
+  ('세븐일레븐 JR 오타루역','ChIJpV-PyKzhCl8RIiLik3MHOKQ','セブンイレブン 小樽駅','06:30–22:00 · 역 개찰구 옆 · 삼각시장 바로 앞',('+81134227241','0134-22-7241')),
+  ('세븐일레븐 미나미오타루역','ChIJVVVh-MnZn18Rl_kSCbqNcDU','セブンイレブン 南小樽駅','24시간 · 사카이마치·르타오 쪽 · ATM 여러 대',('+81134222514','0134-22-2514')),
+  ('세븐일레븐 오타루 신코 1丁目','ChIJAQBAVLNLC18RiuF3MVgGDg4','セブンイレブン 小樽新光1丁目','24시간 · 아사리 쪽 · 료칸 들어가기 전 마지막 · 넓은 주차장',('+81134544477','0134-54-4477')),
+ ]),
+]
+def atm_html():
+    o=['''<div class="sum" style="grid-template-columns:1fr 1fr"><div><span>현금 환전</span><b>5만<small>엔</small></b><em>한국에서 미리</em></div><div><span>모자라면</span><b>세븐 ATM</b><em>24시간 · 한국어 메뉴</em></div></div>
+<h3 class="sec">💡 뽑는 법</h3><ul class="steps">
+<li>트래블로그 = 세븐은행 ATM 수수료 무료 (월 한도 있음)</li>
+<li>트래블월렛 = 이온뱅크·미니스톱 무료 · 세븐은 110엔 안팎 수수료</li>
+<li>화면에서 한국어 선택 → 출금 → 금액 · 1,000엔 단위</li>
+<li>"원화로 환산" 물어보면 거절 (엔화 그대로)</li></ul>''']
+    for sec,items in ATMS:
+        o.append(f'<h3 class="sec">{esc(sec)}</h3><ul class="gas">')
+        for n,pid,q,note,tel in items:
+            u='https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+'&query_place_id='+pid
+            t=f'<button class="tel" data-c="{tel[0]}">{tel[1]}</button>' if tel else ''
+            o.append(f'<li><span class="tg ic">🏧</span><div><b>{esc(n)}</b><span class="sn">{esc(note)}</span><div class="ta"><a class="map" href="{u}" target="_blank" rel="noopener">지도</a>{t}</div></div></li>')
+        o.append('</ul>')
+    return ''.join(o)
+ATM=atm_html()
 
 INFO=f'''
 <h3 class="sec">☎️ 연락처</h3>
@@ -2125,7 +2161,7 @@ PAGE=f'''<!doctype html>
 {view('book',[('flight','✈️ 항공',FLIGHT),('stay','🏨 숙소',STAY),('car','🚗 렌터카',CAR),('icn','🅿️ 인천 주차',ICN)])}
 {view('drive',[('fuel','⛽ 주유',FUEL),('park','🅿️ 주차 · 톨게이트',PARK+TIPS)])}
 {view('check',[('todo','✅ 할 일',TODO),('pack','🎒 짐',PACK)])}
-{view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
+{view('more',[('jp','🗣️ 일본어',JP),('cost','💴 비용',COST),('atm','🏧 환전·ATM',ATM),('info','☎️ 연락처',INFO),('set','⚙️ 설정',SET)])}
 </main>
 <div class="wxm" id="wxm" hidden><div class="wxm-bg" data-x></div><div class="wxm-c" role="dialog" aria-label="일본 날씨 예보"><div class="wxm-h"><b>🗾 일본 날씨</b><button class="wxm-x" data-x aria-label="닫기">✕</button></div><div class="wxm-tabs" id="wxm-tabs"></div><div class="wxm-now" id="wxm-now"></div><div class="wxm-list" id="wxm-list"></div><p class="wxm-n" id="wxm-n"></p></div></div><div class="wxm" id="nwm" hidden><div class="wxm-bg" data-nx></div><div class="wxm-c" role="dialog" aria-label="업데이트 알림"><div class="wxm-h"><b>🔔 업데이트 소식</b><button class="wxm-x" data-nx aria-label="닫기">✕</button></div><div class="nwl" id="nwl"></div><p class="wxm-n">사이트가 바뀌면 🔔에 빨간 점이 떠요 · 열어보면 사라져요</p></div></div><div class="wxm" id="stm" hidden><div class="wxm-bg" data-sx></div><div class="wxm-c" role="dialog" aria-label="찜 목록"><div class="wxm-h"><b>⭐ 우리 찜</b><button class="wxm-x" data-sx aria-label="닫기">✕</button></div><div id="stm-b"></div></div></div><nav class="bn" aria-label="메뉴">
 <button data-v="day">{ICONS['day']}일정</button><button data-v="book">{ICONS['book']}예약</button><button data-v="drive">{ICONS['drive']}운전</button><button data-v="check">{ICONS['check']}체크</button><button data-v="more">{ICONS['more']}더보기</button>

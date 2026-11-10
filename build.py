@@ -9,6 +9,7 @@ def esc(t): return html.escape(t, quote=True)
 
 # 🔔 알림 — 사이트 바뀔 때마다 맨 위에 한 줄 추가 (최신이 위)
 NEWS=[  # (날짜, 내용, 탭/서브, 바로가기 대상) · 대상 = 카드 이름 | 'd2:일정 제목 일부' | 'sec:섹션 제목 일부' | ''
+ ('11/10','💴 일정 추가 · 12/3 08:30 인천 T1 엔화 수령 (환전소 ②)','day/plan','d1:엔화 수령'),
  ('11/10','🏧 환전·ATM 탭 추가 · 동선 위 세븐일레븐 ATM 8곳','more/atm',''),
  ('11/06','🛒 일정 추가 · 12/3 22:00 돈키호테 → 호텔','day/plan','d1:돈키호테'),
  ('11/06','🌟 맛집 추가 · 쿠넬 (미슐랭 1★ 프렌치 · 12/3 첫 저녁 1순위)','day/food','쿠넬'),
@@ -157,6 +158,7 @@ TL={
  stop('07:25','P5 입차','예약 07:30',tiles(tile('P5')),ic='🅿️'),
  stop('07:45','순환버스 → T1 3G','예비 7:52 · 일찍 오면 7:30',tiles(tile_img('./bus.jpg','순환버스 시간표','순환버스 시간표 (T1 3G ↔ 하얏트·예약주차장 ↔ T2)','누르면 크게')),ic='🚌'),
  stop('07:55','T1 도착 · 체크인','카운터 마감 약 09:05',tiles(tile('T1')),ic='🛫'),
+ stop('08:30','엔화 수령 · 5만엔','인터넷 환전 신청분 · T1 3층 3번 출국장 옆 환전소 ②(24시간) 또는 5번 옆 ①(06–22) · 신분증 · 면세구역 안 ③(25번 게이트)은 수령 불가 · 위치도는 더보기 › 환전·ATM',ic='💴'),
  stop('09:35','탑승 시작',ic='🎫'),
  stop('10:05','인천 출발 <span class="code">WE0531</span>',ic='✈️'),
  stop('12:45','신치토세 도착','입국 · 세관',tiles(tile('CTS',cap='신치토세 공항')),ic='🛬'),
@@ -420,7 +422,7 @@ TODO=f'''
 <h3 class="sec">🗓️ 1~2주 전</h3>
 <ul class="checks" data-l="todo">
 {chk('t4','Visit Japan Web 등록','<a class="lk" href="https://vjw-lp.digital.go.jp" target="_blank" rel="noopener">vjw-lp.digital.go.jp</a> · 착륙 6시간 전까지 · 한 계정에 2인 · 숙소: 도큐 REI · 입국·세관 QR 2개 스크린샷')}
-{chk('t5','엔화 환전 5만엔','1만엔권 2 · 5천엔권 2 · 1천엔권 20 · 모자라면 더보기 › 환전·ATM')}
+{chk('t5','엔화 환전 5만엔','인터넷 환전 완료 · 12/3 인천 T1 3층 환전소 ②에서 수령 · 신분증')}
 {chk('t6','카드 해외결제 · PIN 확인','비자 + 마스터')}
 {chk('t7','식당 예약','12/5 점심 쿠키젠(공식 사이트 온라인) · 12/3 첫 저녁 미슐랭: 쿠넬(전화 011-876-8778 · 12~16시) / 아라키(전화 · 영어 OK) / 아리마(12월분 11/1 오픈 → 지금 전화) · 다루마는 예약 불가 → 줄')}
 {chk('t8','청의 호수 · 푸른 운하 일정 확인')}
@@ -489,7 +491,7 @@ COST=f'''
 <div class="sum">
   <div><span>결제 완료</span><b>2,125,560<small>원</small></b></div>
   <div><span>현장 예상</span><b>약 5만<small>엔</small></b><em>렌터카·HEP·주차·기름 48,700–51,700</em></div>
-  <div><span>현금 환전 (2인)</span><b>5만<small>엔</small></b><em>약 43만원 · 현금만 받는 곳용 · 나머지는 카드 · 1만엔권 2 · 5천엔권 2 · 1천엔권 20</em></div>
+  <div><span>현금 환전 (2인)</span><b>5만<small>엔</small></b><em>KB 환전 완료 427,530원 (855.06 · 우대 80%) · 12/3 인천 T1 수령 · 5천엔권 8 · 1천엔권 10 · 나머지는 카드</em></div>
 </div>
 <h3 class="sec">💳 결제 완료 <small>원</small></h3>
 <div class="bars">
@@ -521,6 +523,12 @@ COST=f'''
 '''
 
 ATMS=[
+ ('🇰🇷 12/3 출국 · 인천 T1 3층 (인터넷 환전 수령)',[
+  ('환전소 ② · 3번 출국장 옆','','','24시간 · 출국 심사 전 · 우리 수령 1순위',None),
+  ('환전소 ① · 5번 출국장 옆','','','06:00–22:00 · 출국 심사 전',None),
+  ('환전소 ③ · 25번 게이트 옆 (면세구역)','','','06:00–22:00 · ⚠️ 인터넷 환전 수령 불가',None),
+  ('ATM ④ M카운터 · ⑤ F카운터 · ⑥ H카운터(스마트뱅킹존)','','','06:00–22:00',None),
+ ]),
  ('🛬 12/3 도착 · 12/6 출국 · 신치토세 공항',[
   ('세븐은행 ATM · 신치토세 공항','ChIJSS6bSmogdV8RS3Wm_gdjiII','新千歳空港 セブン銀行ATM','06:20–23:00 · 터미널 안 · 도착하자마자 뽑기 좋음',None),
  ]),
@@ -539,7 +547,8 @@ ATMS=[
  ]),
 ]
 def atm_html():
-    o=['''<div class="sum" style="grid-template-columns:1fr 1fr"><div><span>현금 환전</span><b>5만<small>엔</small></b><em>한국에서 미리</em></div><div><span>모자라면</span><b>세븐 ATM</b><em>24시간 · 한국어 메뉴</em></div></div>
+    o=['''<div class="sum" style="grid-template-columns:1fr 1fr"><div><span>KB 인터넷 환전 완료</span><b>5만<small>엔</small></b><em>427,530원 · 855.06 (우대 80%) · 5천엔권 8 · 1천엔권 10</em></div><div><span>모자라면</span><b>세븐 ATM</b><em>24시간 · 한국어 메뉴</em></div></div>
+<div class="kv"><div><span>환전 신청번호</span>'''+sv('fxno','copyable mono')+'''</div><div><span>수령</span><b>12/3 · 인천공항 1·2터미널 · 신분증</b></div></div>
 <h3 class="sec">💡 뽑는 법</h3><ul class="steps">
 <li>트래블로그 = 세븐은행 ATM 수수료 무료 (월 한도 있음)</li>
 <li>트래블월렛 = 이온뱅크·미니스톱 무료 · 세븐은 110엔 안팎 수수료</li>
@@ -548,10 +557,12 @@ def atm_html():
     for sec,items in ATMS:
         o.append(f'<h3 class="sec">{esc(sec)}</h3><ul class="gas">')
         for n,pid,q,note,tel in items:
-            u='https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+'&query_place_id='+pid
+            u='https://www.google.com/maps/search/?api=1&query='+urllib.parse.quote(q)+'&query_place_id='+pid if pid else ''
             t=f'<button class="tel" data-c="{tel[0]}">{tel[1]}</button>' if tel else ''
-            o.append(f'<li><span class="tg ic">🏧</span><div><b>{esc(n)}</b><span class="sn">{esc(note)}</span><div class="ta"><a class="map" href="{u}" target="_blank" rel="noopener">지도</a>{t}</div></div></li>')
+            ta=(f'<a class="map" href="{u}" target="_blank" rel="noopener">지도</a>' if u else '')+t
+            o.append(f'<li><span class="tg ic">{"💱" if not pid else "🏧"}</span><div><b>{esc(n)}</b><span class="sn">{esc(note)}</span>'+(f'<div class="ta">{ta}</div>' if ta else '')+'</div></li>')
         o.append('</ul>')
+        if sec.startswith('🇰🇷'): o.append('<img class="atmmap" src="./icn_t1_atm.jpg" alt="인천 T1 3층 환전소·ATM 위치" loading="lazy" width="720" height="604">')
     return ''.join(o)
 ATM=atm_html()
 
@@ -576,7 +587,7 @@ INFO=f'''
 '''
 
 FIELDS=[('name','이름','홍길동'),('nameEn','영문 이름','HONG GILDONG'),('stayName','숙소 예약자명','Gil dong'),('phone','전화','010-0000-0000'),('email','이메일','me@example.com'),
- ('pnr','항공 예약번호','6자리'),('p5no','P5 예약번호',''),('p5car','차량번호','12가3456'),('p5pw','P5 비밀번호',''),('carno','타임즈 예약번호',''),('carpw','타임즈 패스워드',''),('card4','카드 뒷 4자리','0000'),('junno','호텔 준 숙소 예약번호',''),('junord','호텔 준 통합 주문번호','')]
+ ('pnr','항공 예약번호','6자리'),('p5no','P5 예약번호',''),('p5car','차량번호','12가3456'),('p5pw','P5 비밀번호',''),('carno','타임즈 예약번호',''),('carpw','타임즈 패스워드',''),('card4','카드 뒷 4자리','0000'),('junno','호텔 준 숙소 예약번호',''),('junord','호텔 준 통합 주문번호',''),('fxno','KB 환전 신청번호','IB…')]
 SET='''
 <div class="inst" id="inst" hidden><div><b>홈 화면에 추가</b><span id="inst-t">앱처럼 열리고 오프라인에서도 동작</span></div><button id="inst-b">설치</button></div>
 <h3 class="sec">🔑 내 정보 넣기 <small>이 폰에만 저장</small></h3>
@@ -1748,6 +1759,7 @@ html:not(.io) .fc .fci::before{transform:none}
 .fc[data-k] .fcn{padding-top:15px}
 .fc[data-k] .fcn3{bottom:auto;top:30px}
 .fc[data-k] .fci .fcn2{bottom:17px}
+.atmmap{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:#fff;margin:-4px 0 6px}
 .mi.rsv{background:#d92d20;color:#fff}
 .kchips{display:flex;gap:5px;margin:-6px 0 -4px;justify-content:center}
 .sub:not(.plan){padding-top:10px}
@@ -1969,7 +1981,7 @@ JS = r'''
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closePh()});
 
   /* 내 정보 (이 기기에만) */
-  var S={},SK='sg-secrets',KEYS=['name','nameEn','stayName','phone','email','pnr','p5no','p5car','p5pw','carno','carpw','card4','junno','junord'];
+  var S={},SK='sg-secrets',KEYS=['name','nameEn','stayName','phone','email','pnr','p5no','p5car','p5pw','carno','carpw','card4','junno','junord','fxno'];
   try{S=JSON.parse(ls.get(SK)||'{}')||{}}catch(e){}
   function fmt(v,f){if(!v)return '';if(f==='intl'){var d=v.replace(/\D/g,'');return d.charAt(0)==='0'?'82'+d.slice(1):d}
     if(f==='words'){var W=['zero','one','two','three','four','five','six','seven','eight','nine'];return v.toUpperCase().split('').filter(function(c){return c!==' '}).map(function(c){return /\d/.test(c)?W[+c]:c}).join('-')}
@@ -2178,7 +2190,7 @@ MANIFEST={"name":"삿포로 여행","short_name":"삿포로","description":"2026
  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png"},{"src":"./icon-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 
 SW = r'''const V='sg-'+'%VER%';const IMG='sg-img2',FONT='sg-font';
-const CORE=['./','./index.html','./app.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./apple-touch-icon.png','./bus.jpg'];
+const CORE=['./','./index.html','./app.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./apple-touch-icon.png','./bus.jpg','./icn_t1_atm.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('sg-')&&k!==V&&k!==IMG&&k!==FONT).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);
